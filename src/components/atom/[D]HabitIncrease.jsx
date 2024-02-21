@@ -30,10 +30,8 @@ const HabitIncrease = () => {
               ...state.user,
               health: state.user.health + 1,
             },
-            loading: false,
           },
         });
-        console.log("Data Updated: ", res.data);
       });
   }
   return (

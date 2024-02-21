@@ -1,18 +1,20 @@
 import { useState } from "react";
 import ToggleButton from "../electrons/ToggleButton";
-import RenderAvailableTags from "../electrons/RenderAvailableTags";
+import GoalsCategory from "../electrons/GoalsCategory";
 
 const GoalsHeader = () => {
   const [showToggle, setShowToggle] = useState(true);
   return (
-    <div>
-      <ToggleButton
-        showToggle={showToggle}
-        setShowToggle={setShowToggle}
-        name="Show Details"
-      />
-      <RenderAvailableTags />
-    </div>
+    <>
+      <div className="flex justify-between mt-5 mx-5">
+        <ToggleButton
+          showToggle={showToggle}
+          setShowToggle={setShowToggle}
+          name="Show Details"
+        />
+        <GoalsCategory />
+      </div>
+    </>
   );
 };
 

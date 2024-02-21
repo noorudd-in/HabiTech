@@ -16,12 +16,12 @@ const GlobalHeader = () => {
         <ProgressBar
           objective="Health"
           value={state.user.health}
-          color="#e63946"
+          color="bg-red-600"
         />
         <ProgressBar
           objective="Experience"
-          value={state.user.exp}
-          color="#ffb703"
+          value={state.user.exp % 100}
+          color="bg-amber-400"
         />
       </div>
     </div>

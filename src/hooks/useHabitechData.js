@@ -2,7 +2,7 @@ import axios from "axios";
 import { API_URL } from "../constants";
 import { useEffect, useState } from "react";
 
-const useHabitechData = () => {
+export const useHabitechData = () => {
   const [loading, setLoading] = useState(true);
   const [habitechData, setHabitechData] = useState(false);
 
@@ -28,5 +28,3 @@ const useHabitechData = () => {
     data: habitechData,
   };
 };
-
-export default useHabitechData;

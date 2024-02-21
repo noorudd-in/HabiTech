@@ -13,7 +13,7 @@ const UserDetails = () => {
           <img src={settingIcon} alt="Settings Icon" className="w-9" />
         </Link>
       </div>
-      <h2>Level: {state.user.level}</h2>
+      <h2>Level: {state.user.exp % 1000}</h2>
     </div>
   );
 };
