@@ -47,18 +47,21 @@ const RenderHabits = () => {
   if (appLoading) return <Shimmer />;
   return (
     <div className="mt-5">
-      {state.habits.map(({ id, name, status, difficulty, lastUpdated }) => {
-        return (
-          <SingleHabit
-            key={id}
-            id={id}
-            name={name}
-            status={status}
-            difficulty={difficulty}
-            lastUpdated={lastUpdated}
-          />
-        );
-      })}
+      {state.habits.map(
+        ({ id, name, status, difficulty, lastUpdated, expValue }) => {
+          return (
+            <SingleHabit
+              key={id}
+              id={id}
+              name={name}
+              status={status}
+              difficulty={difficulty}
+              lastUpdated={lastUpdated}
+              expValue={expValue}
+            />
+          );
+        }
+      )}
     </div>
   );
 };

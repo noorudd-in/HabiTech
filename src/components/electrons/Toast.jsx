@@ -1,9 +1,7 @@
-import toast, { Toaster } from "react-hot-toast";
-
 export const toastSuccess = () => {
   return {
     duration: 4000,
-    icon: "💁",
+    icon: "👏",
     style: {
       borderRadius: "20px",
       background: "#343a40",
@@ -20,6 +18,18 @@ export const toastError = () => {
       borderRadius: "20px",
       background: "#343a40",
       color: "#ef233c",
+    },
+  };
+};
+
+export const toastInfo = () => {
+  return {
+    duration: 4000,
+    icon: "💁",
+    style: {
+      borderRadius: "20px",
+      background: "#343a40",
+      color: "#ffbe0b",
     },
   };
 };

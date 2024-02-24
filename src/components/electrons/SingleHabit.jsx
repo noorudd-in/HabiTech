@@ -5,14 +5,21 @@ import { useTimeDifference } from "../../hooks/useTimeDifference";
 import { API_URL } from "../../constants";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import toast, { Toaster } from "react-hot-toast";
-import { toastSuccess, toastError } from "./Toast";
+import { toastSuccess, toastError, toastInfo } from "./Toast";
 import MinusIcon from "../icons/MinusIcon";
 import PlusIcon from "../icons/PlusIcon";
 import Badge from "./Badge";
 import HabitTimeBar from "./HabitTimeBar";
 import axios from "axios";
 
-const SingleHabit = ({ id, name, status, difficulty, lastUpdated }) => {
+const SingleHabit = ({
+  id,
+  name,
+  status,
+  difficulty,
+  lastUpdated,
+  expValue,
+}) => {
   const { state, dispatch } = useContext(HabitechContext);
   const navigate = useNavigate();
   const value = useTimeDifference(lastUpdated);
@@ -25,6 +32,7 @@ const SingleHabit = ({ id, name, status, difficulty, lastUpdated }) => {
     { threshold: 500 }
   );
 
+  // Find the habit with given id and return updated habits array
   const findAndUpdateHabit = (type) => {
     return state.habits.map((habit) => {
       if (habit.id == id) {
@@ -34,9 +42,17 @@ const SingleHabit = ({ id, name, status, difficulty, lastUpdated }) => {
     });
   };
 
+  // Trigger an update to backend with updated habit array.
   const updateHabit = (type) => {
     if (status != 0) {
-      toast("You have already updated this habit today!", toastSuccess());
+      toast("You have already updated this habit today!", toastInfo());
+      return;
+    }
+    if (state.user.health + type < 1 || state.user.health - type < 1) {
+      toast(
+        "Your health is too low to update this habit!. Please buy health first.",
+        toastError()
+      );
       return;
     }
     if (
@@ -46,16 +62,42 @@ const SingleHabit = ({ id, name, status, difficulty, lastUpdated }) => {
     ) {
       const updatedHabits = findAndUpdateHabit(type);
 
+      // Update Health based on action type
+      let currentHealth = state.user.health;
+      if (currentHealth + type <= 100 && currentHealth + type >= 0) {
+        currentHealth = currentHealth + type;
+      }
+
+      // Update coins based on difficulty,
+      let currentCoins = state.user.coins;
+      if (difficulty == "easy") {
+        currentCoins = currentCoins + 0.5;
+      } else if (difficulty == "decent") {
+        currentCoins = currentCoins + 1;
+      } else if (difficulty == "hard") {
+        currentCoins = currentCoins + 1.5;
+      }
+
+      // Trigger axios update.
       axios
         .put(API_URL, {
           ...state,
+          user: {
+            ...state.user,
+            health: currentHealth,
+            exp: state.user.exp + expValue * type,
+            coins: currentCoins,
+          },
           habits: updatedHabits,
+          lastEdited: new Date().toLocaleString("en-GB", { hour12: true }),
         })
         .then((res) => {
           dispatch({
             type: "FETCH_DATA",
             payload: {
+              user: res?.data?.user,
               habits: res?.data?.habits,
+              lastEdited: res?.data?.lastEdited,
             },
           });
           type == 1
