@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLongPress } from "@uidotdev/usehooks";
 import { useTimeDifference } from "../../hooks/useTimeDifference";
@@ -6,11 +6,13 @@ import { API_URL } from "../../constants";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import toast, { Toaster } from "react-hot-toast";
 import { toastSuccess, toastError, toastInfo } from "./Toast";
+import { motion } from "framer-motion";
+import axios from "axios";
 import MinusIcon from "../icons/MinusIcon";
 import PlusIcon from "../icons/PlusIcon";
 import Badge from "./Badge";
 import HabitTimeBar from "./HabitTimeBar";
-import axios from "axios";
+import HabitStatsModal from "./HabitStatsModal";
 
 const SingleHabit = ({
   id,
@@ -19,7 +21,10 @@ const SingleHabit = ({
   difficulty,
   lastUpdated,
   expValue,
+  posCount,
+  negCount,
 }) => {
+  const [toggleModal, setToggleModal] = useState("hidden");
   const { state, dispatch } = useContext(HabitechContext);
   const navigate = useNavigate();
   const value = useTimeDifference(lastUpdated);
@@ -36,7 +41,13 @@ const SingleHabit = ({
   const findAndUpdateHabit = (type) => {
     return state.habits.map((habit) => {
       if (habit.id == id) {
-        return { ...habit, status: type, lastUpdated: Date.now() };
+        return {
+          ...habit,
+          status: type,
+          lastUpdated: Date.now(),
+          posCount: type == 1 ? habit.posCount + 1 : habit.posCount,
+          negCount: type == -1 ? habit.negCount + 1 : habit.negCount,
+        };
       }
       return habit;
     });
@@ -107,41 +118,63 @@ const SingleHabit = ({
     }
   };
 
+  const handleClick = () => {
+    setToggleModal("");
+  };
+
   return (
     <>
       <Toaster />
-      <div
-        className={`grid grid-cols-12 my-2 border mx-5 rounded-md border-amber-400 ${
-          status != 0 && "bg-amber-400"
-        }`}
-      >
+      <HabitStatsModal
+        toggleModal={toggleModal}
+        setToggleModal={setToggleModal}
+        id={id}
+        name={name}
+        status={status}
+        difficulty={difficulty}
+        lastUpdated={lastUpdated}
+        expValue={expValue}
+        posCount={posCount}
+        negCount={negCount}
+      />
+      <motion.div whileTap={{ scale: 0.97 }}>
         <div
-          className="flex flex-row items-center justify-center rounded-l-md bg-amber-400"
-          onClick={() => updateHabit(-1)}
+          className={`grid grid-cols-12 my-2 border mx-5 rounded-md border-amber-400 ${
+            status != 0 && "bg-amber-400"
+          }`}
         >
-          <MinusIcon status={status} className="col-span-1" />
-        </div>
-
-        <div
-          {...attrs}
-          className={`col-span-10 m-3 ${status != 0 ? "text-black" : ""}`}
-        >
-          <div className="flex justify-between">
-            <h1 className="text-xl">{name}</h1>
-            <Badge difficulty={difficulty} />
+          <div
+            className="flex flex-row items-center justify-center rounded-l-md bg-amber-400"
+            onClick={() => updateHabit(-1)}
+          >
+            <MinusIcon status={status} className="col-span-1" />
           </div>
-          <div>
-            <HabitTimeBar value={parseInt(value)} status={status} />
+
+          <div
+            {...attrs}
+            className={`col-span-10 m-3 ${status != 0 ? "text-black" : ""}`}
+          >
+            <motion.div
+              className="flex justify-between"
+              whileTap={{ scale: 1 }}
+              onClick={handleClick}
+            >
+              <h1 className="text-xl">{name}</h1>
+              <Badge difficulty={difficulty} />
+            </motion.div>
+            <div>
+              <HabitTimeBar value={parseInt(value)} status={status} />
+            </div>
+          </div>
+
+          <div
+            className="flex flex-row items-center justify-center rounded-r-md bg-amber-400"
+            onClick={() => updateHabit(1)}
+          >
+            <PlusIcon status={status} className="col-span-1" />
           </div>
         </div>
-
-        <div
-          className="flex flex-row items-center justify-center rounded-r-md bg-amber-400"
-          onClick={() => updateHabit(1)}
-        >
-          <PlusIcon status={status} className="col-span-1" />
-        </div>
-      </div>
+      </motion.div>
     </>
   );
 };

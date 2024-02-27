@@ -1,12 +1,18 @@
-const CreateIcon = ({ navigate }) => {
+const CreateIcon = ({ navigate, currentURL }) => {
   return (
     <button
       type="button"
-      className="inline-flex items-center justify-center w-10 h-10 font-medium bg-blue-600 rounded-full hover:bg-blue-700 group focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800"
+      className={`inline-flex items-center justify-center w-10 h-10 font-medium ${
+        currentURL == "/create"
+          ? "bg-amber-500"
+          : "bg-gray-500 dark:bg-amber-100"
+      } rounded-full`}
       onClick={() => navigate("/create")}
     >
       <svg
-        className="w-4 h-4 text-white"
+        className={`w-4 h-4 ${
+          currentURL == "/create" ? "text-black" : "text-white dark:text-black"
+        }`}
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

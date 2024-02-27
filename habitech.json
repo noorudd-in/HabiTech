@@ -1,0 +1,85 @@
+{
+  "habitech": {
+    "user": {
+      "name": "Noor",
+      "avatarURL": "https://img.freepik.com/free-photo/3d-illustration-teenager-with-funny-face-glasses_1142-50955.jpg",
+      "health": 12,
+      "coins": 10,
+      "exp": 195
+    },
+    "habits": [
+      {
+        "id": 1707773899538,
+        "name": "Pray Magribh Namaz",
+        "difficulty": "hard",
+        "status": 0,
+        "lastUpdated": 1708030548619,
+        "expValue": 3,
+        "posCount": 3,
+        "negCount": 0
+      },
+      {
+        "id": 1707773899551,
+        "name": "Habit Two",
+        "difficulty": "decent",
+        "status": 0,
+        "lastUpdated": 1708002160806,
+        "expValue": 2,
+        "posCount": 0,
+        "negCount": 2
+      },
+      {
+        "id": 1707773899564,
+        "name": "Habit Three",
+        "difficulty": "easy",
+        "status": 0,
+        "lastUpdated": 1708033419149,
+        "expValue": 1,
+        "posCount": 1,
+        "negCount": 1
+      },
+      {
+        "id": 1707773899578,
+        "name": "Habit Four",
+        "difficulty": "easy",
+        "status": 0,
+        "lastUpdated": 1707519220000,
+        "expValue": 1,
+        "posCount": 1,
+        "negCount": 0
+      },
+      {
+        "id": 1707773899588,
+        "name": "Habit Five",
+        "difficulty": "decent",
+        "status": 0,
+        "lastUpdated": 1707519220000,
+        "expValue": 2,
+        "posCount": 1,
+        "negCount": 0
+      }
+    ],
+    "goals": [
+      {
+        "name": "Goal 1",
+        "priority": "high"
+      },
+      {
+        "name": "Goal 2",
+        "priority": "low"
+      },
+      {
+        "name": "Goal 3",
+        "priority": "medium"
+      }
+    ],
+    "lastEdited": "16/02/2024, 2:25:48 am",
+    "availableTags": [
+      "work",
+      "finance",
+      "home",
+      "vip"
+    ],
+    "theme": "orange"
+  }
+}

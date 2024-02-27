@@ -3,8 +3,8 @@ const CalenderIcon = ({ currentURL, navigate }) => {
     <button
       type="button"
       className={`inline-flex flex-col items-center justify-center px-5 ${
-        currentURL == "/calender" ? "bg-gray-800 dark:hover:bg-gray-800" : ""
-      } hover:bg-gray-800 dark:hover:bg-gray-800 group`}
+        currentURL == "/calender" ? "bg-gray-800 dark:bg-gray-800" : ""
+      }`}
       onClick={() => navigate("/calender")}
     >
       <svg
@@ -12,7 +12,7 @@ const CalenderIcon = ({ currentURL, navigate }) => {
           currentURL == "/calender"
             ? "text-amber-500 dark:text-amber-500"
             : "text-gray-500 dark:text-amber-100"
-        }  group-hover:text-amber-500 dark:group-hover:text-amber-500`}
+        }  `}
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         fill="currentColor"

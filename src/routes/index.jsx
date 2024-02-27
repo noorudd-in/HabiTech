@@ -6,36 +6,56 @@ import Settings from "../pages/Settings";
 import GlobalFooter from "../components/atom/GlobalFooter";
 import CreateTagPage from "../pages/CreateTagPage";
 import CreateHabitPage from "../pages/CreateHabitPage";
+import AnimatePage from "../pages/AnimatePage";
 
 const HABITECH_ROUTES = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: (
+      <AnimatePage>
+        <HomePage />
+      </AnimatePage>
+    ),
     errorElement: <ErrorPage />,
   },
   {
     path: "/setting",
-    element: <GlobalFooter />,
+    element: (
+      <AnimatePage>
+        <Settings />
+        <GlobalFooter />
+      </AnimatePage>
+    ),
     errorElement: <ErrorPage />,
   },
   {
     path: "/create",
     element: (
-      <>
+      <AnimatePage>
         <CreatePage />
         <GlobalFooter />
-      </>
+      </AnimatePage>
     ),
     errorElement: <ErrorPage />,
   },
   {
     path: "/calender",
-    element: <GlobalFooter />,
+    element: (
+      <AnimatePage>
+        <Settings />
+        <GlobalFooter />
+      </AnimatePage>
+    ),
     errorElement: <ErrorPage />,
   },
   {
     path: "/pomodoro",
-    element: <GlobalFooter />,
+    element: (
+      <AnimatePage>
+        <Settings />
+        <GlobalFooter />
+      </AnimatePage>
+    ),
     errorElement: <ErrorPage />,
   },
   {

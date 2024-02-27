@@ -5,6 +5,7 @@ import { API_URL } from "../../constants";
 import SingleHabit from "../electrons/SingleHabit";
 import axios from "axios";
 import Shimmer from "../../pages/Shimmer";
+import { motion } from "framer-motion";
 
 const RenderHabits = () => {
   const { state, dispatch, appLoading } = useContext(HabitechContext);
@@ -48,7 +49,16 @@ const RenderHabits = () => {
   return (
     <div className="mt-5">
       {state.habits.map(
-        ({ id, name, status, difficulty, lastUpdated, expValue }) => {
+        ({
+          id,
+          name,
+          status,
+          difficulty,
+          lastUpdated,
+          expValue,
+          posCount,
+          negCount,
+        }) => {
           return (
             <SingleHabit
               key={id}
@@ -58,6 +68,8 @@ const RenderHabits = () => {
               difficulty={difficulty}
               lastUpdated={lastUpdated}
               expValue={expValue}
+              posCount={posCount}
+              negCount={negCount}
             />
           );
         }

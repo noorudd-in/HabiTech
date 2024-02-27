@@ -37,6 +37,8 @@ const CreateHabitPage = () => {
       status: 0,
       lastUpdated: Date.now(),
       expValue: habitLevel == "easy" ? 1 : habitLevel == "decent" ? 2 : 3,
+      posCount: 0,
+      negCount: 0,
     };
 
     axios
