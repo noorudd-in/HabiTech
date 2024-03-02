@@ -10,8 +10,17 @@ const MainContent = () => {
 
   return (
     <div className="mb-28">
-      <AnimatedTabs setCurrentTab={setCurrentTab} />
-      {currentTab == "habits" ? <RenderHabits /> : <RenderGoals />}
+      <div className="flex justify-center">
+        <AnimatedTabs setCurrentTab={setCurrentTab} />
+      </div>
+      {currentTab == "habits" ? (
+        <RenderHabits />
+      ) : (
+        <>
+          <GoalsHeader />
+          <RenderGoals />
+        </>
+      )}
       <Activity />
     </div>
   );

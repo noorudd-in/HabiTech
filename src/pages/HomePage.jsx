@@ -9,11 +9,13 @@ import MainContent from "../components/atom/MainContent";
 import GlobalFooter from "../components/atom/GlobalFooter";
 import toast, { Toaster } from "react-hot-toast";
 import { toastSuccess, toastError } from "../components/electrons/Toast";
+import { useColorTheme } from "../hooks/useColorTheme";
 
 const HomePage = () => {
   const { dispatch, setAppLoading } = useContext(HabitechContext);
   const { data, loading } = useHabitechData();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { customcolor } = useColorTheme;
 
   useEffect(() => {
     if (data) {
@@ -26,6 +28,7 @@ const HomePage = () => {
           goals: data?.goals,
           lastEdited: data?.lastEdited,
           availableTags: data?.availableTags,
+          theme: data?.theme,
         },
       });
 
@@ -33,7 +36,13 @@ const HomePage = () => {
       let type = searchParams.get("toastType");
       let message = searchParams.get("toastMessage");
       if (type != null && message != null && type != "") {
-        toast(message, type == "toastError" ? toastError() : toastSuccess());
+        console.log(customcolor);
+        toast(
+          message,
+          type == "toastError"
+            ? toastError()
+            : toastSuccess(customcolor == undefined ? "#fff" : customcolor)
+        );
         setSearchParams({ toastType: "", toastMessage: "" });
       }
     }

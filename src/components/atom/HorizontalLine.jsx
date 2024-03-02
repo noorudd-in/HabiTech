@@ -1,11 +1,15 @@
-const HorizontalLine = () => (
-  <hr
-    style={{
-      color: "#ffb703",
-      backgroundColor: "#ffb703",
-      height: 2,
-    }}
-  />
-);
+import { useColorTheme } from "../../hooks/useColorTheme";
+const HorizontalLine = () => {
+  const { customcolor } = useColorTheme();
+  return (
+    <hr
+      style={{
+        color: customcolor,
+        backgroundColor: customcolor,
+        height: 2,
+      }}
+    />
+  );
+};
 
 export default HorizontalLine;

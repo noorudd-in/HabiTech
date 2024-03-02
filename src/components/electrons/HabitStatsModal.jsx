@@ -1,17 +1,17 @@
-import React from "react";
+import { useColorTheme } from "../../hooks/useColorTheme";
 
 const HabitStatsModal = ({
   toggleModal,
   setToggleModal,
   id,
   name,
-  status,
   difficulty,
   lastUpdated,
   expValue,
   posCount,
   negCount,
 }) => {
+  const { bgcolor500, lighttext } = useColorTheme();
   return (
     <div>
       <div
@@ -29,23 +29,22 @@ const HabitStatsModal = ({
 
             <div className="p-5 md:p-q space-y-1">
               <p>
-                Name:<span className="dark:text-yellow-400"> {name}</span>
+                Name:
+                <span> {name}</span>
               </p>
               <p>
-                Created on:{" "}
-                <span className="dark:text-yellow-400">
+                Created on:
+                <span>
                   {new Date(id).toLocaleString("en-GB", { hour12: true })}
                 </span>
               </p>
               <p>
                 Difficulty Level:{" "}
-                <span className="dark:text-yellow-400">
-                  {difficulty[0].toUpperCase() + difficulty.slice(1)}
-                </span>
+                <span>{difficulty[0].toUpperCase() + difficulty.slice(1)}</span>
               </p>
               <p>
                 Habit last updated on:{" "}
-                <span className="dark:text-yellow-400">
+                <span>
                   {new Date(lastUpdated).toLocaleString("en-GB", {
                     hour12: true,
                   })}
@@ -53,33 +52,23 @@ const HabitStatsModal = ({
               </p>
               <br />
               <p>
-                You have completed this habit{" "}
-                <span className="dark:text-yellow-400 font-extrabold">
-                  {posCount}
-                </span>{" "}
-                time(s) and skipped{" "}
-                <span className="dark:text-yellow-400 font-extrabold">
-                  {negCount}
-                </span>{" "}
+                You have completed this habit
+                <span className="font-extrabold">{posCount}</span> time(s) and
+                skipped <span className="font-extrabold">{negCount}</span>{" "}
                 time(s).
               </p>
               <p>
                 Till now you have earned{" "}
-                <span className="dark:text-yellow-400 font-extrabold">
-                  {posCount * 5}
-                </span>{" "}
-                coins and{" "}
-                <span className="dark:text-yellow-400 font-extrabold">
-                  {posCount * expValue}
-                </span>{" "}
-                experience with this habit.{" "}
+                <span className="font-extrabold">{posCount * 5}</span> coins and{" "}
+                <span className="font-extrabold">{posCount * expValue}</span>{" "}
+                experience with this habit.
               </p>
             </div>
 
             <div className="text-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
               <button
                 type="button"
-                className="text-white dark:text-black bg-gray-700 hover:bg-amber-800 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-amber-600 dark:hover:bg-amber-700 dark:focus:ring-amber-800"
+                className={`${lighttext} focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center ${bgcolor500}`}
                 onClick={() => setToggleModal("hidden")}
               >
                 Got it !

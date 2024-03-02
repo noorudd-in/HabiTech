@@ -13,13 +13,9 @@ const GlobalFooter = () => {
       <div className="grid h-full max-w-lg grid-cols-5 mx-auto">
         <HomeIcon currentURL={currentURL} navigate={navigate} />
         <CalenderIcon currentURL={currentURL} navigate={navigate} />
-        <div
-          className={`flex items-center justify-center ${
-            currentURL == "/create" ? "bg-gray-800" : ""
-          } `}
-        >
-          <CreateIcon navigate={navigate} currentURL={currentURL} />
-        </div>
+
+        <CreateIcon navigate={navigate} currentURL={currentURL} />
+
         <TimerIcon currentURL={currentURL} navigate={navigate} />
         <SettingIcon currentURL={currentURL} navigate={navigate} />
       </div>

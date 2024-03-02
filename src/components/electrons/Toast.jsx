@@ -1,11 +1,11 @@
-export const toastSuccess = () => {
+export const toastSuccess = (customcolor) => {
   return {
     duration: 4000,
     icon: "👏",
     style: {
       borderRadius: "20px",
       background: "#343a40",
-      color: "#ffbe0b",
+      color: customcolor,
     },
   };
 };
@@ -17,19 +17,19 @@ export const toastError = () => {
     style: {
       borderRadius: "20px",
       background: "#343a40",
-      color: "#ef233c",
+      color: "#E02424",
     },
   };
 };
 
-export const toastInfo = () => {
+export const toastInfo = (customcolor) => {
   return {
     duration: 4000,
     icon: "💁",
     style: {
       borderRadius: "20px",
       background: "#343a40",
-      color: "#ffbe0b",
+      color: customcolor,
     },
   };
 };

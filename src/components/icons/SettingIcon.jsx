@@ -1,18 +1,21 @@
+import { useColorTheme } from "../../hooks/useColorTheme";
+
 const SettingIcon = ({ currentURL, navigate }) => {
+  const { textcolor500, darktextcolor100 } = useColorTheme();
   return (
     <button
       type="button"
       className={`inline-flex flex-col items-center justify-center px-5 rounded-e-full ${
-        currentURL == "/setting" ? "bg-gray-800 dark:hover:bg-gray-800" : ""
-      } hover:bg-gray-800 dark:hover:bg-gray-800 group`}
+        currentURL == "/setting" ? "bg-gray-800" : ""
+      }`}
       onClick={() => navigate("/setting")}
     >
       <svg
         className={`w-8 h-7 mb-1 ${
           currentURL == "/setting"
-            ? "text-amber-500 dark:text-amber-500"
-            : "text-gray-500 dark:text-amber-100"
-        }  group-hover:text-amber-500 dark:group-hover:text-amber-500`}
+            ? textcolor500
+            : `text-gray-500 ${darktextcolor100}`
+        }  `}
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         fill="currentColor"

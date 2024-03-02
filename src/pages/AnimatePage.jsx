@@ -1,4 +1,4 @@
-import { animate, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 const AnimatePage = ({ children }) => {
   const animations = (variants, custom) => {
@@ -79,7 +79,7 @@ const AnimatePage = ({ children }) => {
               <motion.div
                 key={i}
                 {...animations(expand, column - i)}
-                className="relative h-full w-full bg-amber-100 bg-opacity-90"
+                className={`relative h-full w-full bg-slate-200 bg-opacity-90 dark:bg-gray-500 dark:bg-opacity-90`}
               />
             );
           })}

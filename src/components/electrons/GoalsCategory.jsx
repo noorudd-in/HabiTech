@@ -1,13 +1,14 @@
-import React from "react";
+import { useColorTheme } from "../../hooks/useColorTheme";
 
 const GoalsCategory = () => {
+  const { bgcolor50 } = useColorTheme();
   return (
     <div>
       <label>Category: </label>
       <select
         name="goalsCategory"
         id="goalsCategory"
-        className="text-black rounded-md px-1 bg-gray-100 dark:bg-amber-50"
+        className={`text-black rounded-md px-1 ${bgcolor50} border border-neutral-500`}
       >
         <option value="tag1">Show by Tag 1</option>
         <option value="tag2">Show by Tag 2</option>

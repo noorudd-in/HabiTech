@@ -13,6 +13,7 @@ import PlusIcon from "../icons/PlusIcon";
 import Badge from "./Badge";
 import HabitTimeBar from "./HabitTimeBar";
 import HabitStatsModal from "./HabitStatsModal";
+import { useColorTheme } from "../../hooks/useColorTheme";
 
 const SingleHabit = ({
   id,
@@ -28,6 +29,7 @@ const SingleHabit = ({
   const { state, dispatch } = useContext(HabitechContext);
   const navigate = useNavigate();
   const value = useTimeDifference(lastUpdated);
+  const { bgcolor400, lighttext, border400, customcolor } = useColorTheme();
 
   // Perform below action when habit is long pressed
   const attrs = useLongPress(
@@ -56,7 +58,10 @@ const SingleHabit = ({
   // Trigger an update to backend with updated habit array.
   const updateHabit = (type) => {
     if (status != 0) {
-      toast("You have already updated this habit today!", toastInfo());
+      toast(
+        "You have already updated this habit today!",
+        toastInfo(customcolor)
+      );
       return;
     }
     if (state.user.health + type < 1 || state.user.health - type < 1) {
@@ -112,7 +117,10 @@ const SingleHabit = ({
             },
           });
           type == 1
-            ? toast("Good job keeping up with habit!", toastSuccess())
+            ? toast(
+                "Good job keeping up with habit!",
+                toastSuccess(customcolor)
+              )
             : toast("Oh No! You missed it.", toastError());
         });
     }
@@ -139,12 +147,12 @@ const SingleHabit = ({
       />
       <motion.div whileTap={{ scale: 0.97 }}>
         <div
-          className={`grid grid-cols-12 my-2 border mx-5 rounded-md border-amber-400 ${
-            status != 0 && "bg-amber-400"
+          className={`grid grid-cols-12 my-2 border mx-5 rounded-md ${border400} ${
+            status != 0 && bgcolor400
           }`}
         >
           <div
-            className="flex flex-row items-center justify-center rounded-l-md bg-amber-400"
+            className={`flex flex-row items-center justify-center rounded-l-md ${bgcolor400}`}
             onClick={() => updateHabit(-1)}
           >
             <MinusIcon status={status} className="col-span-1" />
@@ -152,7 +160,7 @@ const SingleHabit = ({
 
           <div
             {...attrs}
-            className={`col-span-10 m-3 ${status != 0 ? "text-black" : ""}`}
+            className={`col-span-10 m-3 ${status != 0 ? lighttext : ""}`}
           >
             <motion.div
               className="flex justify-between"
@@ -168,7 +176,7 @@ const SingleHabit = ({
           </div>
 
           <div
-            className="flex flex-row items-center justify-center rounded-r-md bg-amber-400"
+            className={`flex flex-row items-center justify-center rounded-r-md ${bgcolor400}`}
             onClick={() => updateHabit(1)}
           >
             <PlusIcon status={status} className="col-span-1" />

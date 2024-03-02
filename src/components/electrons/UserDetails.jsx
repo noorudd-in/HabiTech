@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import Shimmer from "../../pages/Shimmer";
-import settingIcon from "../../../assets/settings.svg";
 import CoinIcon from "../icons/CoinIcon";
 import BadgeIcon from "../icons/BadgeIcon";
 
@@ -15,7 +14,7 @@ const UserDetails = () => {
       <div className="flex justify-between">
         <h2 className="text-3xl">{state.user.name}</h2>
         <Link to="/setting">
-          <img src={settingIcon} alt="Settings Icon" className="w-9" />
+          <h1>Hello</h1>
         </Link>
       </div>
 

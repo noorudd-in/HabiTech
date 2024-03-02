@@ -1,10 +1,8 @@
-const MinusIcon = ({ className, status }) => {
+const MinusIcon = ({ className }) => {
   return (
     <div>
       <svg
-        className={`${className} w-7 h-7 text-gray-800 ${
-          status == "completed" ? "text-amber-400" : "text-black"
-        }`}
+        className={`${className} w-7 h-7 text-gray-800`}
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

@@ -5,7 +5,6 @@ import { API_URL } from "../../constants";
 import SingleHabit from "../electrons/SingleHabit";
 import axios from "axios";
 import Shimmer from "../../pages/Shimmer";
-import { motion } from "framer-motion";
 
 const RenderHabits = () => {
   const { state, dispatch, appLoading } = useContext(HabitechContext);
@@ -13,22 +12,30 @@ const RenderHabits = () => {
 
   // Update the status value of habit once the 12 hours have passed!
   const updateHabitCheck = () => {
+    let flag = false;
     const len = state.habits.length;
     if (len == 0) {
       return null;
     }
-    return state.habits.map((habit) => {
+    let updatedHabits = state.habits.map((habit) => {
       const value = useTimeDifference(habit.lastUpdated);
-      if (value == 0) {
+      if (value == 0 && habit.status != 0) {
+        flag = true;
         return { ...habit, status: 0 };
       }
       return habit;
     });
+    if (flag) {
+      return updatedHabits;
+    } else {
+      return null;
+    }
   };
 
   useEffect(() => {
     let updatedHabits = updateHabitCheck();
-    if (updatedHabits != null) {
+
+    if (updatedHabits != null && updatedHabits[0] != null) {
       axios
         .put(API_URL, {
           ...state,

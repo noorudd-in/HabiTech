@@ -7,6 +7,7 @@ const initialState = {
   goals: [],
   lastEdited: "",
   availableTags: [],
+  theme: "",
 };
 
 // Reducer

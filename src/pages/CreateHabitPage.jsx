@@ -1,15 +1,17 @@
 import { useContext, useState } from "react";
 import { HabitechContext } from "../contexts/HabitechContext";
 import toast, { Toaster } from "react-hot-toast";
-import { toastError, toastSuccess } from "../components/electrons/Toast";
+import { toastError } from "../components/electrons/Toast";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { API_URL } from "../constants";
+import { useColorTheme } from "../hooks/useColorTheme";
+import axios from "axios";
 
 const CreateHabitPage = () => {
   const [habitName, setHabitName] = useState("");
   const [habitLevel, setHabitLevel] = useState("");
   const { state, dispatch } = useContext(HabitechContext);
+  const { bgcolor500, lighttext } = useColorTheme();
   const navigate = useNavigate();
 
   const createHabit = () => {
@@ -70,7 +72,7 @@ const CreateHabitPage = () => {
           id="habit"
           type="text"
           value={habitName}
-          className="my-1 p-1 bg-gray-50 border w-3/4 border-gray-300 text-gray-900 text-md rounded-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="my-1 p-1 border w-3/4 text-black text-md rounded-md dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
           placeholder="Read 10 pages daily"
           onChange={(e) => setHabitName(e.target.value)}
           required
@@ -80,7 +82,7 @@ const CreateHabitPage = () => {
         </label>
         <select
           id="habit-level"
-          className=" my-1 p-1 bg-gray-50 w-3/4 border border-gray-300 text-gray-900 text-md rounded-md focus:ring-blue-500 focus:border-blue-500 block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className=" my-1 p-1 w-3/4 border border-gray-300 text-gray-900 text-md rounded-md block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
           onChange={(e) => setHabitLevel(e.target.value)}
         >
           <option value="select">Select</option>
@@ -90,7 +92,7 @@ const CreateHabitPage = () => {
         </select>
 
         <button
-          className="text-center my-3 p-2 bg-amber-500 text-black text-lg rounded-lg items-center"
+          className={`text-center my-3 p-2 ${bgcolor500} ${lighttext} text-lg rounded-lg items-center`}
           onClick={createHabit}
         >
           Create

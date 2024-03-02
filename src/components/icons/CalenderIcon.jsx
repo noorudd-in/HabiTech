@@ -1,17 +1,20 @@
+import { useColorTheme } from "../../hooks/useColorTheme";
+
 const CalenderIcon = ({ currentURL, navigate }) => {
+  const { textcolor500, darktextcolor100 } = useColorTheme();
   return (
     <button
       type="button"
       className={`inline-flex flex-col items-center justify-center px-5 ${
-        currentURL == "/calender" ? "bg-gray-800 dark:bg-gray-800" : ""
+        currentURL == "/calender" ? "bg-gray-800" : ""
       }`}
       onClick={() => navigate("/calender")}
     >
       <svg
         className={`w-8 h-7 mb-1 ${
           currentURL == "/calender"
-            ? "text-amber-500 dark:text-amber-500"
-            : "text-gray-500 dark:text-amber-100"
+            ? textcolor500
+            : `text-gray-500 ${darktextcolor100}`
         }  `}
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
