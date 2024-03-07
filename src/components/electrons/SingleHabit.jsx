@@ -105,7 +105,7 @@ const SingleHabit = ({
             coins: currentCoins,
           },
           habits: updatedHabits,
-          lastEdited: new Date().toLocaleString("en-GB", { hour12: true }),
+          lastEdited: Date.now(),
         })
         .then((res) => {
           dispatch({

@@ -7,6 +7,7 @@ import RenderGoals from "./RenderGoals";
 
 const MainContent = () => {
   const [currentTab, setCurrentTab] = useState("habits");
+  const [showTask, setShowTask] = useState(false);
 
   return (
     <div className="mb-28">
@@ -17,8 +18,8 @@ const MainContent = () => {
         <RenderHabits />
       ) : (
         <>
-          <GoalsHeader />
-          <RenderGoals />
+          <GoalsHeader showTask={showTask} setShowTask={setShowTask} />
+          <RenderGoals showTask={showTask} />
         </>
       )}
       <Activity />

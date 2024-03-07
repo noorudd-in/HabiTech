@@ -13,6 +13,7 @@ const colors = {
   border400: "",
   customcolor: "",
   checkedcolor: "",
+  checkboxcolor: "",
 };
 export const useColorTheme = () => {
   const { state } = useContext(HabitechContext);
@@ -29,6 +30,7 @@ export const useColorTheme = () => {
     border400: "",
     customcolor: "",
     checkedcolor: "",
+    checkboxcolor: "",
   };
   switch (state.theme) {
     case "stone":
@@ -43,6 +45,7 @@ export const useColorTheme = () => {
       colors.border400 = "border-stone-400";
       colors.customcolor = "#d4d4d4";
       colors.checkedcolor = "peer-checked:bg-stone-400";
+      colors.checkboxcolor = "accent-stone-500";
       break;
 
     case "red":
@@ -57,6 +60,7 @@ export const useColorTheme = () => {
       colors.border400 = "border-red-400";
       colors.customcolor = "#ef4444";
       colors.checkedcolor = "peer-checked:bg-red-400";
+      colors.checkboxcolor = "accent-red-500";
       break;
 
     case "orange":
@@ -71,6 +75,7 @@ export const useColorTheme = () => {
       colors.border400 = "border-orange-400";
       colors.customcolor = "#f97316";
       colors.checkedcolor = "peer-checked:bg-orange-400";
+      colors.checkboxcolor = "accent-orange-500";
       break;
 
     case "lime":
@@ -85,6 +90,7 @@ export const useColorTheme = () => {
       colors.border400 = "border-lime-400";
       colors.customcolor = "#84cc16";
       colors.checkedcolor = "peer-checked:bg-lime-400";
+      colors.checkboxcolor = "accent-lime-500";
       break;
 
     case "green":
@@ -99,6 +105,7 @@ export const useColorTheme = () => {
       colors.border400 = "border-green-400";
       colors.customcolor = "#22c55e";
       colors.checkedcolor = "peer-checked:bg-green-400";
+      colors.checkboxcolor = "accent-green-500";
       break;
 
     case "teal":
@@ -113,6 +120,7 @@ export const useColorTheme = () => {
       colors.border400 = "border-teal-400";
       colors.customcolor = "#14b8a6";
       colors.checkedcolor = "peer-checked:bg-teal-400";
+      colors.checkboxcolor = "accent-teal-500";
       break;
 
     case "emerald":
@@ -127,6 +135,7 @@ export const useColorTheme = () => {
       colors.border400 = "border-emerald-400";
       colors.customcolor = "#10b981";
       colors.checkedcolor = "peer-checked:bg-emerald-400";
+      colors.checkboxcolor = "accent-emerald-500";
       break;
 
     case "amber":
@@ -141,6 +150,7 @@ export const useColorTheme = () => {
       colors.border400 = "border-amber-400";
       colors.customcolor = "#f59e0b";
       colors.checkedcolor = "peer-checked:bg-amber-400";
+      colors.checkboxcolor = "accent-amber-500";
       break;
 
     case "yellow":
@@ -155,6 +165,7 @@ export const useColorTheme = () => {
       colors.border400 = "border-yellow-400";
       colors.customcolor = "#eab308";
       colors.checkedcolor = "peer-checked:bg-yellow-400";
+      colors.checkboxcolor = "accent-yellow-500";
       break;
 
     case "cyan":
@@ -169,6 +180,7 @@ export const useColorTheme = () => {
       colors.border400 = "border-cyan-400";
       colors.customcolor = "#06b6d4";
       colors.checkedcolor = "peer-checked:bg-cyan-400";
+      colors.checkboxcolor = "accent-cyan-500";
       break;
 
     case "blue":
@@ -183,6 +195,7 @@ export const useColorTheme = () => {
       colors.border400 = "border-blue-400";
       colors.customcolor = "#3b82f6";
       colors.checkedcolor = "peer-checked:bg-blue-400";
+      colors.checkboxcolor = "accent-blue-500";
       break;
 
     case "sky":
@@ -197,6 +210,7 @@ export const useColorTheme = () => {
       colors.border400 = "border-sky-400";
       colors.customcolor = "#0ea5e9";
       colors.checkedcolor = "peer-checked:bg-sky-400";
+      colors.checkboxcolor = "accent-sky-500";
       break;
 
     case "indigo":
@@ -211,6 +225,7 @@ export const useColorTheme = () => {
       colors.border400 = "border-indigo-400";
       colors.customcolor = "#6366f1";
       colors.checkedcolor = "peer-checked:bg-indigo-400";
+      colors.checkboxcolor = "accent-indigo-500";
       break;
 
     case "violet":
@@ -225,6 +240,7 @@ export const useColorTheme = () => {
       colors.border400 = "border-violet-400";
       colors.customcolor = "#8b5cf6";
       colors.checkedcolor = "peer-checked:bg-violet-400";
+      colors.checkboxcolor = "accent-violet-500";
       break;
 
     case "purple":
@@ -239,6 +255,7 @@ export const useColorTheme = () => {
       colors.border400 = "border-purple-400";
       colors.customcolor = "#a855f7";
       colors.checkedcolor = "peer-checked:bg-purple-400";
+      colors.checkboxcolor = "accent-purple-500";
       break;
 
     case "rose":
@@ -253,6 +270,7 @@ export const useColorTheme = () => {
       colors.border400 = "border-rose-400";
       colors.customcolor = "#f43f5e";
       colors.checkedcolor = "peer-checked:bg-rose-400";
+      colors.checkboxcolor = "accent-rose-500";
       break;
 
     case "pink":
@@ -267,6 +285,7 @@ export const useColorTheme = () => {
       colors.border400 = "border-pink-400";
       colors.customcolor = "#ec4899";
       colors.checkedcolor = "peer-checked:bg-pink-400";
+      colors.checkboxcolor = "accent-pink-500";
       break;
 
     default:

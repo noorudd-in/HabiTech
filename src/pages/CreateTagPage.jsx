@@ -20,7 +20,10 @@ const CreateTagPage = () => {
         setToggleUpdate={setToggleUpdate}
       />
       <HorizontalLine />
-      <AvailableTags tagData={tagData} />
+      <div className="text-center text-2xl mt-2 break-words text-wrap whitespace-normal">
+        <h1>Available Tags</h1>
+        <AvailableTags tagData={tagData} />
+      </div>
     </div>
   );
 };
