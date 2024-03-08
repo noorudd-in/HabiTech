@@ -42,7 +42,7 @@ const SingleGoal = ({
 
   const attrs = useLongPress(
     () => {
-      navigate(`/edit/goal?id=${id}`);
+      navigate(`/edit/goal/${id}`);
     },
     { threshold: 500 }
   );

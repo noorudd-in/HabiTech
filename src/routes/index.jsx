@@ -8,6 +8,8 @@ import CreateTagPage from "../pages/CreateTagPage";
 import CreateHabitPage from "../pages/CreateHabitPage";
 import CreateGoalPage from "../pages/CreateGoalPage";
 import AnimatePage from "../pages/AnimatePage";
+import EditHabitPage from "../pages/EditHabitPage";
+import EditGoalPage from "../pages/EditGoalPage";
 
 const HABITECH_ROUTES = createBrowserRouter([
   {
@@ -85,6 +87,30 @@ const HABITECH_ROUTES = createBrowserRouter([
       <>
         <CreateGoalPage />
         <GlobalFooter />
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/edit/habit/:id",
+    element: (
+      <>
+        <AnimatePage>
+          <EditHabitPage />
+          <GlobalFooter />
+        </AnimatePage>
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/edit/goal/:id",
+    element: (
+      <>
+        <AnimatePage>
+          <EditGoalPage />
+          <GlobalFooter />
+        </AnimatePage>
       </>
     ),
     errorElement: <ErrorPage />,

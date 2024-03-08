@@ -44,7 +44,7 @@ Below are features that I am planning to add in the app.
 - [ ] Ability to create/edit/delete/view plans.
 - [x] Ability to create/edit/delete/view tags.
 - [x] Gamify app (health, coins, etc).
-- [ ] Sort goals by Timeline/Tags/Types/Priority.
+- [x] Sort goals by Timeline/Tags/Types/Priority.
 - [ ] Show active VS inactive goals.
 - [x] Show last activity.
 - [ ] Sort goals based on duedate by default.

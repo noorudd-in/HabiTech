@@ -3,7 +3,7 @@ import { HabitechContext } from "../contexts/HabitechContext";
 import toast, { Toaster } from "react-hot-toast";
 import { toastError, toastSuccess } from "../components/electrons/Toast";
 import { API_URL } from "../constants/index";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -15,7 +15,7 @@ import AvailableTags from "../components/electrons/AvailableTags";
 import { useColorTheme } from "../hooks/useColorTheme";
 import AvailableSubtask from "../components/electrons/AvailableSubtask";
 
-const CreateGoalPage = () => {
+const EditGoalPage = () => {
   const { bgcolor500, lighttext } = useColorTheme();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -27,9 +27,9 @@ const CreateGoalPage = () => {
   const [task, setTask] = useState([]);
   const [dropdown, setDropdown] = useState(false);
   const [toggleModal, setToggleModal] = useState("hidden");
-
   const { state, dispatch } = useContext(HabitechContext);
   const navigate = useNavigate();
+  let { id } = useParams();
 
   const setGoalType = (type) => {
     setType(type);
@@ -60,7 +60,7 @@ const CreateGoalPage = () => {
     setDropdown(type);
   };
 
-  const handleCreateGoal = () => {
+  const updateGoals = () => {
     if (name == "") {
       toast("Goal name is empty!", toastError());
       return;
@@ -81,22 +81,24 @@ const CreateGoalPage = () => {
       return;
     }
 
-    let newGoal = {
-      id: Date.now(),
-      name: name,
-      duedate: Date.parse(duedate),
-      timeline: type,
-      status: 0,
-      priority: priority,
-      tags: tags,
-      description: description,
-      subtasks: task,
-    };
+    let newGoals = [...state.goals];
+
+    newGoals.map((goal) => {
+      if (goal.id == id) {
+        goal.name = name;
+        goal.duedate = Date.parse(duedate);
+        goal.timeline = type;
+        goal.priority = priority;
+        goal.tags = tags;
+        goal.description = description;
+        goal.subtasks = task;
+      }
+    });
 
     axios
       .put(API_URL, {
         ...state,
-        goals: [...state.goals, newGoal],
+        goals: newGoals,
         lastEdited: Date.now(),
       })
       .then((res) => {
@@ -107,14 +109,68 @@ const CreateGoalPage = () => {
             lastEdited: res?.data?.lastEdited,
           },
         });
-        navigate("/?toastType=toastSuccess&toastMessage=New goal created!");
+        navigate("/?toastType=toastInfo&toastMessage=Goal Updated!");
       });
   };
+
+  const deleteGoal = () => {
+    if (window.confirm(`Are you sure you want to delete the goal: ${name}?`)) {
+      let newGoals = state.goals.filter((goal) => {
+        return goal.id != id;
+      });
+
+      axios
+        .put(API_URL, {
+          ...state,
+          goals: newGoals,
+          lastEdited: Date.now(),
+        })
+        .then((res) => {
+          dispatch({
+            type: "FETCH_DATA",
+            payload: {
+              goals: res?.data?.goals,
+              lastEdited: res?.data?.lastEdited,
+            },
+          });
+          navigate("/?toastType=toastError&toastMessage=Goal Deleted!");
+        });
+    }
+  };
+
+  useEffect(() => {
+    if (state.user.name == undefined) {
+      navigate(
+        "/?toastType=toastError&toastMessage=Something went wrong. Please try again!"
+      );
+    }
+    for (const goal of state.goals) {
+      if (goal.id == id) {
+        setName(goal.name);
+        setDescription(goal.description);
+        setType(goal.timeline);
+        setPriority(goal.priority);
+        setDuedate(new Date(goal.duedate));
+        setTags(goal.tags);
+        setTask(goal.subtasks);
+        break;
+      }
+    }
+  }, []);
 
   return (
     <>
       <Toaster />
       <div className="ml-5 mt-10">
+        <div id="deleteGoal" className="text-center mt-5">
+          <button
+            onClick={deleteGoal}
+            className="mb-5 inline-flex items-center px-4 py-2 text-sm font-medium text-center text-black bg-red-500 rounded-lg"
+          >
+            Delete
+          </button>
+        </div>
+
         <label className="text-xl flex" htmlFor="goalname">
           Goal Name
           <p className="text-red-500 ml-1">*</p>
@@ -150,6 +206,7 @@ const CreateGoalPage = () => {
             </label>
             <select
               id="type"
+              value={type}
               className=" my-1 p-1 w-3/4 border border-gray-300 text-gray-900 text-md rounded-md block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
               onChange={(e) => setGoalType(e.target.value)}
             >
@@ -168,6 +225,7 @@ const CreateGoalPage = () => {
             </label>
             <select
               id="priority"
+              value={priority}
               className=" my-1 p-1 w-3/4 border border-gray-300 text-gray-900 text-md rounded-md block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
               onChange={(e) => setPriority(e.target.value)}
             >
@@ -248,9 +306,9 @@ const CreateGoalPage = () => {
           <button
             className={`inline-flex items-center px-4 py-2 text-sm font-medium text-center text-black ${bgcolor500} rounded-lg`}
             type="button"
-            onClick={handleCreateGoal}
+            onClick={updateGoals}
           >
-            Create Goal
+            Update Goal
           </button>
         </div>
 
@@ -296,4 +354,4 @@ const CreateGoalPage = () => {
   );
 };
 
-export default CreateGoalPage;
+export default EditGoalPage;

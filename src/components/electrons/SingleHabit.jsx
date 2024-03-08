@@ -34,7 +34,7 @@ const SingleHabit = ({
   // Perform below action when habit is long pressed
   const attrs = useLongPress(
     () => {
-      navigate(`/edit/habit?id=${id}`);
+      navigate(`/edit/habit/${id}`);
     },
     { threshold: 500 }
   );
