@@ -9,7 +9,7 @@ import DownIcon from "../icons/DownIcon";
 
 const GoalsByTimeline = ({ showTask }) => {
   const [dropdown, setDropdown] = useState("weekly");
-  const { state, dispatch, appLoading } = useContext(HabitechContext);
+  const { state, appLoading } = useContext(HabitechContext);
   const { bgcolor400 } = useColorTheme();
   const [goalsData, setGoalsData] = useState(null);
 
@@ -42,7 +42,7 @@ const GoalsByTimeline = ({ showTask }) => {
       const result = sortByTimeline();
       setGoalsData(result);
     }
-  }, [dispatch]);
+  }, []);
 
   if (appLoading) return <Shimmer />;
   return (
@@ -148,21 +148,21 @@ const GoalsByTimeline = ({ showTask }) => {
           <motion.div
             whileTap={{ scale: 0.97 }}
             className={`flex text-lg ${bgcolor400} justify-between px-2 rounded-sm`}
-            onClick={() => toggleTap("quaterly")}
+            onClick={() => toggleTap("quarterly")}
           >
-            <h1 className=" text-black mr-3">Quaterly Goals</h1>
-            {dropdown == "quaterly" ? <DownIcon /> : <UpIcon />}
+            <h1 className=" text-black mr-3">Quarterly Goals</h1>
+            {dropdown == "quarterly" ? <DownIcon /> : <UpIcon />}
           </motion.div>
-          {dropdown == "quaterly" && (
+          {dropdown == "quarterly" && (
             <>
               <p className="text-xs mb-5 mt-1 italic dark:text-gray-300 text-center">
                 Mid-term goals with 3 to 6 months of period.
               </p>
-              {goalsData?.quaterly == undefined && (
+              {goalsData?.quarterly == undefined && (
                 <h1 className="text-center">No Goals Found</h1>
               )}
 
-              {goalsData?.quaterly?.map(
+              {goalsData?.quarterly?.map(
                 ({
                   id,
                   name,

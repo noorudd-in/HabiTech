@@ -6,6 +6,7 @@ import Settings from "../pages/Settings";
 import GlobalFooter from "../components/atom/GlobalFooter";
 import CreateTagPage from "../pages/CreateTagPage";
 import CreateHabitPage from "../pages/CreateHabitPage";
+import CreateGoalPage from "../pages/CreateGoalPage";
 import AnimatePage from "../pages/AnimatePage";
 
 const HABITECH_ROUTES = createBrowserRouter([
@@ -73,6 +74,16 @@ const HABITECH_ROUTES = createBrowserRouter([
     element: (
       <>
         <CreateHabitPage />
+        <GlobalFooter />
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/create/goal",
+    element: (
+      <>
+        <CreateGoalPage />
         <GlobalFooter />
       </>
     ),

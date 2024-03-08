@@ -47,6 +47,7 @@ const CreateHabitPage = () => {
       .put(API_URL, {
         ...state,
         habits: [...state.habits, newHabit],
+        lastEdited: Date.now(),
       })
       .then((res) => {
         console.log(res.data.habits);
@@ -54,6 +55,7 @@ const CreateHabitPage = () => {
           type: "FETCH_DATA",
           payload: {
             habits: res?.data?.habits,
+            lastEdited: res?.data?.lastEdited,
           },
         });
         setHabitName("");

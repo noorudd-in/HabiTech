@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useLongPress } from "@uidotdev/usehooks";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import UntickIcon from "../icons/UntickIcon";
 import TickIcon from "../icons/TickIcon";
 import dayjs from "dayjs";
@@ -35,9 +38,18 @@ const SingleGoal = ({
     return date;
   };
   const getDate = getDueDate();
+  const navigate = useNavigate();
+
+  const attrs = useLongPress(
+    () => {
+      navigate(`/edit/goal?id=${id}`);
+    },
+    { threshold: 500 }
+  );
+
   return (
     <>
-      <div className="flex">
+      <motion.div {...attrs} className="flex" whileTap={{ scale: 0.98 }}>
         <UntickIcon />
         <div className="ml-3">
           <div className="text-lg" onClick={() => setToggleGoal(!toggleGoal)}>
@@ -68,7 +80,7 @@ const SingleGoal = ({
             </>
           )}
         </div>
-      </div>
+      </motion.div>
       <hr className="my-3" />
     </>
   );

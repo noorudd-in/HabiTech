@@ -1,16 +1,20 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import Shimmer from "../../pages/Shimmer";
 import GoalsByTimeline from "../electrons/GoalsByTimeline";
+import GoalsByPriority from "../electrons/GoalsByPriority";
+import GoalsByTags from "../electrons/GoalsByTags";
 
-const RenderGoals = ({ showTask }) => {
-  const { state, dispatch, appLoading } = useContext(HabitechContext);
+const RenderGoals = ({ showTask, groupBy }) => {
+  const { appLoading } = useContext(HabitechContext);
 
   if (appLoading) return <Shimmer />;
 
   return (
     <>
-      <GoalsByTimeline showTask={showTask} />
+      {groupBy == "timeline" && <GoalsByTimeline showTask={showTask} />}
+      {groupBy == "priority" && <GoalsByPriority showTask={showTask} />}
+      {groupBy == "tags" && <GoalsByTags showTask={showTask} />}
     </>
   );
 };

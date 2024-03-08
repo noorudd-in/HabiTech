@@ -1,8 +1,8 @@
 import { useState } from "react";
 import ToggleButton from "../electrons/ToggleButton";
-import GoalsCategory from "../electrons/GoalsCategory";
+import GroupByGoals from "../electrons/GroupByGoals";
 
-const GoalsHeader = ({ showTask, setShowTask }) => {
+const GoalsHeader = ({ showTask, setShowTask, groupBy, setGroupBy }) => {
   return (
     <>
       <div className="flex justify-between mt-5 mx-5">
@@ -11,7 +11,7 @@ const GoalsHeader = ({ showTask, setShowTask }) => {
           setShowTask={setShowTask}
           name="Show Subtask"
         />
-        <GoalsCategory />
+        <GroupByGoals groupBy={groupBy} setGroupBy={setGroupBy} />
       </div>
     </>
   );

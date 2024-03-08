@@ -8,6 +8,7 @@ import RenderGoals from "./RenderGoals";
 const MainContent = () => {
   const [currentTab, setCurrentTab] = useState("habits");
   const [showTask, setShowTask] = useState(false);
+  const [groupBy, setGroupBy] = useState("timeline");
 
   return (
     <div className="mb-28">
@@ -18,8 +19,13 @@ const MainContent = () => {
         <RenderHabits />
       ) : (
         <>
-          <GoalsHeader showTask={showTask} setShowTask={setShowTask} />
-          <RenderGoals showTask={showTask} />
+          <GoalsHeader
+            showTask={showTask}
+            setShowTask={setShowTask}
+            groupBy={groupBy}
+            setGroupBy={setGroupBy}
+          />
+          <RenderGoals showTask={showTask} groupBy={groupBy} />
         </>
       )}
       <Activity />

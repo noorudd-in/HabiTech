@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import { useColorTheme } from "../../hooks/useColorTheme";
 
-const GoalsCategory = () => {
+const GroupByGoals = ({ groupBy, setGroupBy }) => {
   const { bgcolor50 } = useColorTheme();
+
   return (
     <div>
       <label>Group By: </label>
@@ -9,8 +11,9 @@ const GoalsCategory = () => {
         name="goalsCategory"
         id="goalsCategory"
         className={`text-black rounded-md px-1 ${bgcolor50} border border-neutral-500`}
+        onChange={(e) => setGroupBy(e.target.value)}
       >
-        <option value="timelime">Timeline</option>
+        <option value="timeline">Timeline</option>
         <option value="priority">Priority</option>
         <option value="tags">Tags</option>
       </select>
@@ -18,4 +21,4 @@ const GoalsCategory = () => {
   );
 };
 
-export default GoalsCategory;
+export default GroupByGoals;
