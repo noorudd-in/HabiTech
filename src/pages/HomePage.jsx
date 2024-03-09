@@ -3,12 +3,12 @@ import { HabitechContext } from "../contexts/HabitechContext";
 import { useHabitechData } from "../hooks/useHabitechData";
 import { useSearchParams } from "react-router-dom";
 import Shimmer from "./Shimmer";
-import GlobalHeader from "../components/atom/GlobalHeader";
-import HorizontalLine from "../components/atom/HorizontalLine";
-import MainContent from "../components/atom/MainContent";
-import GlobalFooter from "../components/atom/GlobalFooter";
+import GlobalHeader from "../components/layout/GlobalHeader";
+import HorizontalLine from "../components/common/HorizontalLine";
+import MainContent from "../components/layout/MainContent";
+import GlobalFooter from "../components/layout/GlobalFooter";
 import toast, { Toaster } from "react-hot-toast";
-import { toastSuccess, toastError } from "../components/electrons/Toast";
+import { toastSuccess, toastError } from "../components/common/Toast";
 import { useColorTheme } from "../hooks/useColorTheme";
 
 const HomePage = () => {
@@ -36,7 +36,6 @@ const HomePage = () => {
       let type = searchParams.get("toastType");
       let message = searchParams.get("toastMessage");
       if (type != null && message != null && type != "") {
-        console.log(customcolor);
         toast(
           message,
           type == "toastError"

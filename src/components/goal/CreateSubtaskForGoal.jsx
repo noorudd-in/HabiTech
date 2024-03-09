@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { toastError } from "./Toast";
+import { toastError } from "../common/Toast";
 import { useColorTheme } from "../../hooks/useColorTheme";
 
 const CreateSubtaskForGoal = ({ task, setTask }) => {

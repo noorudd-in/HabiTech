@@ -124,6 +124,7 @@ const GoalsByTimeline = ({ showTask }) => {
                   tags,
                   description,
                   subtasks,
+                  status,
                 }) => {
                   return (
                     <SingleGoal
@@ -136,6 +137,7 @@ const GoalsByTimeline = ({ showTask }) => {
                       description={description}
                       subtasks={subtasks}
                       showTask={showTask}
+                      status={status}
                     />
                   );
                 }

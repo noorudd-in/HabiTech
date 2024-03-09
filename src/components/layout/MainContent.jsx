@@ -1,9 +1,9 @@
 import { useState } from "react";
-import RenderHabits from "./RenderHabits";
-import GoalsHeader from "./GoalsHeader";
-import Activity from "../electrons/ShowLastActivity";
-import AnimatedTabs from "../electrons/AnimatedTabs";
-import RenderGoals from "./RenderGoals";
+import RenderHabits from "../habit/RenderHabits";
+import GoalsHeader from "../goal/GoalsHeader";
+import Activity from "./ShowLastActivity";
+import AnimatedTabs from "../common/AnimatedTabs";
+import RenderGoals from "../goal/RenderGoals";
 
 const MainContent = () => {
   const [currentTab, setCurrentTab] = useState("habits");

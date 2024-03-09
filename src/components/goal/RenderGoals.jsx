@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import Shimmer from "../../pages/Shimmer";
-import GoalsByTimeline from "../electrons/GoalsByTimeline";
-import GoalsByPriority from "../electrons/GoalsByPriority";
-import GoalsByTags from "../electrons/GoalsByTags";
+import GoalsByTimeline from "./GoalsByTimeline";
+import GoalsByPriority from "./GoalsByPriority";
+import GoalsByTags from "./GoalsByTags";
 
 const RenderGoals = ({ showTask, groupBy }) => {
   const { appLoading } = useContext(HabitechContext);

@@ -5,15 +5,15 @@ import { useTimeDifference } from "../../hooks/useTimeDifference";
 import { API_URL } from "../../constants";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import toast, { Toaster } from "react-hot-toast";
-import { toastSuccess, toastError, toastInfo } from "./Toast";
+import { toastSuccess, toastError, toastInfo } from "../common/Toast";
 import { motion } from "framer-motion";
+import { useColorTheme } from "../../hooks/useColorTheme";
 import axios from "axios";
 import MinusIcon from "../icons/MinusIcon";
 import PlusIcon from "../icons/PlusIcon";
-import Badge from "./Badge";
+import Badge from "../common/Badge";
 import HabitTimeBar from "./HabitTimeBar";
 import HabitStatsModal from "./HabitStatsModal";
-import { useColorTheme } from "../../hooks/useColorTheme";
 
 const SingleHabit = ({
   id,

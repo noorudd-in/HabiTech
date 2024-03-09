@@ -1,5 +1,4 @@
 import { useColorTheme } from "../../hooks/useColorTheme";
-import { motion } from "framer-motion";
 
 const ToggleButton = ({ showTask, setShowTask, name }) => {
   const { checkedcolor } = useColorTheme();

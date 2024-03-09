@@ -3,7 +3,7 @@ import HomePage from "../pages/HomePage";
 import ErrorPage from "../pages/ErrorPage";
 import CreatePage from "../pages/CreatePage";
 import Settings from "../pages/Settings";
-import GlobalFooter from "../components/atom/GlobalFooter";
+import GlobalFooter from "../components/layout/GlobalFooter";
 import CreateTagPage from "../pages/CreateTagPage";
 import CreateHabitPage from "../pages/CreateHabitPage";
 import CreateGoalPage from "../pages/CreateGoalPage";

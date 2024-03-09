@@ -3,7 +3,7 @@ import { useColorTheme } from "../../hooks/useColorTheme";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import { API_URL } from "../../constants/index";
 import { toast } from "react-hot-toast";
-import { toastSuccess } from "./Toast";
+import { toastSuccess } from "../common/Toast";
 import axios from "axios";
 
 const GoalsSubTask = ({ task, goalId }) => {

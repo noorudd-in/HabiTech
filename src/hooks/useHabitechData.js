@@ -11,9 +11,6 @@ export const useHabitechData = () => {
       const { data } = await axios.get(API_URL);
       setHabitechData(data);
     } catch (error) {
-      console.log(error);
-      console.log("Data when error occured: ", data);
-      console.log("Loading Status when error occured: ".loading);
     } finally {
       setLoading(false);
     }
