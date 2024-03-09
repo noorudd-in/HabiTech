@@ -1,4 +1,4 @@
-import ChangeTheme from "../components/atom/ChangeTheme";
+import ChangeTheme from "../components/layout/ChangeTheme";
 const Settings = () => {
   return (
     <div>

@@ -1,4 +1,4 @@
-import SingleTheme from "../electrons/SingleTheme";
+import SingleTheme from "../layout/SingleTheme";
 
 const ChangeTheme = () => {
   return (

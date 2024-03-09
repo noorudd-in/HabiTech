@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import { useTimeDifference } from "../../hooks/useTimeDifference";
 import { API_URL } from "../../constants";
-import SingleHabit from "../electrons/SingleHabit";
+import SingleHabit from "./SingleHabit";
 import axios from "axios";
 import Shimmer from "../../pages/Shimmer";
 

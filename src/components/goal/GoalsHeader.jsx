@@ -1,6 +1,5 @@
-import { useState } from "react";
-import ToggleButton from "../electrons/ToggleButton";
-import GroupByGoals from "../electrons/GroupByGoals";
+import ToggleButton from "../common/ToggleButton";
+import GroupByGoals from "../layout/GroupByGoals";
 
 const GoalsHeader = ({ showTask, setShowTask, groupBy, setGroupBy }) => {
   return (

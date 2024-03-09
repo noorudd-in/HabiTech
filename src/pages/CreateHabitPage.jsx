@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { HabitechContext } from "../contexts/HabitechContext";
 import toast, { Toaster } from "react-hot-toast";
-import { toastError } from "../components/electrons/Toast";
+import { toastError } from "../components/common/Toast";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../constants";
 import { useColorTheme } from "../hooks/useColorTheme";
@@ -50,7 +50,6 @@ const CreateHabitPage = () => {
         lastEdited: Date.now(),
       })
       .then((res) => {
-        console.log(res.data.habits);
         dispatch({
           type: "FETCH_DATA",
           payload: {

@@ -1,6 +1,6 @@
-import AvailableTags from "../components/electrons/AvailableTags";
-import HorizontalLine from "../components/atom/HorizontalLine";
-import CreateTagForm from "../components/electrons/CreateTagForm";
+import AvailableTags from "../components/common/AvailableTags";
+import HorizontalLine from "../components/common/HorizontalLine";
+import CreateTagForm from "../components/layout/CreateTagForm";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL } from "../constants";

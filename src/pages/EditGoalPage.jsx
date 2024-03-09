@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { HabitechContext } from "../contexts/HabitechContext";
 import toast, { Toaster } from "react-hot-toast";
-import { toastError, toastSuccess } from "../components/electrons/Toast";
+import { toastError } from "../components/common/Toast";
 import { API_URL } from "../constants/index";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -9,11 +9,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePickerCalenderIcon from "../components/icons/DatePickerCalenderIcon";
 import dayjs from "dayjs";
-import SelectTagsForGoal from "../components/electrons/SelectTagsForGoal";
-import CreateSubtaskForGoal from "../components/electrons/CreateSubtaskForGoal";
-import AvailableTags from "../components/electrons/AvailableTags";
+import SelectTagsForGoal from "../components/goal/SelectTagsForGoal";
+import CreateSubtaskForGoal from "../components/goal/CreateSubtaskForGoal";
+import AvailableTags from "../components/common/AvailableTags";
 import { useColorTheme } from "../hooks/useColorTheme";
-import AvailableSubtask from "../components/electrons/AvailableSubtask";
+import AvailableSubtask from "../components/common/AvailableSubtask";
 
 const EditGoalPage = () => {
   const { bgcolor500, lighttext } = useColorTheme();

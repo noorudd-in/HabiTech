@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import { toast, Toaster } from "react-hot-toast";
-import { toastError, toastSuccess } from "./Toast";
+import { toastError, toastSuccess } from "../common/Toast";
 import { API_URL } from "../../constants";
 import { useColorTheme } from "../../hooks/useColorTheme";
 import axios from "axios";
@@ -25,12 +25,14 @@ const CreateTagForm = ({ toggleUpdate, setToggleUpdate }) => {
       .put(API_URL, {
         ...state,
         availableTags: [...state.availableTags, newTag.toLowerCase()],
+        lastEdited: Date.now(),
       })
       .then((res) => {
         dispatch({
           type: "FETCH_DATA",
           payload: {
             availableTags: res?.data?.availableTags,
+            lastEdited: res?.data?.lastEdited,
           },
         });
         toast("Tag created successfully!", toastSuccess(customcolor));

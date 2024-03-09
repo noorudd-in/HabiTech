@@ -1,7 +1,6 @@
-import { useEffect } from "react";
 import { useColorTheme } from "../../hooks/useColorTheme";
 
-const GroupByGoals = ({ groupBy, setGroupBy }) => {
+const GroupByGoals = ({ setGroupBy }) => {
   const { bgcolor50 } = useColorTheme();
 
   return (

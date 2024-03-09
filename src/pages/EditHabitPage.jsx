@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { HabitechContext } from "../contexts/HabitechContext";
 import { useColorTheme } from "../hooks/useColorTheme";
 import { useNavigate, useParams } from "react-router-dom";
-import { toastError } from "../components/electrons/Toast";
+import { toastError } from "../components/common/Toast";
 import { API_URL } from "../constants";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";

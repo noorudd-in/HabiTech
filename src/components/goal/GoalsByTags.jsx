@@ -13,7 +13,6 @@ const GoalsByTags = ({ showTask }) => {
   const { state, appLoading } = useContext(HabitechContext);
 
   const toggleTap = (type) => {
-    console.log(goalsData[type]);
     if (dropdown == type) {
       setDropdown(false);
       return;
@@ -35,7 +34,6 @@ const GoalsByTags = ({ showTask }) => {
         }
       });
     });
-    console.log(newObj);
     setAllTags(Object.keys(newObj));
     return newObj;
   }, []);

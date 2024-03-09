@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
-import Avatar from "../electrons/Avatar";
-import UserDetails from "../electrons/UserDetails";
-import ProgressBar from "../electrons/ProgressBar";
+import Avatar from "./Avatar";
+import UserDetails from "./UserDetails";
+import ProgressBar from "./ProgressBar";
 import { useColorTheme } from "../../hooks/useColorTheme";
 
 const GlobalHeader = () => {
