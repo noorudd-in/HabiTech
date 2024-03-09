@@ -1,6 +1,6 @@
 # HabiTech
 
-A goal and habit tracker with planner included. Unlock your productivity with the power of technology!
+A goal and habit tracker with planner included. Unlock your productivity with the power of technology.
 
 ## 🛠️ Technologies
 
