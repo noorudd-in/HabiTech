@@ -82,6 +82,8 @@ const SingleHabit = ({
       let currentHealth = state.user.health;
       if (currentHealth + type <= 100 && currentHealth + type >= 0) {
         currentHealth = currentHealth + type;
+      } else {
+        currentHealth = 100;
       }
 
       // Update coins based on difficulty,

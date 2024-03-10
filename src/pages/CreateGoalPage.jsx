@@ -91,6 +91,7 @@ const CreateGoalPage = () => {
       tags: tags,
       description: description,
       subtasks: task,
+      lastUpdated: 0,
     };
 
     axios
