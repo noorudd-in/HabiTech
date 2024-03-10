@@ -7,11 +7,12 @@ import Shimmer from "../../pages/Shimmer";
 import UpIcon from "../icons/UpIcon";
 import DownIcon from "../icons/DownIcon";
 
-const GoalsByTimeline = ({ showTask }) => {
+const GoalsByTimeline = ({ showTask, showActive }) => {
   const [dropdown, setDropdown] = useState("weekly");
   const { state, appLoading } = useContext(HabitechContext);
   const { bgcolor400 } = useColorTheme();
   const [goalsData, setGoalsData] = useState(null);
+  const index = showActive ? 0 : 1;
 
   const toggleTap = (type) => {
     if (dropdown == type) {
@@ -25,16 +26,27 @@ const GoalsByTimeline = ({ showTask }) => {
     const sortedByDueDate = state.goals.sort(function compare(a, b) {
       return a.duedate - b.duedate;
     });
-    const newObj = {};
+    const activeGoals = {};
+    const inactiveGoals = {};
     sortedByDueDate.map((goal) => {
-      if (newObj[goal.timeline]) {
-        newObj[goal.timeline].push(goal);
-      } else {
-        newObj[goal.timeline] = [goal];
+      if (goal.status == 0) {
+        if (activeGoals[goal.timeline]) {
+          activeGoals[goal.timeline].push(goal);
+        } else {
+          activeGoals[goal.timeline] = [goal];
+        }
+      }
+
+      if (goal.status == 1) {
+        if (inactiveGoals[goal.timeline]) {
+          inactiveGoals[goal.timeline].push(goal);
+        } else {
+          inactiveGoals[goal.timeline] = [goal];
+        }
       }
     });
 
-    return newObj;
+    return [activeGoals, inactiveGoals];
   }, []);
 
   useEffect(() => {
@@ -47,7 +59,7 @@ const GoalsByTimeline = ({ showTask }) => {
   if (appLoading) return <Shimmer />;
   return (
     <>
-      <div className="mt-10">
+      <div>
         <div className="w-4/5 my-3 mx-auto">
           <motion.div
             whileTap={{ scale: 0.97 }}
@@ -63,11 +75,11 @@ const GoalsByTimeline = ({ showTask }) => {
               <p className="text-xs mb-5 mt-1 italic dark:text-gray-300 text-center">
                 Very short-term goals i.e. Daily or Weekly!
               </p>
-              {goalsData?.weekly == undefined && (
+              {goalsData?.[index]?.weekly == undefined && (
                 <h1 className="text-center">No Goals Found</h1>
               )}
 
-              {goalsData?.weekly?.map(
+              {goalsData?.[index]?.weekly?.map(
                 ({
                   id,
                   name,
@@ -119,11 +131,11 @@ const GoalsByTimeline = ({ showTask }) => {
               <p className="text-xs mb-5 mt-1 italic dark:text-gray-300 text-center">
                 Short-term goals with a duration of a month or two!
               </p>
-              {goalsData?.monthly == undefined && (
+              {goalsData?.[index]?.monthly == undefined && (
                 <h1 className="text-center">No Goals Found</h1>
               )}
 
-              {goalsData?.monthly?.map(
+              {goalsData?.[index]?.monthly?.map(
                 ({
                   id,
                   name,
@@ -174,11 +186,11 @@ const GoalsByTimeline = ({ showTask }) => {
               <p className="text-xs mb-5 mt-1 italic dark:text-gray-300 text-center">
                 Mid-term goals with 3 to 6 months of period.
               </p>
-              {goalsData?.quarterly == undefined && (
+              {goalsData?.[index]?.quarterly == undefined && (
                 <h1 className="text-center">No Goals Found</h1>
               )}
 
-              {goalsData?.quarterly?.map(
+              {goalsData?.[index]?.quarterly?.map(
                 ({
                   id,
                   name,
@@ -229,11 +241,11 @@ const GoalsByTimeline = ({ showTask }) => {
               <p className="text-xs mb-5 mt-1 italic dark:text-gray-300 text-center">
                 Long-term goals with annual period.
               </p>
-              {goalsData?.yearly == undefined && (
+              {goalsData?.[index]?.yearly == undefined && (
                 <h1 className="text-center">No Goals Found</h1>
               )}
 
-              {goalsData?.yearly?.map(
+              {goalsData?.[index]?.yearly?.map(
                 ({
                   id,
                   name,

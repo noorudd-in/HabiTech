@@ -6,10 +6,11 @@ import DownIcon from "../icons/DownIcon";
 import Shimmer from "../../pages/Shimmer";
 import SingleGoal from "./SingleGoal";
 
-const GoalsByPriority = ({ showTask }) => {
+const GoalsByPriority = ({ showTask, showActive }) => {
   const [goalsData, setGoalsData] = useState(null);
   const [dropdown, setDropdown] = useState("high");
   const { state, appLoading } = useContext(HabitechContext);
+  const index = showActive ? 0 : 1;
 
   const toggleTap = (type) => {
     if (dropdown == type) {
@@ -23,16 +24,27 @@ const GoalsByPriority = ({ showTask }) => {
     const sortedByDueDate = state.goals.sort(function compare(a, b) {
       return a.duedate - b.duedate;
     });
-    const newObj = {};
+    const activeGoals = {};
+    const inactiveGoals = {};
 
     sortedByDueDate.map((goal) => {
-      if (newObj[goal.priority]) {
-        newObj[goal.priority].push(goal);
-      } else {
-        newObj[goal.priority] = [goal];
+      if (goal.status == 0) {
+        if (activeGoals[goal.priority]) {
+          activeGoals[goal.priority].push(goal);
+        } else {
+          activeGoals[goal.priority] = [goal];
+        }
+      }
+
+      if (goal.status == 1) {
+        if (inactiveGoals[goal.priority]) {
+          inactiveGoals[goal.priority].push(goal);
+        } else {
+          inactiveGoals[goal.priority] = [goal];
+        }
       }
     });
-    return newObj;
+    return [activeGoals, inactiveGoals];
   }, []);
 
   useEffect(() => {
@@ -45,7 +57,7 @@ const GoalsByPriority = ({ showTask }) => {
   if (appLoading) return <Shimmer />;
   return (
     <>
-      <div className="mt-10">
+      <div>
         <div className="w-4/5 my-5 mx-auto">
           <motion.div
             whileTap={{ scale: 0.97 }}
@@ -58,11 +70,11 @@ const GoalsByPriority = ({ showTask }) => {
 
           {dropdown == "high" && (
             <div className="mt-5">
-              {goalsData?.high == undefined && (
+              {goalsData?.[index]?.high == undefined && (
                 <h1 className="text-center">No Goals Found</h1>
               )}
 
-              {goalsData?.high?.map(
+              {goalsData?.[index]?.high?.map(
                 ({
                   id,
                   name,
@@ -111,11 +123,11 @@ const GoalsByPriority = ({ showTask }) => {
 
           {dropdown == "medium" && (
             <div className="mt-5">
-              {goalsData?.medium == undefined && (
+              {goalsData?.[index]?.medium == undefined && (
                 <h1 className="text-center">No Goals Found</h1>
               )}
 
-              {goalsData?.medium?.map(
+              {goalsData?.[index]?.medium?.map(
                 ({
                   id,
                   name,
@@ -164,11 +176,11 @@ const GoalsByPriority = ({ showTask }) => {
 
           {dropdown == "low" && (
             <div className="mt-5">
-              {goalsData?.low == undefined && (
+              {goalsData?.[index]?.low == undefined && (
                 <h1 className="text-center">No Goals Found</h1>
               )}
 
-              {goalsData?.low?.map(
+              {goalsData?.[index]?.low?.map(
                 ({
                   id,
                   name,
