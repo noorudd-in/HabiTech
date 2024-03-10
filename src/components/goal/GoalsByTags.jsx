@@ -6,11 +6,12 @@ import UpIcon from "../icons/UpIcon";
 import DownIcon from "../icons/DownIcon";
 import SingleGoal from "./SingleGoal";
 
-const GoalsByTags = ({ showTask }) => {
+const GoalsByTags = ({ showTask, showActive }) => {
   const [dropdown, setDropdown] = useState(null);
   const [goalsData, setGoalsData] = useState(null);
   const [allTags, setAllTags] = useState(null);
   const { state, appLoading } = useContext(HabitechContext);
+  const index = showActive ? 0 : 1;
 
   const toggleTap = (type) => {
     if (dropdown == type) {
@@ -24,18 +25,31 @@ const GoalsByTags = ({ showTask }) => {
     const sortedByDueDate = state.goals.sort(function compare(a, b) {
       return a.duedate - b.duedate;
     });
-    const newObj = {};
+
+    const activeGoals = {};
+    const inactiveGoals = {};
     sortedByDueDate.map((goal) => {
       goal.tags.map((tag) => {
-        if (newObj[tag]) {
-          newObj[tag].push(goal);
-        } else {
-          newObj[tag] = [goal];
+        if (goal.status == 0) {
+          if (activeGoals[tag]) {
+            activeGoals[tag].push(goal);
+          } else {
+            activeGoals[tag] = [goal];
+          }
+        }
+
+        if (goal.status == 1) {
+          if (inactiveGoals[tag]) {
+            inactiveGoals[tag].push(goal);
+          } else {
+            inactiveGoals[tag] = [goal];
+          }
         }
       });
     });
-    setAllTags(Object.keys(newObj));
-    return newObj;
+
+    setAllTags([Object.keys(activeGoals), Object.keys(inactiveGoals)]);
+    return [activeGoals, inactiveGoals];
   }, []);
 
   useEffect(() => {
@@ -48,7 +62,7 @@ const GoalsByTags = ({ showTask }) => {
   if (appLoading) return <Shimmer />;
   return (
     <div>
-      {allTags?.map((tag) => {
+      {allTags?.[index]?.map((tag) => {
         return (
           <div className="w-4/5 my-3 mx-auto" key={tag}>
             <motion.div
@@ -64,7 +78,7 @@ const GoalsByTags = ({ showTask }) => {
 
             {dropdown == tag && (
               <>
-                {goalsData?.[tag]?.map(
+                {goalsData?.[index]?.[tag]?.map(
                   ({
                     id,
                     name,

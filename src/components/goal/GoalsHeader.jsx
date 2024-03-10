@@ -1,5 +1,6 @@
 import ToggleButton from "../common/ToggleButton";
 import GroupByGoals from "../layout/GroupByGoals";
+import TabSwitchForGoals from "../layout/TabSwitchForGoals";
 
 const GoalsHeader = ({ showTask, setShowTask, groupBy, setGroupBy }) => {
   return (
