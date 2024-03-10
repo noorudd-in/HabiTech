@@ -91,6 +91,7 @@ const GoalsByTags = ({ showTask }) => {
                           status,
                           timeline,
                           lastUpdated,
+                          showTask,
                         }}
                       />
                     );
