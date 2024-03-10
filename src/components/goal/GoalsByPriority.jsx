@@ -71,18 +71,25 @@ const GoalsByPriority = ({ showTask }) => {
                   tags,
                   description,
                   subtasks,
+                  status,
+                  timeline,
+                  lastUpdated,
                 }) => {
                   return (
                     <SingleGoal
                       key={id}
-                      id={id}
-                      name={name}
-                      duedate={duedate}
-                      priority={priority}
-                      tags={tags}
-                      description={description}
-                      subtasks={subtasks}
-                      showTask={showTask}
+                      {...{
+                        id,
+                        name,
+                        duedate,
+                        priority,
+                        tags,
+                        description,
+                        subtasks,
+                        status,
+                        timeline,
+                        lastUpdated,
+                      }}
                     />
                   );
                 }
@@ -116,18 +123,25 @@ const GoalsByPriority = ({ showTask }) => {
                   tags,
                   description,
                   subtasks,
+                  status,
+                  timeline,
+                  lastUpdated,
                 }) => {
                   return (
                     <SingleGoal
                       key={id}
-                      id={id}
-                      name={name}
-                      duedate={duedate}
-                      priority={priority}
-                      tags={tags}
-                      description={description}
-                      subtasks={subtasks}
-                      showTask={showTask}
+                      {...{
+                        id,
+                        name,
+                        duedate,
+                        priority,
+                        tags,
+                        description,
+                        subtasks,
+                        status,
+                        timeline,
+                        lastUpdated,
+                      }}
                     />
                   );
                 }
@@ -161,18 +175,25 @@ const GoalsByPriority = ({ showTask }) => {
                   tags,
                   description,
                   subtasks,
+                  status,
+                  timeline,
+                  lastUpdated,
                 }) => {
                   return (
                     <SingleGoal
                       key={id}
-                      id={id}
-                      name={name}
-                      duedate={duedate}
-                      priority={priority}
-                      tags={tags}
-                      description={description}
-                      subtasks={subtasks}
-                      showTask={showTask}
+                      {...{
+                        id,
+                        name,
+                        duedate,
+                        priority,
+                        tags,
+                        description,
+                        subtasks,
+                        status,
+                        timeline,
+                        lastUpdated,
+                      }}
                     />
                   );
                 }
