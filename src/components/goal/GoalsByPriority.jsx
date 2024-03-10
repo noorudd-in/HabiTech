@@ -89,6 +89,7 @@ const GoalsByPriority = ({ showTask }) => {
                         status,
                         timeline,
                         lastUpdated,
+                        showTask,
                       }}
                     />
                   );
@@ -141,6 +142,7 @@ const GoalsByPriority = ({ showTask }) => {
                         status,
                         timeline,
                         lastUpdated,
+                        showTask,
                       }}
                     />
                   );
@@ -193,6 +195,7 @@ const GoalsByPriority = ({ showTask }) => {
                         status,
                         timeline,
                         lastUpdated,
+                        showTask,
                       }}
                     />
                   );

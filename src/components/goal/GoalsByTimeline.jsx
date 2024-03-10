@@ -94,6 +94,7 @@ const GoalsByTimeline = ({ showTask }) => {
                         status,
                         timeline,
                         lastUpdated,
+                        showTask,
                       }}
                     />
                   );
@@ -149,6 +150,7 @@ const GoalsByTimeline = ({ showTask }) => {
                         status,
                         timeline,
                         lastUpdated,
+                        showTask,
                       }}
                     />
                   );
@@ -203,6 +205,7 @@ const GoalsByTimeline = ({ showTask }) => {
                         status,
                         timeline,
                         lastUpdated,
+                        showTask,
                       }}
                     />
                   );
@@ -257,6 +260,7 @@ const GoalsByTimeline = ({ showTask }) => {
                         status,
                         timeline,
                         lastUpdated,
+                        showTask,
                       }}
                     />
                   );
