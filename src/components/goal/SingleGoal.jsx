@@ -31,6 +31,8 @@ const SingleGoal = ({
   status,
   timeline,
   lastUpdated,
+  toggleUpdate,
+  setToggleUpdate,
 }) => {
   const [toggleGoal, setToggleGoal] = useState(false);
   const { customcolor } = useColorTheme();
@@ -163,6 +165,7 @@ const SingleGoal = ({
               },
             });
             toast("Goal achieved! Congratulations!", toastSuccess(customcolor));
+            setToggleUpdate(!toggleUpdate);
 
             // Notify user after 3 seconds if they completed a missed goal!
             // Notifying user after delay so user can read both notifications.

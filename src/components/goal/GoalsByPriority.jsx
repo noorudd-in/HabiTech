@@ -10,6 +10,7 @@ const GoalsByPriority = ({ showTask, showActive }) => {
   const [goalsData, setGoalsData] = useState(null);
   const [dropdown, setDropdown] = useState("high");
   const { state, appLoading } = useContext(HabitechContext);
+  const [toggleUpdate, setToggleUpdate] = useState(true);
   const index = showActive ? 0 : 1;
 
   const toggleTap = (type) => {
@@ -52,7 +53,7 @@ const GoalsByPriority = ({ showTask, showActive }) => {
       const result = sortByPriority();
       setGoalsData(result);
     }
-  }, []);
+  }, [toggleUpdate]);
 
   if (appLoading) return <Shimmer />;
   return (
@@ -102,6 +103,8 @@ const GoalsByPriority = ({ showTask, showActive }) => {
                         timeline,
                         lastUpdated,
                         showTask,
+                        toggleUpdate,
+                        setToggleUpdate,
                       }}
                     />
                   );
@@ -155,6 +158,8 @@ const GoalsByPriority = ({ showTask, showActive }) => {
                         timeline,
                         lastUpdated,
                         showTask,
+                        toggleUpdate,
+                        setToggleUpdate,
                       }}
                     />
                   );
@@ -208,6 +213,8 @@ const GoalsByPriority = ({ showTask, showActive }) => {
                         timeline,
                         lastUpdated,
                         showTask,
+                        toggleUpdate,
+                        setToggleUpdate,
                       }}
                     />
                   );
