@@ -12,6 +12,7 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
   const { state, appLoading } = useContext(HabitechContext);
   const { bgcolor400 } = useColorTheme();
   const [goalsData, setGoalsData] = useState(null);
+  const [toggleUpdate, setToggleUpdate] = useState(true);
   const index = showActive ? 0 : 1;
 
   const toggleTap = (type) => {
@@ -54,7 +55,7 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
       const result = sortByTimeline();
       setGoalsData(result);
     }
-  }, []);
+  }, [toggleUpdate]);
 
   if (appLoading) return <Shimmer />;
   return (
@@ -107,6 +108,8 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
                         timeline,
                         lastUpdated,
                         showTask,
+                        toggleUpdate,
+                        setToggleUpdate,
                       }}
                     />
                   );
@@ -163,6 +166,8 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
                         timeline,
                         lastUpdated,
                         showTask,
+                        toggleUpdate,
+                        setToggleUpdate,
                       }}
                     />
                   );
@@ -218,6 +223,8 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
                         timeline,
                         lastUpdated,
                         showTask,
+                        toggleUpdate,
+                        setToggleUpdate,
                       }}
                     />
                   );
@@ -273,6 +280,8 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
                         timeline,
                         lastUpdated,
                         showTask,
+                        toggleUpdate,
+                        setToggleUpdate,
                       }}
                     />
                   );

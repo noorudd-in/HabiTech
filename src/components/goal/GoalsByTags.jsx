@@ -11,6 +11,7 @@ const GoalsByTags = ({ showTask, showActive }) => {
   const [goalsData, setGoalsData] = useState(null);
   const [allTags, setAllTags] = useState(null);
   const { state, appLoading } = useContext(HabitechContext);
+  const [toggleUpdate, setToggleUpdate] = useState(true);
   const index = showActive ? 0 : 1;
 
   const toggleTap = (type) => {
@@ -57,7 +58,7 @@ const GoalsByTags = ({ showTask, showActive }) => {
       const result = sortByTags();
       setGoalsData(result);
     }
-  }, []);
+  }, [toggleUpdate]);
 
   if (appLoading) return <Shimmer />;
   return (
@@ -106,6 +107,8 @@ const GoalsByTags = ({ showTask, showActive }) => {
                           timeline,
                           lastUpdated,
                           showTask,
+                          toggleUpdate,
+                          setToggleUpdate,
                         }}
                       />
                     );
