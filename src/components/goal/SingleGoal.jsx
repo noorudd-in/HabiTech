@@ -16,7 +16,6 @@ import GoalsSubTask from "./GoalsSubTask";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import axios from "axios";
 import { API_URL } from "../../constants";
-
 dayjs.extend(isToday);
 dayjs.extend(isTomorrow);
 
@@ -44,7 +43,7 @@ const SingleGoal = ({
     if (dayjs(new Date(duedate)).isTomorrow()) {
       return "Tomorrow";
     }
-    if (dayjs(new Date(duedate)).isBefore(new Date())) {
+    if (dayjs(new Date(duedate)).isBefore(new Date(), "day")) {
       return "Missed";
     }
     const date = dayjs(new Date(duedate)).format("DD MMM YYYY");
@@ -120,18 +119,26 @@ const SingleGoal = ({
       const newGoals = findAndUpdateGoal();
       let newCoins;
       let newExp;
+      let newHealth;
       if (newGoals == true) {
         toast("First complete all subtasks!", toastError());
       } else {
         // Perform axios update.
 
         // If goal's due date is missed, assign 0 coins and 0 exp.
-        if (dayjs(new Date(duedate)).isBefore(new Date())) {
+        if (dayjs(new Date(duedate)).isBefore(new Date(), "day")) {
           newCoins = 0;
           newExp = 0;
         } else {
           newCoins = coins[timeline][priority];
           newExp = exp[timeline][priority];
+        }
+
+        // If health surpass 100 after adding new health, set the new health to 100.
+        if (state.user.health + health[timeline] <= 100) {
+          newHealth = state.user.health + health[timeline];
+        } else {
+          newHealth = 100;
         }
 
         axios
@@ -142,7 +149,7 @@ const SingleGoal = ({
               ...state.user,
               coins: state.user.coins + newCoins,
               exp: state.user.exp + newExp,
-              health: state.user.health + health[timeline],
+              health: newHealth,
             },
             lastEdited: Date.now(),
           })
@@ -159,11 +166,11 @@ const SingleGoal = ({
 
             // Notify user after 3 seconds if they completed a missed goal!
             // Notifying user after delay so user can read both notifications.
-            if (dayjs(new Date(duedate)).isBefore(new Date())) {
+            if (dayjs(new Date(duedate)).isBefore(new Date(), "day")) {
               setTimeout(
                 () =>
                   toast(
-                    "Since you missed the due-date of this goal, you will not receive coins and exp points.",
+                    "No coins and exp added, since you missed the due date of this goal.",
                     toastError()
                   ),
                 3000
