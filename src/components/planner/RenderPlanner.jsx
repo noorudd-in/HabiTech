@@ -5,97 +5,178 @@ import SinglePlan from "./SinglePlan";
 import dayjs from "dayjs";
 import PlanWrapper from "./PlanWrapper";
 import Shimmer from "../../pages/Shimmer";
+import axios from "axios";
+import { API_URL } from "../../constants";
 
 const RenderPlanner = () => {
   const { state, dispatch, appLoading } = useContext(HabitechContext);
-  const [time, setTime] = useState(null);
+  const [toggleData, setToggleData] = useState("today");
+  const [planData, setPlanData] = useState(null);
 
+  let today = dayjs();
+  let yesterday = today.subtract(1, "day");
+  let tomorrow = today.add(1, "day");
+
+  // Function to get status. Past plan: -1, Present Plan: 0, Future Plan: 1
   const getStatus = (startTime, endTime) => {
-    let currentTime = dayjs();
-    // Past
-    if (currentTime.hour() > endTime?.hour()) {
+    const currentDate = Date.now();
+    const startDate = new Date();
+    const endDate = new Date();
+    let startArr = startTime.split(":");
+    let endArr = endTime.split(":");
+    startDate.setHours(parseInt(startArr[0]));
+    startDate.setMinutes(parseInt(startArr[1]));
+    endDate.setHours(parseInt(endArr[0]));
+    endDate.setMinutes(parseInt(endArr[1]));
+
+    if (currentDate > endDate.getTime()) {
       return -1;
     }
-    if (currentTime.hour() < startTime?.hour()) {
+    if (currentDate < startDate.getTime()) {
       return 1;
     }
+
     if (
-      currentTime.hour() >= startTime.hour() &&
-      currentTime.hour() <= endTime.hour()
+      currentDate >= startDate.getTime() &&
+      currentDate <= endDate.getTime()
     ) {
-      console.log(startTime.hour(), currentTime.hour(), endTime.hour());
-
-      if (
-        currentTime.hour() == startTime.hour() ||
-        currentTime.hour() == endTime.hour()
-      ) {
-        if (currentTime.minute() < startTime?.minute()) {
-          return 1;
-        }
-        if (currentTime.minute() > endTime?.minute()) {
-          return -1;
-        }
-
-        if (
-          currentTime.minute() >= startTime?.minute() &&
-          currentTime.minute() <= endTime?.minute()
-        ) {
-          return 0;
-        }
-      } else {
-        return 0;
-      }
+      return 0;
     }
   };
 
+  const sortByDay = () => {
+    //First sort all the plans by time
+    let sortedByTime = state?.plans?.toSorted((a, b) => {
+      return a.start.localeCompare(b.start);
+    });
+
+    //console.log(yesterday.date(), today.date(), tomorrow.date());
+    // Track if the plan is older than yesterday.
+    let flag = false;
+    let older = [];
+    let updatedData = {
+      [yesterday.date()]: [],
+      [today.date()]: [],
+      [tomorrow.date()]: [],
+    };
+    //console.log(updatedData);
+    sortedByTime.map((plan) => {
+      let date = new Date(plan.date);
+      if (updatedData[date.getDate()]) {
+        updatedData[date.getDate()].push(plan);
+      } else {
+        flag = true;
+        older.push(plan);
+      }
+    });
+    return updatedData;
+  };
+
   useEffect(() => {
-    const time1 = dayjs().hour(11).minute(1);
-    const time2 = dayjs().hour(11).minute(20);
-    const time = "14:24";
-    //console.log(dayjs().hour(time.slice(0, 2)).minute(time.slice(3, 5)));
-    //console.log(time2.diff(time1, "minutes"));
-    //console.log(time);
-  }, [time]);
+    if (state.user.name != undefined) {
+      const result = sortByDay();
+      setPlanData(result);
+    }
+  }, [state]);
 
   if (appLoading) return <Shimmer />;
   return (
     <>
-      <PlannersHeader />
+      <PlannersHeader toggleData={toggleData} setToggleData={setToggleData} />
       {/*
       <div className="overflow-y-auto no-scrollbar"
         style={{ maxHeight: window.innerHeight - 400 }}>
         </div>
       */}
       <div>
-        {state?.plans?.length == 0 && (
+        {toggleData == "yesterday" &&
+          planData[yesterday.date()]?.length == 0 && (
+            <h1 className="m-10 text-center font-bold text-xl">
+              No plans found. Check back tomorrow!
+            </h1>
+          )}
+
+        {toggleData == "yesterday" &&
+          planData?.[yesterday.date()]?.map((plan) => {
+            let startTime = dayjs()
+              .hour(plan.start?.slice(0, 2))
+              .minute(plan.start?.slice(3, 5));
+            let endTime = dayjs()
+              .hour(plan.end?.slice(0, 2))
+              .minute(plan.end?.slice(3, 5));
+
+            return (
+              <div key={plan.id}>
+                <PlanWrapper status={-1}>
+                  <SinglePlan
+                    start={startTime}
+                    end={endTime}
+                    name={plan.name}
+                    status={-1}
+                  />
+                </PlanWrapper>
+              </div>
+            );
+          })}
+
+        {toggleData == "today" && planData?.[today.date()]?.length == 0 && (
           <h1 className="m-10 text-center font-bold text-xl">
             No plans found for today! Click on the plus button to add one!
           </h1>
         )}
-        {state?.plans?.map((plan) => {
-          let startTime = dayjs()
-            .hour(plan.start?.slice(0, 2))
-            .minute(plan.start?.slice(3, 5));
 
-          let endTime = dayjs()
-            .hour(plan.end?.slice(0, 2))
-            .minute(plan.end?.slice(3, 5));
+        {toggleData == "today" &&
+          planData?.[today.date()]?.map((plan) => {
+            let startTime = dayjs()
+              .hour(plan.start?.slice(0, 2))
+              .minute(plan.start?.slice(3, 5));
+            let endTime = dayjs()
+              .hour(plan.end?.slice(0, 2))
+              .minute(plan.end?.slice(3, 5));
+            let status = getStatus(plan.start, plan.end);
 
-          let status = getStatus(startTime, endTime);
+            return (
+              <div key={plan.id}>
+                <PlanWrapper status={status}>
+                  <SinglePlan
+                    start={startTime}
+                    end={endTime}
+                    name={plan.name}
+                    status={status}
+                  />
+                </PlanWrapper>
+              </div>
+            );
+          })}
 
-          return (
-            <div key={plan.id}>
-              <PlanWrapper status={status}>
-                <SinglePlan
-                  start={startTime}
-                  end={endTime}
-                  name={plan.name}
-                  status={status}
-                />
-              </PlanWrapper>
-            </div>
-          );
-        })}
+        {toggleData == "tomorrow" && planData[tomorrow.date()]?.length == 0 && (
+          <h1 className="m-10 text-center font-bold text-xl">
+            No plans found. Click on the plus button to add one!
+          </h1>
+        )}
+
+        {toggleData == "tomorrow" &&
+          planData?.[tomorrow.date()]?.map((plan) => {
+            let startTime = dayjs()
+              .hour(plan.start?.slice(0, 2))
+              .minute(plan.start?.slice(3, 5));
+            let endTime = dayjs()
+              .hour(plan.end?.slice(0, 2))
+              .minute(plan.end?.slice(3, 5));
+
+            return (
+              <div key={plan.id}>
+                <PlanWrapper status={1}>
+                  <SinglePlan
+                    start={startTime}
+                    end={endTime}
+                    name={plan.name}
+                    status={1}
+                  />
+                </PlanWrapper>
+              </div>
+            );
+          })}
 
         {/** 
         <div>
