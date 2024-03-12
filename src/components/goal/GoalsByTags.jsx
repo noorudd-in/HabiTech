@@ -30,6 +30,23 @@ const GoalsByTags = ({ showTask, showActive }) => {
     const activeGoals = {};
     const inactiveGoals = {};
     sortedByDueDate.map((goal) => {
+      if (goal.tags.length == 0) {
+        if (goal.status == 0) {
+          if (activeGoals["No Tags"]) {
+            activeGoals["No Tags"].push(goal);
+          } else {
+            activeGoals["No Tags"] = [goal];
+          }
+        }
+
+        if (goal.status == 1) {
+          if (inactiveGoals["No Tags"]) {
+            inactiveGoals["No Tags"].push(goal);
+          } else {
+            inactiveGoals["No Tags"] = [goal];
+          }
+        }
+      }
       goal.tags.map((tag) => {
         if (goal.status == 0) {
           if (activeGoals[tag]) {
