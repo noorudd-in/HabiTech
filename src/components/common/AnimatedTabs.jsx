@@ -3,9 +3,9 @@ import { useState } from "react";
 import { useColorTheme } from "../../hooks/useColorTheme";
 
 let tabs = [
+  { id: "planner", label: "Planner" },
   { id: "habits", label: "Habit" },
   { id: "goals", label: "Goals" },
-  { id: "time", label: "Table" },
 ];
 
 const AnimatedTabs = ({ setCurrentTab }) => {
