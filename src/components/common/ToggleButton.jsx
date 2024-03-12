@@ -7,8 +7,9 @@ const ToggleButton = ({ showTask, setShowTask, name }) => {
       <label className="relative inline-flex items-center me-5 cursor-pointer">
         <input
           type="checkbox"
-          value=""
-          className="sr-only peer"
+          value={showTask}
+          checked={showTask ? "checked" : ""}
+          className={`sr-only peer`}
           onChange={() => setShowTask(!showTask)}
         />
 
