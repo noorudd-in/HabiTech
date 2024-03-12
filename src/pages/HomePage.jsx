@@ -2,14 +2,14 @@ import { useContext, useEffect } from "react";
 import { HabitechContext } from "../contexts/HabitechContext";
 import { useHabitechData } from "../hooks/useHabitechData";
 import { useSearchParams } from "react-router-dom";
+import { toastSuccess, toastError } from "../components/common/Toast";
+import { useColorTheme } from "../hooks/useColorTheme";
 import Shimmer from "./Shimmer";
 import GlobalHeader from "../components/layout/GlobalHeader";
 import HorizontalLine from "../components/common/HorizontalLine";
 import MainContent from "../components/layout/MainContent";
 import GlobalFooter from "../components/layout/GlobalFooter";
 import toast, { Toaster } from "react-hot-toast";
-import { toastSuccess, toastError } from "../components/common/Toast";
-import { useColorTheme } from "../hooks/useColorTheme";
 
 const HomePage = () => {
   const { dispatch, setAppLoading } = useContext(HabitechContext);
@@ -26,6 +26,7 @@ const HomePage = () => {
           user: data?.user,
           habits: data?.habits,
           goals: data?.goals,
+          plans: data?.plans,
           lastEdited: data?.lastEdited,
           availableTags: data?.availableTags,
           theme: data?.theme,

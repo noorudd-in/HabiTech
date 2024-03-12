@@ -173,7 +173,9 @@ const SingleHabit = ({
               <Badge difficulty={difficulty} />
             </motion.div>
             <div>
-              <HabitTimeBar value={parseInt(value)} status={status} />
+              <div className="w-full bg-gray-200 h-2 dark:bg-gray-700 mt-3 -mb-3 rounded-t">
+                <HabitTimeBar value={parseInt(value)} status={status} />
+              </div>
             </div>
           </div>
 
