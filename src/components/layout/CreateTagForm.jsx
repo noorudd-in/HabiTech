@@ -6,7 +6,7 @@ import { API_URL } from "../../constants";
 import { useColorTheme } from "../../hooks/useColorTheme";
 import axios from "axios";
 
-const CreateTagForm = ({ toggleUpdate, setToggleUpdate }) => {
+const CreateTagForm = () => {
   const { state, dispatch } = useContext(HabitechContext);
   const [newTag, setNewTag] = useState("");
   const { bgcolor500, lighttext, customcolor } = useColorTheme();
@@ -24,7 +24,7 @@ const CreateTagForm = ({ toggleUpdate, setToggleUpdate }) => {
     axios
       .put(API_URL, {
         ...state,
-        availableTags: [...state.availableTags, newTag.toLowerCase()],
+        availableTags: [...state.availableTags, newTag],
         lastEdited: Date.now(),
       })
       .then((res) => {
@@ -37,7 +37,6 @@ const CreateTagForm = ({ toggleUpdate, setToggleUpdate }) => {
         });
         toast("Tag created successfully!", toastSuccess(customcolor));
         setNewTag("");
-        setToggleUpdate(!toggleUpdate);
       });
   };
   return (

@@ -10,7 +10,7 @@ const TabSwitchForGoals = ({ showActive, setShowActive }) => {
         className={`px-2 py-1 text-sm font-medium rounded-s-lg border  ${
           showActive
             ? bgcolor500 + " " + border400 + " " + "text-gray-900"
-            : "border-gray-700 bg-gray-800 text-white"
+            : "border-gray-700 dark:bg-gray-800 dark:text-white"
         }`}
       >
         Active
@@ -20,7 +20,7 @@ const TabSwitchForGoals = ({ showActive, setShowActive }) => {
         onClick={() => setShowActive(false)}
         className={`px-2 py-1 text-sm font-medium rounded-e-lg border ${
           showActive
-            ? "border-gray-700 bg-gray-800 text-white"
+            ? "border-gray-700 dark:bg-gray-800 dark:text-white"
             : bgcolor500 + " " + border400 + " " + "text-gray-900"
         }`}
       >

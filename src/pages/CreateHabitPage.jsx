@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HabitechContext } from "../contexts/HabitechContext";
 import toast, { Toaster } from "react-hot-toast";
 import { toastError } from "../components/common/Toast";
@@ -62,6 +62,14 @@ const CreateHabitPage = () => {
         navigate("/?toastType=toastSuccess&toastMessage=New habit created!");
       });
   };
+
+  useEffect(() => {
+    if (state.user.name == undefined) {
+      navigate(
+        "/?toastType=toastError&toastMessage=Something went wrong. Please try again!"
+      );
+    }
+  });
   return (
     <>
       <Toaster />

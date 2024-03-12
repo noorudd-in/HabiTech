@@ -138,6 +138,13 @@ const EditGoalPage = () => {
     }
   };
 
+  const handleDeleteTag = (givenTag) => {
+    const newTags = tags.filter((tag) => {
+      return tag != givenTag;
+    });
+    setTags(newTags);
+  };
+
   useEffect(() => {
     if (state.user.name == undefined) {
       navigate(
@@ -270,7 +277,11 @@ const EditGoalPage = () => {
           {tags[0] == undefined ? (
             <p>No tags found.</p>
           ) : (
-            <AvailableTags tagData={tags} />
+            <AvailableTags
+              tagData={tags}
+              deleteIcon={true}
+              handleDelete={handleDeleteTag}
+            />
           )}
         </div>
 
