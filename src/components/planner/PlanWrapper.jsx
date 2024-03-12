@@ -5,7 +5,7 @@ import { useColorTheme } from "../../hooks/useColorTheme";
 const PlanWrapper = ({ children, status }) => {
   const { bgcolor100 } = useColorTheme();
   return (
-    <div className="px-4 mx-auto">
+    <div className={`px-4 mx-auto ${status == 0 && "animate-pulse"}`}>
       <div className="flex">
         <div className="flex flex-col items-center">
           {status <= 0 ? <CircleTickedIcon /> : <CircleIcon />}

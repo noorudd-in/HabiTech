@@ -24,7 +24,7 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
   };
 
   const sortByTimeline = useCallback(() => {
-    const sortedByDueDate = state.goals.sort(function compare(a, b) {
+    const sortedByDueDate = state.goals.toSorted(function compare(a, b) {
       return a.duedate - b.duedate;
     });
     const activeGoals = {};
