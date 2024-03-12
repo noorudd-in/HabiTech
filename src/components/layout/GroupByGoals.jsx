@@ -1,6 +1,6 @@
 import { useColorTheme } from "../../hooks/useColorTheme";
 
-const GroupByGoals = ({ setGroupBy }) => {
+const GroupByGoals = ({ groupBy, setGroupBy }) => {
   const { bgcolor50 } = useColorTheme();
 
   return (
@@ -9,6 +9,7 @@ const GroupByGoals = ({ setGroupBy }) => {
       <select
         name="goalsCategory"
         id="goalsCategory"
+        value={groupBy}
         className={`text-black rounded-md px-1 ${bgcolor50} border border-neutral-500`}
         onChange={(e) => setGroupBy(e.target.value)}
       >
