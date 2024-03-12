@@ -96,7 +96,7 @@ const EditHabitPage = () => {
   return (
     <>
       <Toaster />
-      <div className="ml-[20%] mt-10">
+      <div className="ml-5 mt-10">
         <div id="deleteGoal" className="text-center mt-5">
           <button
             onClick={deleteHabit}

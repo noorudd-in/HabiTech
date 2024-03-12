@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { HabitechContext } from "../contexts/HabitechContext";
 import toast, { Toaster } from "react-hot-toast";
 import { toastError } from "../components/common/Toast";
@@ -112,6 +112,22 @@ const CreateGoalPage = () => {
       });
   };
 
+  const handleDeleteTag = (givenTag) => {
+    let newTags = tags.filter((tag) => {
+      return tag != givenTag;
+    });
+    setTags(newTags);
+    console.log("Done");
+  };
+
+  useEffect(() => {
+    if (state.user.name == undefined) {
+      navigate(
+        "/?toastType=toastError&toastMessage=Something went wrong. Please try again!"
+      );
+    }
+  });
+
   return (
     <>
       <Toaster />
@@ -213,7 +229,11 @@ const CreateGoalPage = () => {
           {tags[0] == undefined ? (
             <p>No tags found.</p>
           ) : (
-            <AvailableTags tagData={tags} />
+            <AvailableTags
+              tagData={tags}
+              deleteIcon={true}
+              handleDelete={handleDeleteTag}
+            />
           )}
         </div>
 
