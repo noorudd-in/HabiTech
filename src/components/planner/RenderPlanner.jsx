@@ -18,6 +18,51 @@ const RenderPlanner = () => {
   let yesterday = today.subtract(1, "day");
   let tomorrow = today.add(1, "day");
 
+  const organiseData = () => {
+    let flag = false;
+    let older = [];
+    let data = {
+      [yesterday.date()]: [],
+      [today.date()]: [],
+      [tomorrow.date()]: [],
+    };
+    // Push all the task which is to be done once
+    state?.plans?.once.map((plan) => {
+      let date = new Date(plan.date);
+      if (data[date.getDate()]) {
+        data[date.getDate()].push(plan);
+      } else {
+        flag = true;
+        older.push(plan);
+      }
+    });
+    // Push daily task to every timeline object.
+    state?.plans?.daily.map((plan) => {
+      data[yesterday.date()].push(plan);
+      data[today.date()].push(plan);
+      data[tomorrow.date()].push(plan);
+    });
+
+    // Sort all the timeline object based on date
+    data[yesterday.date()].sort((a, b) => {
+      return a.start.localeCompare(b.start);
+    });
+    data[today.date()].sort((a, b) => {
+      return a.start.localeCompare(b.start);
+    });
+    data[tomorrow.date()].sort((a, b) => {
+      return a.start.localeCompare(b.start);
+    });
+
+    // Track if the plan is older than yesterday.
+    if (flag) {
+      console.log(older);
+      setOlderData(older);
+    }
+
+    return data;
+  };
+
   // Function to get status. Past plan: -1, Present Plan: 0, Future Plan: 1
   const getStatus = (startTime, endTime) => {
     const currentDate = Date.now();
@@ -45,41 +90,10 @@ const RenderPlanner = () => {
     }
   };
 
-  const sortByDay = () => {
-    //First sort all the plans by time
-    let sortedByTime = state?.plans?.toSorted((a, b) => {
-      return a.start.localeCompare(b.start);
-    });
-
-    // Track if the plan is older than yesterday.
-    let flag = false;
-    let older = [];
-    let updatedData = {
-      [yesterday.date()]: [],
-      [today.date()]: [],
-      [tomorrow.date()]: [],
-    };
-
-    sortedByTime.map((plan) => {
-      let date = new Date(plan.date);
-      if (updatedData[date.getDate()]) {
-        updatedData[date.getDate()].push(plan);
-      } else {
-        flag = true;
-        older.push(plan);
-      }
-    });
-
-    if (flag) {
-      setOlderData(older);
-    }
-    return updatedData;
-  };
-
   // Sort and display plan based on dates.
   useEffect(() => {
     if (state.user.name != undefined) {
-      const result = sortByDay();
+      const result = organiseData();
       setPlanData(result);
     }
   }, [state]);
@@ -87,9 +101,15 @@ const RenderPlanner = () => {
   // Run this useffect if we found data older than yesterday's date.
   useEffect(() => {
     if (olderData != null) {
-      let updatedData = state.plans.filter((obj1) => {
+      console.log("I got triggered");
+      let newData = state.plans.once.filter((obj1) => {
         return !olderData.find((obj2) => obj1.id == obj2.id);
       });
+      const updatedData = {
+        ...state.plans,
+        once: newData,
+      };
+
       axios
         .put(API_URL, {
           ...state,
