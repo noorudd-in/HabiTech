@@ -101,23 +101,10 @@ const CreatePlanPage = () => {
       description: description,
     };
 
-    let updatedPlans = {};
-    if (toggleRepeat == "once") {
-      updatedPlans = {
-        ...state.plans,
-        once: [...state.plans.once, newPlan],
-      };
-    }
-    if (toggleRepeat == "daily") {
-      updatedPlans = {
-        ...state.plans,
-        daily: [...state.plans.daily, newPlan],
-      };
-    }
     axios
       .put(API_URL, {
         ...state,
-        plans: updatedPlans,
+        plans: [...state.plans, newPlan],
         lastEdited: Date.now(),
       })
       .then((res) => {

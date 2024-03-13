@@ -26,6 +26,7 @@ const HomePage = () => {
           user: data?.user,
           habits: data?.habits,
           goals: data?.goals,
+          plan: data?.plan,
           plans: data?.plans,
           lastEdited: data?.lastEdited,
           availableTags: data?.availableTags,

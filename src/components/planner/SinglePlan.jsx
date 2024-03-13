@@ -31,6 +31,7 @@ const SinglePlan = ({ id, name, start, end, status }) => {
   return (
     <motion.div whileTap={{ scale: 0.95 }}>
       <div
+        id={status == 0 ? "current" : ""}
         {...attrs}
         className={`border m-2 rounded-lg mb-5 ${
           status == 0 && "animate-pulse"
