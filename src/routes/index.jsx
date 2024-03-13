@@ -11,6 +11,7 @@ import CreatePlanPage from "../pages/CreatePlanPage";
 import AnimatePage from "../pages/AnimatePage";
 import EditHabitPage from "../pages/EditHabitPage";
 import EditGoalPage from "../pages/EditGoalPage";
+import EditPlanPage from "../pages/EditPlanPage";
 
 const HABITECH_ROUTES = createBrowserRouter([
   {
@@ -120,6 +121,18 @@ const HABITECH_ROUTES = createBrowserRouter([
       <>
         <AnimatePage>
           <EditGoalPage />
+          <GlobalFooter />
+        </AnimatePage>
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/edit/plan/:id",
+    element: (
+      <>
+        <AnimatePage>
+          <EditPlanPage />
           <GlobalFooter />
         </AnimatePage>
       </>

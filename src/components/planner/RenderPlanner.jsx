@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
+import { API_URL } from "../../constants";
 import PlannersHeader from "./PlannersHeader";
 import SinglePlan from "./SinglePlan";
 import dayjs from "dayjs";
 import PlanWrapper from "./PlanWrapper";
 import Shimmer from "../../pages/Shimmer";
 import axios from "axios";
-import { API_URL } from "../../constants";
 
 const RenderPlanner = () => {
   const { state, dispatch, appLoading } = useContext(HabitechContext);
@@ -19,6 +19,10 @@ const RenderPlanner = () => {
   let tomorrow = today.add(1, "day");
 
   const organiseData = () => {
+    const sortedByDate = state?.plans?.toSorted((a, b) => {
+      return a.start.localeCompare(b.start);
+    });
+
     let flag = false;
     let older = [];
     let data = {
@@ -26,32 +30,22 @@ const RenderPlanner = () => {
       [today.date()]: [],
       [tomorrow.date()]: [],
     };
-    // Push all the task which is to be done once
-    state?.plans?.once.map((plan) => {
-      let date = new Date(plan.date);
-      if (data[date.getDate()]) {
-        data[date.getDate()].push(plan);
-      } else {
-        flag = true;
-        older.push(plan);
-      }
-    });
-    // Push daily task to every timeline object.
-    state?.plans?.daily.map((plan) => {
-      data[yesterday.date()].push(plan);
-      data[today.date()].push(plan);
-      data[tomorrow.date()].push(plan);
-    });
 
-    // Sort all the timeline object based on date
-    data[yesterday.date()].sort((a, b) => {
-      return a.start.localeCompare(b.start);
-    });
-    data[today.date()].sort((a, b) => {
-      return a.start.localeCompare(b.start);
-    });
-    data[tomorrow.date()].sort((a, b) => {
-      return a.start.localeCompare(b.start);
+    sortedByDate?.map((plan) => {
+      let date = new Date(plan.date);
+      if (plan.repeat == "once") {
+        if (data[date.getDate()]) {
+          data[date.getDate()].push(plan);
+        } else {
+          flag = true;
+          older.push(plan);
+        }
+      }
+      if (plan.repeat == "daily") {
+        data[yesterday.date()].push(plan);
+        data[today.date()].push(plan);
+        data[tomorrow.date()].push(plan);
+      }
     });
 
     // Track if the plan is older than yesterday.
@@ -100,18 +94,14 @@ const RenderPlanner = () => {
   // Run this useffect if we found data older than yesterday's date.
   useEffect(() => {
     if (olderData != null) {
-      let newData = state.plans.once.filter((obj1) => {
+      let newData = state.plans.filter((obj1) => {
         return !olderData.find((obj2) => obj1.id == obj2.id);
       });
-      const updatedData = {
-        ...state.plans,
-        once: newData,
-      };
 
       axios
         .put(API_URL, {
           ...state,
-          plans: updatedData,
+          plans: newData,
         })
         .then((res) => {
           dispatch({
@@ -128,109 +118,102 @@ const RenderPlanner = () => {
   return (
     <>
       <PlannersHeader toggleData={toggleData} setToggleData={setToggleData} />
-      {/*
-      <div className="overflow-y-auto no-scrollbar"
-        style={{ maxHeight: window.innerHeight - 400 }}>
-        </div>
-      */}
+
       <div>
-        {toggleData == "yesterday" &&
-          planData[yesterday.date()]?.length == 0 && (
+        <div>
+          {toggleData == "yesterday" &&
+            planData[yesterday.date()]?.length == 0 && (
+              <h1 className="m-10 text-center font-bold text-xl">
+                No plans found. Check back tomorrow!
+              </h1>
+            )}
+
+          {toggleData == "yesterday" &&
+            planData?.[yesterday.date()]?.map((plan) => {
+              let startTime = dayjs()
+                .hour(plan.start?.slice(0, 2))
+                .minute(plan.start?.slice(3, 5));
+              let endTime = dayjs()
+                .hour(plan.end?.slice(0, 2))
+                .minute(plan.end?.slice(3, 5));
+
+              return (
+                <div key={plan.id}>
+                  <PlanWrapper status={-1}>
+                    <SinglePlan
+                      id={plan.id}
+                      start={startTime}
+                      end={endTime}
+                      name={plan.name}
+                      status={-1}
+                    />
+                  </PlanWrapper>
+                </div>
+              );
+            })}
+
+          {toggleData == "today" && planData?.[today.date()]?.length == 0 && (
             <h1 className="m-10 text-center font-bold text-xl">
-              No plans found. Check back tomorrow!
+              No plans found for today! Click on the plus button to add one!
             </h1>
           )}
 
-        {toggleData == "yesterday" &&
-          planData?.[yesterday.date()]?.map((plan) => {
-            let startTime = dayjs()
-              .hour(plan.start?.slice(0, 2))
-              .minute(plan.start?.slice(3, 5));
-            let endTime = dayjs()
-              .hour(plan.end?.slice(0, 2))
-              .minute(plan.end?.slice(3, 5));
+          {toggleData == "today" &&
+            planData?.[today.date()]?.map((plan) => {
+              let startTime = dayjs()
+                .hour(plan.start?.slice(0, 2))
+                .minute(plan.start?.slice(3, 5));
+              let endTime = dayjs()
+                .hour(plan.end?.slice(0, 2))
+                .minute(plan.end?.slice(3, 5));
+              let status = getStatus(plan.start, plan.end);
 
-            return (
-              <div key={plan.id}>
-                <PlanWrapper status={-1}>
-                  <SinglePlan
-                    id={plan.id}
-                    start={startTime}
-                    end={endTime}
-                    name={plan.name}
-                    status={-1}
-                  />
-                </PlanWrapper>
-              </div>
-            );
-          })}
+              return (
+                <div key={plan.id}>
+                  <PlanWrapper status={status}>
+                    <SinglePlan
+                      id={plan.id}
+                      start={startTime}
+                      end={endTime}
+                      name={plan.name}
+                      status={status}
+                    />
+                  </PlanWrapper>
+                </div>
+              );
+            })}
 
-        {toggleData == "today" && planData?.[today.date()]?.length == 0 && (
-          <h1 className="m-10 text-center font-bold text-xl">
-            No plans found for today! Click on the plus button to add one!
-          </h1>
-        )}
+          {toggleData == "tomorrow" &&
+            planData[tomorrow.date()]?.length == 0 && (
+              <h1 className="m-10 text-center font-bold text-xl">
+                No plans found. Click on the plus button to add one!
+              </h1>
+            )}
 
-        {toggleData == "today" &&
-          planData?.[today.date()]?.map((plan) => {
-            let startTime = dayjs()
-              .hour(plan.start?.slice(0, 2))
-              .minute(plan.start?.slice(3, 5));
-            let endTime = dayjs()
-              .hour(plan.end?.slice(0, 2))
-              .minute(plan.end?.slice(3, 5));
-            let status = getStatus(plan.start, plan.end);
+          {toggleData == "tomorrow" &&
+            planData?.[tomorrow.date()]?.map((plan) => {
+              let startTime = dayjs()
+                .hour(plan.start?.slice(0, 2))
+                .minute(plan.start?.slice(3, 5));
+              let endTime = dayjs()
+                .hour(plan.end?.slice(0, 2))
+                .minute(plan.end?.slice(3, 5));
 
-            return (
-              <div key={plan.id}>
-                <PlanWrapper status={status}>
-                  <SinglePlan
-                    id={plan.id}
-                    start={startTime}
-                    end={endTime}
-                    name={plan.name}
-                    status={status}
-                  />
-                </PlanWrapper>
-              </div>
-            );
-          })}
-
-        {toggleData == "tomorrow" && planData[tomorrow.date()]?.length == 0 && (
-          <h1 className="m-10 text-center font-bold text-xl">
-            No plans found. Click on the plus button to add one!
-          </h1>
-        )}
-
-        {toggleData == "tomorrow" &&
-          planData?.[tomorrow.date()]?.map((plan) => {
-            let startTime = dayjs()
-              .hour(plan.start?.slice(0, 2))
-              .minute(plan.start?.slice(3, 5));
-            let endTime = dayjs()
-              .hour(plan.end?.slice(0, 2))
-              .minute(plan.end?.slice(3, 5));
-
-            return (
-              <div key={plan.id}>
-                <PlanWrapper status={1}>
-                  <SinglePlan
-                    id={plan.id}
-                    start={startTime}
-                    end={endTime}
-                    name={plan.name}
-                    status={1}
-                  />
-                </PlanWrapper>
-              </div>
-            );
-          })}
-
-        {/** 
-        <div>
-          <input type="time" onChange={(e) => setTime(e.target.value)} />
+              return (
+                <div key={plan.id}>
+                  <PlanWrapper status={1}>
+                    <SinglePlan
+                      id={plan.id}
+                      start={startTime}
+                      end={endTime}
+                      name={plan.name}
+                      status={1}
+                    />
+                  </PlanWrapper>
+                </div>
+              );
+            })}
         </div>
-        */}
       </div>
     </>
   );
