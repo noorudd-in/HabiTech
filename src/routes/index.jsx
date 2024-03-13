@@ -7,6 +7,7 @@ import GlobalFooter from "../components/layout/GlobalFooter";
 import CreateTagPage from "../pages/CreateTagPage";
 import CreateHabitPage from "../pages/CreateHabitPage";
 import CreateGoalPage from "../pages/CreateGoalPage";
+import CreatePlanPage from "../pages/CreatePlanPage";
 import AnimatePage from "../pages/AnimatePage";
 import EditHabitPage from "../pages/EditHabitPage";
 import EditGoalPage from "../pages/EditGoalPage";
@@ -86,6 +87,16 @@ const HABITECH_ROUTES = createBrowserRouter([
     element: (
       <>
         <CreateGoalPage />
+        <GlobalFooter />
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/create/plan",
+    element: (
+      <>
+        <CreatePlanPage />
         <GlobalFooter />
       </>
     ),

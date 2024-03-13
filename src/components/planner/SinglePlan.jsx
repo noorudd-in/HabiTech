@@ -2,10 +2,21 @@ import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import { useColorTheme } from "../../hooks/useColorTheme";
 import { motion } from "framer-motion";
+import { useLongPress } from "@uidotdev/usehooks";
+import { useNavigate } from "react-router-dom";
 dayjs.extend(duration);
 
-const SinglePlan = ({ name, start, end, status }) => {
+const SinglePlan = ({ id, name, start, end, status }) => {
+  const navigate = useNavigate();
   const { bgcolor500 } = useColorTheme();
+
+  // Perform below action when habit is long pressed
+  const attrs = useLongPress(
+    () => {
+      navigate(`/edit/plan/${id}`);
+    },
+    { threshold: 500 }
+  );
 
   let duration = end?.diff(start, "minute");
   let hours =
@@ -20,6 +31,7 @@ const SinglePlan = ({ name, start, end, status }) => {
   return (
     <motion.div whileTap={{ scale: 0.95 }}>
       <div
+        {...attrs}
         className={`border m-2 rounded-lg mb-5 ${
           status == 0 && "animate-pulse"
         }`}

@@ -56,7 +56,6 @@ const RenderPlanner = () => {
 
     // Track if the plan is older than yesterday.
     if (flag) {
-      console.log(older);
       setOlderData(older);
     }
 
@@ -101,7 +100,6 @@ const RenderPlanner = () => {
   // Run this useffect if we found data older than yesterday's date.
   useEffect(() => {
     if (olderData != null) {
-      console.log("I got triggered");
       let newData = state.plans.once.filter((obj1) => {
         return !olderData.find((obj2) => obj1.id == obj2.id);
       });
@@ -156,6 +154,7 @@ const RenderPlanner = () => {
               <div key={plan.id}>
                 <PlanWrapper status={-1}>
                   <SinglePlan
+                    id={plan.id}
                     start={startTime}
                     end={endTime}
                     name={plan.name}
@@ -186,6 +185,7 @@ const RenderPlanner = () => {
               <div key={plan.id}>
                 <PlanWrapper status={status}>
                   <SinglePlan
+                    id={plan.id}
                     start={startTime}
                     end={endTime}
                     name={plan.name}
@@ -215,6 +215,7 @@ const RenderPlanner = () => {
               <div key={plan.id}>
                 <PlanWrapper status={1}>
                   <SinglePlan
+                    id={plan.id}
                     start={startTime}
                     end={endTime}
                     name={plan.name}
