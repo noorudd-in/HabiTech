@@ -80,16 +80,14 @@ const EditHabitPage = () => {
 
   useEffect(() => {
     if (state.user.name == undefined) {
-      navigate(
-        "/?toastType=toastError&toastMessage=Something went wrong. Please try again!"
-      );
-    }
-
-    for (const habit of state.habits) {
-      if (habit.id == id) {
-        setHabitName(habit.name);
-        setHabitLevel(habit.difficulty);
-        break;
+      navigate("/");
+    } else {
+      for (const habit of state.habits) {
+        if (habit.id == id) {
+          setHabitName(habit.name);
+          setHabitLevel(habit.difficulty);
+          break;
+        }
       }
     }
   }, []);

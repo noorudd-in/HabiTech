@@ -65,9 +65,7 @@ const CreateHabitPage = () => {
 
   useEffect(() => {
     if (state.user.name == undefined) {
-      navigate(
-        "/?toastType=toastError&toastMessage=Something went wrong. Please try again!"
-      );
+      navigate("/");
     }
   });
   return (

@@ -164,14 +164,10 @@ const SingleHabit = ({
             {...attrs}
             className={`col-span-10 m-3 ${status != 0 ? lighttext : ""}`}
           >
-            <motion.div
-              className="flex justify-between"
-              whileTap={{ scale: 1 }}
-              onClick={handleClick}
-            >
+            <div className="flex justify-between" onClick={handleClick}>
               <h1 className="text-xl">{name}</h1>
               <Badge difficulty={difficulty} />
-            </motion.div>
+            </div>
             <div>
               <div className="w-full bg-gray-200 h-2 dark:bg-gray-700 mt-3 -mb-3 rounded-t">
                 <HabitTimeBar value={parseInt(value)} status={status} />

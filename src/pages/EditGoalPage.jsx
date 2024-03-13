@@ -147,20 +147,19 @@ const EditGoalPage = () => {
 
   useEffect(() => {
     if (state.user.name == undefined) {
-      navigate(
-        "/?toastType=toastError&toastMessage=Something went wrong. Please try again!"
-      );
-    }
-    for (const goal of state.goals) {
-      if (goal.id == id) {
-        setName(goal.name);
-        setDescription(goal.description);
-        setType(goal.timeline);
-        setPriority(goal.priority);
-        setDuedate(new Date(goal.duedate));
-        setTags(goal.tags);
-        setTask(goal.subtasks);
-        break;
+      navigate("/");
+    } else {
+      for (const goal of state.goals) {
+        if (goal.id == id) {
+          setName(goal.name);
+          setDescription(goal.description);
+          setType(goal.timeline);
+          setPriority(goal.priority);
+          setDuedate(new Date(goal.duedate));
+          setTags(goal.tags);
+          setTask(goal.subtasks);
+          break;
+        }
       }
     }
   }, []);

@@ -12,6 +12,14 @@ const CreatePage = () => {
       <div className="mt-40">
         <div className="text-center">
           <button
+            className={`py-2 px-3 m-2 ${bgcolor500} ${lighttext} text-2xl rounded-lg`}
+            onClick={() => redirectPage("/create/plan")}
+          >
+            <h1 className="ml-2 mr-1">Create Plan</h1>
+          </button>
+        </div>
+        <div className="text-center">
+          <button
             className={`p-2 m-2 ${bgcolor500} ${lighttext} text-2xl rounded-lg`}
             onClick={() => redirectPage("/create/habit")}
           >
@@ -20,7 +28,7 @@ const CreatePage = () => {
         </div>
         <div className="text-center">
           <button
-            className={`p-2 m-2 ${bgcolor500} ${lighttext} text-2xl rounded-lg`}
+            className={`py-2 px-3 m-2 ${bgcolor500} ${lighttext} text-2xl rounded-lg`}
             onClick={() => redirectPage("/create/goal")}
           >
             <h1 className="ml-2 mr-1">Create Goal</h1>
@@ -29,7 +37,7 @@ const CreatePage = () => {
 
         <div className="text-center">
           <button
-            className={`p-2 m-2 ${bgcolor500} ${lighttext} text-2xl rounded-lg`}
+            className={`py-2 px-4 m-2 ${bgcolor500} ${lighttext} text-2xl rounded-lg`}
             onClick={() => redirectPage("/create/tag")}
           >
             <h1 className="ml-2 mr-1">Create Tag</h1>

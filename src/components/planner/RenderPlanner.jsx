@@ -12,6 +12,7 @@ const RenderPlanner = () => {
   const { state, dispatch, appLoading } = useContext(HabitechContext);
   const [toggleData, setToggleData] = useState("today");
   const [planData, setPlanData] = useState(null);
+  const [olderData, setOlderData] = useState(null);
 
   let today = dayjs();
   let yesterday = today.subtract(1, "day");
@@ -50,7 +51,6 @@ const RenderPlanner = () => {
       return a.start.localeCompare(b.start);
     });
 
-    //console.log(yesterday.date(), today.date(), tomorrow.date());
     // Track if the plan is older than yesterday.
     let flag = false;
     let older = [];
@@ -59,7 +59,7 @@ const RenderPlanner = () => {
       [today.date()]: [],
       [tomorrow.date()]: [],
     };
-    //console.log(updatedData);
+
     sortedByTime.map((plan) => {
       let date = new Date(plan.date);
       if (updatedData[date.getDate()]) {
@@ -69,15 +69,42 @@ const RenderPlanner = () => {
         older.push(plan);
       }
     });
+
+    if (flag) {
+      setOlderData(older);
+    }
     return updatedData;
   };
 
+  // Sort and display plan based on dates.
   useEffect(() => {
     if (state.user.name != undefined) {
       const result = sortByDay();
       setPlanData(result);
     }
   }, [state]);
+
+  // Run this useffect if we found data older than yesterday's date.
+  useEffect(() => {
+    if (olderData != null) {
+      let updatedData = state.plans.filter((obj1) => {
+        return !olderData.find((obj2) => obj1.id == obj2.id);
+      });
+      axios
+        .put(API_URL, {
+          ...state,
+          plans: updatedData,
+        })
+        .then((res) => {
+          dispatch({
+            type: "FETCH_DATA",
+            payload: {
+              plans: res?.data?.plans,
+            },
+          });
+        });
+    }
+  }, [olderData]);
 
   if (appLoading) return <Shimmer />;
   return (
