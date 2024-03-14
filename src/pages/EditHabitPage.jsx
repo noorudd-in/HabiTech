@@ -78,6 +78,7 @@ const EditHabitPage = () => {
     }
   };
 
+  // Find the habit by ID and autofill the details
   useEffect(() => {
     if (state.user.name == undefined) {
       navigate("/");
