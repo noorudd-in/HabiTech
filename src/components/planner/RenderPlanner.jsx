@@ -14,6 +14,8 @@ const RenderPlanner = () => {
   const [planData, setPlanData] = useState(null);
   const [olderData, setOlderData] = useState(null);
 
+  console.log(state.plans);
+
   let today = dayjs();
   let yesterday = today.subtract(1, "day");
   let tomorrow = today.add(1, "day");
