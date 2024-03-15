@@ -13,7 +13,7 @@ import MinusIcon from "../icons/MinusIcon";
 import PlusIcon from "../icons/PlusIcon";
 import Badge from "../common/Badge";
 import HabitTimeBar from "./HabitTimeBar";
-import HabitStatsModal from "./HabitStatsModal";
+import Modal from "../common/Modal";
 
 const SingleHabit = ({
   id,
@@ -135,18 +135,22 @@ const SingleHabit = ({
   return (
     <>
       <Toaster />
-      <HabitStatsModal
+
+      <Modal
         toggleModal={toggleModal}
         setToggleModal={setToggleModal}
-        id={id}
-        name={name}
-        status={status}
-        difficulty={difficulty}
-        lastUpdated={lastUpdated}
-        expValue={expValue}
-        posCount={posCount}
-        negCount={negCount}
+        data={{
+          id: id,
+          name: name,
+          status: status,
+          difficulty: difficulty,
+          lastUpdated: lastUpdated,
+          expValue: expValue,
+          posCount: posCount,
+          negCount: negCount,
+        }}
       />
+
       <motion.div whileTap={{ scale: 0.97 }}>
         <div
           className={`grid grid-cols-12 my-2 border mx-5 rounded-md ${border400} ${

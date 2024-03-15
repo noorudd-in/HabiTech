@@ -14,8 +14,6 @@ const RenderPlanner = () => {
   const [planData, setPlanData] = useState(null);
   const [olderData, setOlderData] = useState(null);
 
-  console.log(state.plans);
-
   let today = dayjs();
   let yesterday = today.subtract(1, "day");
   let tomorrow = today.add(1, "day");
@@ -148,6 +146,8 @@ const RenderPlanner = () => {
                       end={endTime}
                       name={plan.name}
                       status={-1}
+                      lastUpdated={plan.lastUpdated}
+                      description={plan.description}
                     />
                   </PlanWrapper>
                 </div>
@@ -179,6 +179,8 @@ const RenderPlanner = () => {
                       end={endTime}
                       name={plan.name}
                       status={status}
+                      lastUpdated={plan.lastUpdated}
+                      description={plan.description}
                     />
                   </PlanWrapper>
                 </div>
@@ -210,6 +212,8 @@ const RenderPlanner = () => {
                       end={endTime}
                       name={plan.name}
                       status={1}
+                      lastUpdated={plan.lastUpdated}
+                      description={plan.description}
                     />
                   </PlanWrapper>
                 </div>

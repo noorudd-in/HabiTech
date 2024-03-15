@@ -11,7 +11,7 @@ const EditHabitPage = () => {
   const [habitName, setHabitName] = useState("");
   const [habitLevel, setHabitLevel] = useState("");
   const { state, dispatch } = useContext(HabitechContext);
-  const { bgcolor500, lighttext } = useColorTheme();
+  const { bgcolor500, lighttext, textcolor500 } = useColorTheme();
   const navigate = useNavigate();
   let { id } = useParams();
 
@@ -95,16 +95,12 @@ const EditHabitPage = () => {
   return (
     <>
       <Toaster />
-      <div className="ml-5 mt-10">
-        <div id="deleteGoal" className="text-center mt-5">
-          <button
-            onClick={deleteHabit}
-            className="mb-5 inline-flex items-center px-4 py-2 text-sm font-medium text-center text-black bg-red-500 rounded-lg"
-          >
-            Delete
-          </button>
-        </div>
-
+      <div
+        className={`text-center mt-10 ml-5 text-2xl font-bold ${textcolor500}`}
+      >
+        <h1>Whoopsie... Let's fix this habit!</h1>
+      </div>
+      <div className="ml-5 mt-2">
         <label className="text-2xl block" htmlFor="habit">
           Habit Name
         </label>
@@ -132,12 +128,23 @@ const EditHabitPage = () => {
           <option value="hard">Hard</option>
         </select>
 
-        <button
-          className={`text-center my-3 p-2 ${bgcolor500} ${lighttext} text-lg rounded-lg items-center`}
-          onClick={updateHabit}
-        >
-          Update
-        </button>
+        <div>
+          <button
+            className={`text-center my-3 p-2 ${bgcolor500} ${lighttext} text-lg rounded-lg items-center`}
+            onClick={updateHabit}
+          >
+            Update
+          </button>
+
+          <span className="mx-5">OR</span>
+
+          <button
+            onClick={deleteHabit}
+            className="text-center my-3 p-2 text-black bg-red-500 text-lg rounded-lg items-center"
+          >
+            Delete
+          </button>
+        </div>
       </div>
     </>
   );

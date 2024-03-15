@@ -86,7 +86,6 @@ const SingleGoal = ({
       }
     }
   };
-
   const handleUpdate = () => {
     if (status == 1) {
       return;
@@ -219,7 +218,7 @@ const SingleGoal = ({
                 Created on{" "}
                 {dayjs(new Date(id)).format("DD MMM YYYY, hh:mm:ss A")}
               </p>
-              {lastUpdated != 0 && (
+              {status != 0 && (
                 <p className="text-xs text-center">
                   Completed on{" "}
                   {dayjs(new Date(lastUpdated)).format(

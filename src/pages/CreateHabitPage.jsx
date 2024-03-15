@@ -11,7 +11,7 @@ const CreateHabitPage = () => {
   const [habitName, setHabitName] = useState("");
   const [habitLevel, setHabitLevel] = useState("");
   const { state, dispatch } = useContext(HabitechContext);
-  const { bgcolor500, lighttext } = useColorTheme();
+  const { bgcolor500, lighttext, textcolor500 } = useColorTheme();
   const navigate = useNavigate();
 
   const createHabit = () => {
@@ -71,7 +71,12 @@ const CreateHabitPage = () => {
   return (
     <>
       <Toaster />
-      <div className="ml-[20%] mt-10">
+      <div
+        className={`text-center mt-10 ml-5 text-2xl font-bold ${textcolor500}`}
+      >
+        <h1>Let's create a habit for you!</h1>
+      </div>
+      <div className="ml-5 mt-2">
         <label className="text-2xl block" htmlFor="habit">
           Habit Name
         </label>
