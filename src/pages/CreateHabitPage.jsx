@@ -41,6 +41,7 @@ const CreateHabitPage = () => {
       expValue: habitLevel == "easy" ? 1 : habitLevel == "decent" ? 2 : 3,
       posCount: 0,
       negCount: 0,
+      analytics: [],
     };
 
     axios

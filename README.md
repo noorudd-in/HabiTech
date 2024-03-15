@@ -41,14 +41,14 @@ Below are features that I am planning to add in the app.
 
 - [x] Ability to create/edit/delete/view habits.
 - [x] Ability to create/edit/delete/view goals.
-- [ ] Ability to create/edit/delete/view plans.
+- [x] Ability to create/edit/delete/view plans.
 - [x] Ability to create/edit/delete/view tags.
 - [x] Gamify app (health, coins, etc).
 - [x] Sort goals by Timeline/Tags/Types/Priority.
-- [ ] Show active VS inactive goals.
+- [x] Show active VS inactive goals.
 - [x] Show last activity.
-- [ ] Sort goals based on duedate by default.
-- [ ] Allow users to show/hide subtask.
+- [x] Sort goals based on duedate by default.
+- [x] Allow users to show/hide subtask.
 - [ ] Track and show all the activities performed by user (Activity Feed).
 - [x] Add Animations/Transisition/Smooth Scroll.
 - [x] Add progress bar when habit is updated.
@@ -73,6 +73,8 @@ Below are features that I am planning to add in the app.
 - [ ] Allow users to set different background/fonts.
 - [ ] Allow users to print/export/share the habits/goals/plans list.
 - [ ] Page for `How to use app`
+- [ ] Provide users the badges/rewards if are eligible (e.g. completed 5 goals, achieved level 5, etc).
+- [ ] Allow users to pin goal or habit.
 
 ## 🐞 Issues
 
@@ -89,6 +91,7 @@ Issues/Bugs which I am not interested to fix due to lack of time or resources.
 
 ## ⚡️ Build In Public Progress
 
-- [HabiTech V1.0](https://www.linkedin.com/posts/nooruddin-shaikh_developer-habits-habitech-activity-7164270082024431616-L-IQ?utm_source=share&utm_medium=member_desktop)
-- [HabiTech V2.0](https://www.linkedin.com/posts/nooruddin-shaikh_tailwindcss-react-api-activity-7166338128054534147-_NnH?utm_source=share&utm_medium=member_desktop)
-- [HabiTech V3.0](https://www.linkedin.com/posts/nooruddin-shaikh_framermotion-priority-deadline-activity-7168499155403751424-k7FX?utm_source=share&utm_medium=member_desktop)
+- [HabiTech V1.0](https://www.linkedin.com/posts/nooruddin-shaikh_developer-habits-habitech-activity-7164270082024431616-L-IQ)
+- [HabiTech V2.0](https://www.linkedin.com/posts/nooruddin-shaikh_tailwindcss-react-api-activity-7166338128054534147-_NnH)
+- [HabiTech V3.0](https://www.linkedin.com/posts/nooruddin-shaikh_framermotion-priority-deadline-activity-7168499155403751424-k7FX)
+- [HabiTech V4.0](https://www.linkedin.com/posts/nooruddin-shaikh_framermotion-priority-deadline-activity-7172513445098078208-qIRy)
