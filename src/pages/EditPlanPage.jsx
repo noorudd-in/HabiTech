@@ -18,8 +18,9 @@ const EditPlanPage = () => {
   const [toggleDuration, setToggleDuration] = useState("time");
   const [toggleRepeat, setToggleRepeat] = useState("");
   const [toggleDate, setToggleDate] = useState("today");
+  const [durationValue, setDurationValue] = useState("select");
   const { state, dispatch } = useContext(HabitechContext);
-  const { bgcolor500, border400, lighttext } = useColorTheme();
+  const { bgcolor500, border400, lighttext, textcolor500 } = useColorTheme();
   const navigate = useNavigate();
   let { id } = useParams();
 
@@ -33,6 +34,12 @@ const EditPlanPage = () => {
   };
 
   const setDuration = (value) => {
+    // Redirect user to select custom time if dropdown is custom!
+    if (value == "custom") {
+      setToggleDuration("time");
+      return;
+    }
+    setDurationValue(value);
     const num = value.slice(0, 2);
     const type = value.slice(2, 3) == "M" ? "minute" : "hour";
     const startTime = dayjs().hour(start.slice(0, 2)).minute(start.slice(3, 5));
@@ -53,6 +60,30 @@ const EditPlanPage = () => {
     if (value == "tomorrow") {
       const tomorrow = dayjs().add(1, "day");
       setDate(tomorrow.valueOf());
+    }
+  };
+
+  // If user select custom time then calculate the duration and set dropdown based on the value
+  const settingEndTime = (value) => {
+    setEnd(value);
+    const startTime = start.split(":");
+    const endTime = value.split(":");
+    const startDate = dayjs().hour(startTime[0]).minute(startTime[1]);
+    const endDate = dayjs().hour(endTime[0]).minute(endTime[1]);
+    const totalMinutes = endDate.diff(startDate, "minute");
+    let durationvalue = "";
+    if (totalMinutes == 5) durationvalue = "05M";
+    if (totalMinutes == 10) durationvalue = "10M";
+    if (totalMinutes == 15) durationvalue = "15M";
+    if (totalMinutes == 30) durationvalue = "30M";
+    if (totalMinutes == 45) durationvalue = "45M";
+    if (totalMinutes == 60) durationvalue = "01H";
+    if (totalMinutes == 120) durationvalue = "02H";
+    if (totalMinutes == 480) durationvalue = "08H";
+    if (durationvalue == "") {
+      setDurationValue("custom");
+    } else {
+      setDurationValue(durationvalue);
     }
   };
 
@@ -99,12 +130,13 @@ const EditPlanPage = () => {
     let newPlans = [...state.plans];
     newPlans.map((plan) => {
       if (plan.id == id) {
-        (plan.name = name),
-          (plan.start = start),
-          (plan.end = end),
-          (plan.date = date),
-          (plan.repeat = repeat),
-          (plan.description = description);
+        plan.name = name;
+        plan.start = start;
+        plan.end = end;
+        plan.date = date;
+        plan.repeat = repeat;
+        plan.description = description;
+        plan.lastUpdated = Date.now();
       }
     });
 
@@ -174,6 +206,27 @@ const EditPlanPage = () => {
               setToggleDate("tomorrow");
             }
           }
+
+          // Set dropdown value after calculating duration from start to end time.
+          const startTime = plan.start.split(":");
+          const endTime = plan.end.split(":");
+          const startDate = dayjs().hour(startTime[0]).minute(startTime[1]);
+          const endDate = dayjs().hour(endTime[0]).minute(endTime[1]);
+          const totalMinutes = endDate.diff(startDate, "minute");
+          let durationvalue = "";
+          if (totalMinutes == 5) durationvalue = "05M";
+          if (totalMinutes == 10) durationvalue = "10M";
+          if (totalMinutes == 15) durationvalue = "15M";
+          if (totalMinutes == 30) durationvalue = "30M";
+          if (totalMinutes == 45) durationvalue = "45M";
+          if (totalMinutes == 60) durationvalue = "01H";
+          if (totalMinutes == 120) durationvalue = "02H";
+          if (totalMinutes == 480) durationvalue = "08H";
+          if (durationvalue == "") {
+            setDurationValue("custom");
+          } else {
+            setDurationValue(durationvalue);
+          }
           break;
         }
       }
@@ -182,16 +235,12 @@ const EditPlanPage = () => {
   return (
     <>
       <Toaster />
-      <div className="ml-5 mt-10">
-        <div id="deleteGoal" className="text-center mt-5">
-          <button
-            onClick={deletePlan}
-            className="mb-5 inline-flex items-center px-4 py-2 text-sm font-medium text-center text-black bg-red-500 rounded-lg"
-          >
-            Delete
-          </button>
-        </div>
-
+      <div
+        className={`text-center mt-10 ml-5 text-2xl font-bold ${textcolor500}`}
+      >
+        <h1>Whoopsie... Let's fix this plan!</h1>
+      </div>
+      <div className="ml-5 mt-2">
         <div>
           <label className="text-xl flex" htmlFor="planname">
             What's on your mind?
@@ -251,6 +300,7 @@ const EditPlanPage = () => {
               {toggleDuration == "duration" && (
                 <div>
                   <select
+                    value={durationValue}
                     id="type"
                     className=" my-1 p-1 border border-gray-300 text-gray-900 text-md rounded-md block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                     onChange={(e) => setDuration(e.target.value)}
@@ -261,9 +311,10 @@ const EditPlanPage = () => {
                     <option value="15M">15 minutes</option>
                     <option value="30M">30 minutes</option>
                     <option value="45M">45 minutes</option>
-                    <option value="01H">1 hours</option>
+                    <option value="01H">1 hour</option>
                     <option value="02H">2 hours</option>
                     <option value="08H">8 hours</option>
+                    <option value="custom">Custom</option>
                   </select>
                 </div>
               )}
@@ -277,7 +328,7 @@ const EditPlanPage = () => {
                     min={start}
                     max="23:55"
                     className="text-black dark:text-white p-1 rounded dark:bg-gray-700 dark:border-gray-600"
-                    onChange={(e) => setEnd(e.target.value)}
+                    onChange={(e) => settingEndTime(e.target.value)}
                   />
                 </div>
               )}
@@ -357,12 +408,23 @@ const EditPlanPage = () => {
           ></textarea>
         </div>
 
-        <button
-          className={`text-center my-3 p-2 ${bgcolor500} ${lighttext} text-lg rounded-lg items-center`}
-          onClick={updatePlan}
-        >
-          Update
-        </button>
+        <div>
+          <button
+            className={`text-center my-3 p-2 ${bgcolor500} ${lighttext} text-lg rounded-lg items-center`}
+            onClick={updatePlan}
+          >
+            Update
+          </button>
+
+          <span className="mx-5">OR</span>
+
+          <button
+            onClick={deletePlan}
+            className="text-center my-3 p-2 text-black bg-red-500 text-lg rounded-lg items-center"
+          >
+            Delete
+          </button>
+        </div>
       </div>
     </>
   );

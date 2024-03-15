@@ -9,7 +9,7 @@ import axios from "axios";
 const CreateTagForm = () => {
   const { state, dispatch } = useContext(HabitechContext);
   const [newTag, setNewTag] = useState("");
-  const { bgcolor500, lighttext, customcolor } = useColorTheme();
+  const { bgcolor500, lighttext, customcolor, textcolor500 } = useColorTheme();
 
   const creatTag = () => {
     if (state.availableTags.includes(newTag.toLowerCase())) {
@@ -42,7 +42,12 @@ const CreateTagForm = () => {
   return (
     <>
       <Toaster />
-      <div className="ml-28 mt-10 mb-5">
+      <div
+        className={`text-center mt-10 ml-5 text-2xl font-bold ${textcolor500}`}
+      >
+        <h1>Let's create tags!</h1>
+      </div>
+      <div className="ml-5 mt-2 mb-5">
         <label className="text-lg block" htmlFor="tag">
           Tag Name
         </label>

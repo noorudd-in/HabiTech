@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useColorTheme } from "../hooks/useColorTheme";
 import toast, { Toaster } from "react-hot-toast";
 import { toastError } from "../components/common/Toast";
@@ -19,7 +19,8 @@ const CreatePlanPage = () => {
   const [toggleDuration, setToggleDuration] = useState("duration");
   const [toggleRepeat, setToggleRepeat] = useState("once");
   const [toggleDate, setToggleDate] = useState("today");
-  const { bgcolor500, border400, lighttext } = useColorTheme();
+  const [durationValue, setDurationValue] = useState("select");
+  const { bgcolor500, border400, lighttext, textcolor500 } = useColorTheme();
   const navigate = useNavigate();
 
   const setNow = () => {
@@ -28,11 +29,17 @@ const CreatePlanPage = () => {
   };
 
   const setDuration = (value) => {
+    // Redirect user to select custom time if dropdown is custom!
+    if (value == "custom") {
+      setToggleDuration("time");
+      return;
+    }
     const num = value.slice(0, 2);
     const type = value.slice(2, 3) == "M" ? "minute" : "hour";
     const startTime = dayjs().hour(start.slice(0, 2)).minute(start.slice(3, 5));
     const endTime = startTime.add(parseInt(num), type);
     setEnd(endTime.toDate().toLocaleTimeString().slice(0, 5));
+    setDurationValue(value);
   };
 
   const settingRepeat = (value) => {
@@ -48,6 +55,30 @@ const CreatePlanPage = () => {
     if (value == "tomorrow") {
       const tomorrow = dayjs().add(1, "day");
       setDate(tomorrow.valueOf());
+    }
+  };
+
+  // If user select custom time then calculate the duration and set dropdown based on the value
+  const settingEndTime = (value) => {
+    setEnd(value);
+    const startTime = start.split(":");
+    const endTime = value.split(":");
+    const startDate = dayjs().hour(startTime[0]).minute(startTime[1]);
+    const endDate = dayjs().hour(endTime[0]).minute(endTime[1]);
+    const totalMinutes = endDate.diff(startDate, "minute");
+    let durationvalue = "";
+    if (totalMinutes == 5) durationvalue = "05M";
+    if (totalMinutes == 10) durationvalue = "10M";
+    if (totalMinutes == 15) durationvalue = "15M";
+    if (totalMinutes == 30) durationvalue = "30M";
+    if (totalMinutes == 45) durationvalue = "45M";
+    if (totalMinutes == 60) durationvalue = "01H";
+    if (totalMinutes == 120) durationvalue = "02H";
+    if (totalMinutes == 480) durationvalue = "08H";
+    if (durationvalue == "") {
+      setDurationValue("custom");
+    } else {
+      setDurationValue(durationvalue);
     }
   };
 
@@ -99,7 +130,9 @@ const CreatePlanPage = () => {
       date: date,
       repeat: repeat,
       description: description,
+      lastUpdated: Date.now(),
     };
+    console.log(newPlan);
 
     axios
       .put(API_URL, {
@@ -119,10 +152,22 @@ const CreatePlanPage = () => {
       });
   };
 
+  useEffect(() => {
+    if (state.user.name == undefined) {
+      navigate("/");
+    }
+  });
+
   return (
     <>
       <Toaster />
-      <div className="ml-5 mt-10">
+      {/* Heading */}
+      <div
+        className={`text-center mt-10 ml-5 text-2xl font-bold ${textcolor500}`}
+      >
+        <h1>Let's create a plan for you!</h1>
+      </div>
+      <div className="ml-5 mt-2">
         <div>
           <label className="text-xl flex" htmlFor="planname">
             What's on your mind?
@@ -183,6 +228,7 @@ const CreatePlanPage = () => {
                 <div>
                   <select
                     id="type"
+                    value={durationValue}
                     className=" my-1 p-1 border border-gray-300 text-gray-900 text-md rounded-md block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                     onChange={(e) => setDuration(e.target.value)}
                   >
@@ -195,6 +241,7 @@ const CreatePlanPage = () => {
                     <option value="01H">1 hours</option>
                     <option value="02H">2 hours</option>
                     <option value="08H">8 hours</option>
+                    <option value="custom">Custom</option>
                   </select>
                 </div>
               )}
@@ -208,7 +255,7 @@ const CreatePlanPage = () => {
                     min={start}
                     max="23:55"
                     className="text-black dark:text-white p-1 rounded dark:bg-gray-700 dark:border-gray-600"
-                    onChange={(e) => setEnd(e.target.value)}
+                    onChange={(e) => settingEndTime(e.target.value)}
                   />
                 </div>
               )}

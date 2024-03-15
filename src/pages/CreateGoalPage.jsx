@@ -16,7 +16,7 @@ import { useColorTheme } from "../hooks/useColorTheme";
 import AvailableSubtask from "../components/common/AvailableSubtask";
 
 const CreateGoalPage = () => {
-  const { bgcolor500, lighttext } = useColorTheme();
+  const { bgcolor500, lighttext, textcolor500 } = useColorTheme();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState("");
@@ -91,7 +91,7 @@ const CreateGoalPage = () => {
       tags: tags,
       description: description,
       subtasks: task,
-      lastUpdated: 0,
+      lastUpdated: Date.now(),
     };
 
     axios
@@ -129,7 +129,13 @@ const CreateGoalPage = () => {
   return (
     <>
       <Toaster />
-      <div className="ml-5 mt-10">
+      <div
+        className={`text-center mt-10 ml-5 text-2xl font-bold ${textcolor500}`}
+      >
+        <h1>Let's create a goal for you!</h1>
+      </div>
+
+      <div className="ml-5 mt-2">
         <label className="text-xl flex" htmlFor="goalname">
           Goal Name
           <p className="text-red-500 ml-1">*</p>
@@ -224,6 +230,13 @@ const CreateGoalPage = () => {
           Tags
         </label>
         <div>
+          <button
+            className={`mb-3 underline underline-offset-4 text-sm font-medium text-center text-black ${textcolor500}`}
+            type="button"
+            onClick={() => toggleDropdown("add-tag")}
+          >
+            Add a tag
+          </button>
           {tags[0] == undefined ? (
             <p>No tags found.</p>
           ) : (
@@ -239,6 +252,13 @@ const CreateGoalPage = () => {
           Sub-tasks
         </label>
         <div>
+          <button
+            className={`mb-3 underline underline-offset-4 text-sm font-medium text-center text-black ${textcolor500}`}
+            type="button"
+            onClick={() => toggleDropdown("add-task")}
+          >
+            Add a subtask
+          </button>
           {task[0] == undefined ? (
             <p>No sub-tasks found.</p>
           ) : (
@@ -246,32 +266,13 @@ const CreateGoalPage = () => {
           )}
         </div>
 
-        <div className="text-center mt-5">
-          <button
-            className={`mr-5 inline-flex items-center px-4 py-2 text-sm font-medium text-center text-black ${bgcolor500} rounded-lg`}
-            type="button"
-            onClick={() => toggleDropdown("add-tag")}
-          >
-            Add a tag
-          </button>
-          <button
-            className={`inline-flex items-center px-4 py-2 text-sm font-medium text-center text-black ${bgcolor500} rounded-lg`}
-            type="button"
-            onClick={() => toggleDropdown("add-task")}
-          >
-            Add subtask
-          </button>
-        </div>
-
-        <div id="createGoal" className="text-center mt-5">
-          <button
-            className={`inline-flex items-center px-4 py-2 text-sm font-medium text-center text-black ${bgcolor500} rounded-lg`}
-            type="button"
-            onClick={handleCreateGoal}
-          >
-            Create Goal
-          </button>
-        </div>
+        <button
+          className={`text-center my-3 p-2 ${bgcolor500} ${lighttext} text-lg rounded-lg items-center`}
+          type="button"
+          onClick={handleCreateGoal}
+        >
+          Create
+        </button>
 
         {/* Modal */}
         <div>

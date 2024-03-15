@@ -1,16 +1,7 @@
 import { useColorTheme } from "../../hooks/useColorTheme";
+import dayjs from "dayjs";
 
-const HabitStatsModal = ({
-  toggleModal,
-  setToggleModal,
-  id,
-  name,
-  difficulty,
-  lastUpdated,
-  expValue,
-  posCount,
-  negCount,
-}) => {
+const Modal = ({ toggleModal, setToggleModal, data }) => {
   const { bgcolor500, lighttext } = useColorTheme();
   return (
     <div>
@@ -23,45 +14,53 @@ const HabitStatsModal = ({
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <div className="text-center p-4 md:p-5 border-b rounded-t dark:border-gray-600">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                Statistics
+                {/* Heading */}
+                {data.name}
               </h3>
             </div>
 
+            {/* Content */}
+
             <div className="p-5 md:p-q space-y-1">
+              {data.posCount !== undefined && (
+                <div>
+                  You have completed this habit {data.posCount} time(s) and
+                  skipped {data.negCount} time(s) which gives you{" "}
+                  {data.posCount * 5} coins and {data.posCount * data.expValue}{" "}
+                  experience points so far.
+                </div>
+              )}
+              {data.start != undefined && (
+                <div>
+                  <div>
+                    Time: {data.start.format("h:MM A")} to{" "}
+                    {data.end.format("h:MM A")}
+                  </div>
+                  <div>
+                    {data.description != "" && (
+                      <h1>Description: {data.description}</h1>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="text-sm font-thin px-5 md:p-q space-y-1">
               <p>
-                Name:
-                <span> {name}</span>
-              </p>
-              <p>
-                Created on:
+                Created at:
                 <span>
-                  {new Date(id).toLocaleString("en-GB", { hour12: true })}
+                  {" "}
+                  {dayjs(new Date(data.id)).format("DD/MM/YYYY h:mm A")}
                 </span>
               </p>
               <p>
-                Difficulty Level:{" "}
-                <span>{difficulty[0].toUpperCase() + difficulty.slice(1)}</span>
-              </p>
-              <p>
-                Habit last updated on:{" "}
+                Last modified at:
                 <span>
-                  {new Date(lastUpdated).toLocaleString("en-GB", {
-                    hour12: true,
-                  })}
+                  {" "}
+                  {dayjs(new Date(data.lastUpdated)).format(
+                    "DD/MM/YYYY h:mm A"
+                  )}
                 </span>
-              </p>
-              <br />
-              <p>
-                You have completed this habit
-                <span className="font-extrabold">{posCount}</span> time(s) and
-                skipped <span className="font-extrabold">{negCount}</span>{" "}
-                time(s).
-              </p>
-              <p>
-                Till now you have earned{" "}
-                <span className="font-extrabold">{posCount * 5}</span> coins and{" "}
-                <span className="font-extrabold">{posCount * expValue}</span>{" "}
-                experience with this habit.
               </p>
             </div>
 
@@ -81,4 +80,4 @@ const HabitStatsModal = ({
   );
 };
 
-export default HabitStatsModal;
+export default Modal;

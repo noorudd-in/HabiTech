@@ -1,12 +1,23 @@
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
+import Modal from "../common/Modal";
 import { useColorTheme } from "../../hooks/useColorTheme";
 import { motion } from "framer-motion";
 import { useLongPress } from "@uidotdev/usehooks";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 dayjs.extend(duration);
 
-const SinglePlan = ({ id, name, start, end, status }) => {
+const SinglePlan = ({
+  id,
+  name,
+  start,
+  end,
+  status,
+  lastUpdated,
+  description,
+}) => {
+  const [toggleModal, setToggleModal] = useState("hidden");
   const navigate = useNavigate();
   const { bgcolor500 } = useColorTheme();
 
@@ -17,6 +28,10 @@ const SinglePlan = ({ id, name, start, end, status }) => {
     },
     { threshold: 500 }
   );
+
+  const handleClick = () => {
+    setToggleModal("");
+  };
 
   let duration = end?.diff(start, "minute");
   let hours =
@@ -29,42 +44,58 @@ const SinglePlan = ({ id, name, start, end, status }) => {
       : parseInt(duration % 60);
 
   return (
-    <motion.div whileTap={{ scale: 0.95 }}>
-      <div
-        id={status == 0 ? "current" : ""}
-        {...attrs}
-        className={`border m-2 rounded-lg mb-5 ${
-          status == 0 && "animate-pulse"
-        }`}
-      >
-        <div className="w-11/12 mx-auto mt-2">
-          <div
-            className={`h-1 w-full ${
-              status > 0 ? "bg-gray-400" : ""
-            } overflow-hidden rounded-full`}
-          >
+    <>
+      <Modal
+        toggleModal={toggleModal}
+        setToggleModal={setToggleModal}
+        data={{
+          id: id,
+          name: name,
+          start: start,
+          end: end,
+          description: description,
+          lastUpdated: lastUpdated,
+        }}
+      />
+
+      <motion.div whileTap={{ scale: 0.95 }}>
+        <div
+          id={status == 0 ? "current" : ""}
+          {...attrs}
+          className={`border m-2 rounded-lg mb-5 ${
+            status == 0 && "animate-pulse"
+          }`}
+          onClick={handleClick}
+        >
+          <div className="w-11/12 mx-auto mt-2">
             <div
-              className={`w-full h-full ${
-                status > 0 ? "" : bgcolor500
-              } rounded-full ${
-                status == 0 && "animate-progress origin-left-right"
-              } `}
-            ></div>
+              className={`h-1 w-full ${
+                status > 0 ? "bg-gray-400" : ""
+              } overflow-hidden rounded-full`}
+            >
+              <div
+                className={`w-full h-full ${
+                  status > 0 ? "" : bgcolor500
+                } rounded-full ${
+                  status == 0 && "animate-progress origin-left-right"
+                } `}
+              ></div>
+            </div>
+          </div>
+
+          <div className="flex justify-between w-11/12 mx-auto">
+            <div className="text-xs">{dayjs(start).format("hh:mm A")}</div>
+            <div className="text-xs">{`${hours !== 0 ? hours + "h" : ""} ${
+              minutes !== 0 ? minutes + "m" : ""
+            }`}</div>
+            <div className="text-xs">{dayjs(end).format("hh:mm A")}</div>
+          </div>
+          <div>
+            <h1 className="text-lg text-center font-semibold">{name}</h1>
           </div>
         </div>
-
-        <div className="flex justify-between w-11/12 mx-auto">
-          <div className="text-xs">{dayjs(start).format("hh:mm A")}</div>
-          <div className="text-xs">{`${hours !== 0 ? hours + "h" : ""} ${
-            minutes !== 0 ? minutes + "m" : ""
-          }`}</div>
-          <div className="text-xs">{dayjs(end).format("hh:mm A")}</div>
-        </div>
-        <div>
-          <h1 className="text-lg text-center font-semibold">{name}</h1>
-        </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </>
   );
 };
 
