@@ -1,5 +1,6 @@
 import { useColorTheme } from "../../hooks/useColorTheme";
 import dayjs from "dayjs";
+import AreaGraph from "../chart/AreaGraph";
 
 const Modal = ({ toggleModal, setToggleModal, data }) => {
   const { bgcolor500, lighttext } = useColorTheme();
@@ -20,7 +21,6 @@ const Modal = ({ toggleModal, setToggleModal, data }) => {
             </div>
 
             {/* Content */}
-
             <div className="p-5 md:p-q space-y-1">
               {data.posCount !== undefined && (
                 <div>
@@ -37,15 +37,30 @@ const Modal = ({ toggleModal, setToggleModal, data }) => {
                     {data.end.format("h:MM A")}
                   </div>
                   <div>
-                    {data.description != "" && (
+                    {data.description != "" ? (
                       <h1>Description: {data.description}</h1>
+                    ) : (
+                      <h1>No description found!</h1>
                     )}
                   </div>
                 </div>
               )}
             </div>
 
-            <div className="text-sm font-thin px-5 md:p-q space-y-1">
+            {data.analytics != undefined && (
+              <div>
+                {data.analytics[5] == undefined ? (
+                  <h1 className="text-center m-3">
+                    Data too low to show analytical chart. Regulary update the
+                    habit to view chart.
+                  </h1>
+                ) : (
+                  <AreaGraph data={data.analytics} />
+                )}
+              </div>
+            )}
+
+            <div className="text-sm font-thin px-5 md:p-q space-y-1 mb-3">
               <p>
                 Created at:
                 <span>

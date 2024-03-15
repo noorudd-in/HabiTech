@@ -5,7 +5,6 @@ import { API_URL } from "../../constants";
 import SingleHabit from "./SingleHabit";
 import axios from "axios";
 import Shimmer from "../../pages/Shimmer";
-import Test from "./Test";
 
 const RenderHabits = () => {
   const { state, dispatch, appLoading } = useContext(HabitechContext);
@@ -66,6 +65,7 @@ const RenderHabits = () => {
           expValue,
           posCount,
           negCount,
+          analytics,
         }) => {
           return (
             <SingleHabit
@@ -78,11 +78,11 @@ const RenderHabits = () => {
               expValue={expValue}
               posCount={posCount}
               negCount={negCount}
+              analytics={analytics}
             />
           );
         }
       )}
-      <Test />
     </div>
   );
 };

@@ -24,6 +24,7 @@ const SingleHabit = ({
   expValue,
   posCount,
   negCount,
+  analytics,
 }) => {
   const [toggleModal, setToggleModal] = useState("hidden");
   const { state, dispatch } = useContext(HabitechContext);
@@ -41,14 +42,27 @@ const SingleHabit = ({
 
   // Find the habit with given id and return updated habits array
   const findAndUpdateHabit = (type) => {
+    let newposCount;
+    let newnegCount;
     return state.habits.map((habit) => {
       if (habit.id == id) {
+        if (type == 1) {
+          newposCount = habit.posCount + 1;
+          newnegCount = habit.negCount;
+        } else {
+          newposCount = habit.posCount;
+          newnegCount = habit.negCount + 1;
+        }
         return {
           ...habit,
           status: type,
           lastUpdated: Date.now(),
-          posCount: type == 1 ? habit.posCount + 1 : habit.posCount,
-          negCount: type == -1 ? habit.negCount + 1 : habit.negCount,
+          posCount: newposCount,
+          negCount: newnegCount,
+          analytics: [
+            ...habit.analytics,
+            { date: Date.now(), count: newposCount - newnegCount },
+          ],
         };
       }
       return habit;
@@ -148,6 +162,7 @@ const SingleHabit = ({
           expValue: expValue,
           posCount: posCount,
           negCount: negCount,
+          analytics: analytics,
         }}
       />
 
