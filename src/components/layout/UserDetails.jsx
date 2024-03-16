@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import Shimmer from "../../pages/Shimmer";
 import CoinIcon from "../icons/CoinIcon";
-import BadgeIcon from "../icons/BadgeIcon";
+import LevelIcon from "../icons/LevelIcon";
 
 const UserDetails = () => {
   const { state, appLoading } = useContext(HabitechContext);
@@ -20,7 +20,7 @@ const UserDetails = () => {
 
       <div className="flex">
         <div className="flex text-xl">
-          <BadgeIcon />
+          <LevelIcon />
           <h1 className="mr-5">{parseInt(state.user.exp / 100)}</h1>
         </div>
 
