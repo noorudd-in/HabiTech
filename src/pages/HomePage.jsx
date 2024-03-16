@@ -30,6 +30,7 @@ const HomePage = () => {
           plans: data?.plans,
           lastEdited: data?.lastEdited,
           availableTags: data?.availableTags,
+          store: data?.store,
           theme: data?.theme,
         },
       });
