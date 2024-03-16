@@ -8,6 +8,7 @@ const initialState = {
   plans: [],
   lastEdited: "",
   availableTags: [],
+  store: {},
   theme: "",
 };
 

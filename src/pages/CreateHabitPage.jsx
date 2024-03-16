@@ -79,7 +79,7 @@ const CreateHabitPage = () => {
       </div>
       <div className="ml-5 mt-2">
         <label className="text-2xl block" htmlFor="habit">
-          Habit Name
+          What's the habit?
         </label>
         <input
           id="habit"
@@ -91,7 +91,7 @@ const CreateHabitPage = () => {
           required
         />
         <label className="text-2xl block mt-2" htmlFor="habit-level">
-          Habit Level
+          How difficult is it?
         </label>
         <select
           id="habit-level"

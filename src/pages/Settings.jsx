@@ -1,11 +1,5 @@
-import ChangeTheme from "../components/layout/ChangeTheme";
 const Settings = () => {
-  return (
-    <div>
-      Hello Settings
-      <ChangeTheme />
-    </div>
-  );
+  return <div>Hello Settings</div>;
 };
 
 export default Settings;

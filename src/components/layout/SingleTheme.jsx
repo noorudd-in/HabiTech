@@ -1,46 +1,35 @@
-import { useContext } from "react";
-import { HabitechContext } from "../../contexts/HabitechContext";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { API_URL } from "../../constants";
-
-const SingleTheme = ({ name, lower, higher }) => {
-  const { state, dispatch } = useContext(HabitechContext);
-  const navigate = useNavigate();
-  const handleSelectTheme = (id) => {
-    //Check is state is loaded or not;
-    if (state.user.name == undefined) {
-      navigate(
-        "/?toastType=toastError&toastMessage=Something went wrong. Please try again!"
-      );
-      return;
-    }
-    //alert(`Do you want to change the theme to ${name}?`);
-
-    if (window.confirm(`Do you want to change the theme to ${name}?`)) {
-      axios
-        .put(API_URL, {
-          ...state,
-          theme: name.toLowerCase(),
-        })
-        .then((res) => {
-          dispatch({
-            type: "FETCH_DATA",
-            payload: {
-              theme: res?.data?.theme,
-            },
-          });
-          navigate("/?toastType=toastSuccess&toastMessage=New Theme Applied!");
-        });
-    }
-  };
+import CoinIcon from "../icons/CoinIcon";
+import { useColorTheme } from "../../hooks/useColorTheme";
+const SingleTheme = ({
+  name,
+  color,
+  price,
+  isPurchased,
+  selected,
+  handleClick,
+}) => {
+  const { bgcolor500 } = useColorTheme();
   return (
-    <div onClick={() => handleSelectTheme(name)}>
-      <div className="mx-2">
-        <div className={`w-16 h-8 ${lower}`}></div>
-        <div className={`w-16 h-8 ${higher}`}></div>
+    <div onClick={handleClick}>
+      <div className="m-3 p-1 mb-8">
+        {selected == name && (
+          <div
+            className={`h-5 w-5 -mt-2 ml-14 ${bgcolor500} border border-black text-right absolute rounded-full`}
+          ></div>
+        )}
+        <div className={`p-8 rounded-xl ${color}`}></div>
+
+        <div className="mt-2">
+          {isPurchased ? (
+            <h1>Owned</h1>
+          ) : (
+            <div className="flex justify-center">
+              <h1 className="mr-1 font-semibold">{price}</h1>
+              <CoinIcon w={"w-5"} h={"h-6"} />
+            </div>
+          )}
+        </div>
       </div>
-      <h1 className="text-center mt-1">{name}</h1>
     </div>
   );
 };

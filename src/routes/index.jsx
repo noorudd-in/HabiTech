@@ -12,6 +12,8 @@ import AnimatePage from "../pages/AnimatePage";
 import EditHabitPage from "../pages/EditHabitPage";
 import EditGoalPage from "../pages/EditGoalPage";
 import EditPlanPage from "../pages/EditPlanPage";
+import Store from "../components/setting/Store";
+import Theme from "../components/setting/Theme";
 
 const HABITECH_ROUTES = createBrowserRouter([
   {
@@ -27,7 +29,7 @@ const HABITECH_ROUTES = createBrowserRouter([
     path: "/setting",
     element: (
       <AnimatePage>
-        <Settings />
+        <Theme />
         <GlobalFooter />
       </AnimatePage>
     ),
