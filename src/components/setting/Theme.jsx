@@ -1,15 +1,17 @@
 import SingleTheme from "../layout/SingleTheme";
 import { useColorTheme } from "../../hooks/useColorTheme";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import { toast, Toaster } from "react-hot-toast";
-import { toastError, toastSuccess } from "../common/Toast";
+import { toastError } from "../common/Toast";
 import axios from "axios";
 import { API_URL } from "../../constants";
+import { useNavigate } from "react-router-dom";
 
 const Theme = () => {
   const { state, dispatch } = useContext(HabitechContext);
   const { textcolor500 } = useColorTheme();
+  const navigate = useNavigate();
 
   const handleThemeClick = (name, color, price, isPurchased) => {
     // ignore if theme is same as selected.
@@ -78,6 +80,12 @@ const Theme = () => {
         });
     }
   };
+
+  useEffect(() => {
+    if (state.user.name == undefined) {
+      navigate("/");
+    }
+  }, []);
   return (
     <>
       <Toaster />

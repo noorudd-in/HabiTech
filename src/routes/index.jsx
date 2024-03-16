@@ -12,7 +12,7 @@ import AnimatePage from "../pages/AnimatePage";
 import EditHabitPage from "../pages/EditHabitPage";
 import EditGoalPage from "../pages/EditGoalPage";
 import EditPlanPage from "../pages/EditPlanPage";
-import Store from "../components/setting/Store";
+import CommingSoon from "../components/layout/CommingSoon";
 import Theme from "../components/setting/Theme";
 
 const HABITECH_ROUTES = createBrowserRouter([
@@ -26,10 +26,30 @@ const HABITECH_ROUTES = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
+    path: "/calender",
+    element: (
+      <AnimatePage>
+        <CommingSoon />
+        <GlobalFooter />
+      </AnimatePage>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/pomodoro",
+    element: (
+      <AnimatePage>
+        <CommingSoon />
+        <GlobalFooter />
+      </AnimatePage>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
     path: "/setting",
     element: (
       <AnimatePage>
-        <Theme />
+        <Settings />
         <GlobalFooter />
       </AnimatePage>
     ),
@@ -40,26 +60,6 @@ const HABITECH_ROUTES = createBrowserRouter([
     element: (
       <AnimatePage>
         <CreatePage />
-        <GlobalFooter />
-      </AnimatePage>
-    ),
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/calender",
-    element: (
-      <AnimatePage>
-        <Settings />
-        <GlobalFooter />
-      </AnimatePage>
-    ),
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/pomodoro",
-    element: (
-      <AnimatePage>
-        <Settings />
         <GlobalFooter />
       </AnimatePage>
     ),
@@ -137,6 +137,76 @@ const HABITECH_ROUTES = createBrowserRouter([
           <EditPlanPage />
           <GlobalFooter />
         </AnimatePage>
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/theme",
+    element: (
+      <>
+        <Theme />
+        <GlobalFooter />
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/avatar",
+    element: (
+      <>
+        <CommingSoon />
+        <GlobalFooter />
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/reward",
+    element: (
+      <>
+        <CommingSoon />
+        <GlobalFooter />
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/sound",
+    element: (
+      <>
+        <CommingSoon />
+        <GlobalFooter />
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/lock",
+    element: (
+      <>
+        <CommingSoon />
+        <GlobalFooter />
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/terms",
+    element: (
+      <>
+        <CommingSoon />
+        <GlobalFooter />
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/privacy",
+    element: (
+      <>
+        <CommingSoon />
+        <GlobalFooter />
       </>
     ),
     errorElement: <ErrorPage />,
