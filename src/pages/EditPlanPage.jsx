@@ -140,10 +140,18 @@ const EditPlanPage = () => {
       }
     });
 
+    let newActivity = {
+      action: "edit",
+      type: "plan",
+      name: name,
+      time: Date.now(),
+    };
+
     axios
       .put(API_URL, {
         ...state,
         plans: newPlans,
+        activity: [...state.activity, newActivity],
         lastEdited: Date.now(),
       })
       .then((res) => {
@@ -151,6 +159,7 @@ const EditPlanPage = () => {
           type: "FETCH_DATA",
           payload: {
             plans: res?.data?.plans,
+            activity: res?.data?.activity,
             lastEdited: res?.data?.lastEdited,
           },
         });
@@ -163,10 +172,19 @@ const EditPlanPage = () => {
       let newPlans = state.plans.filter((plan) => {
         return plan.id != id;
       });
+
+      let newActivity = {
+        action: "delete",
+        type: "plan",
+        name: name,
+        time: Date.now(),
+      };
+
       axios
         .put(API_URL, {
           ...state,
           plans: newPlans,
+          activity: [...state.activity, newActivity],
           lastEdited: Date.now(),
         })
         .then((res) => {
@@ -174,6 +192,7 @@ const EditPlanPage = () => {
             type: "FETCH_DATA",
             payload: {
               plans: res?.data?.plans,
+              activity: res?.data?.activity,
               lastEdited: res?.data?.lastEdited,
             },
           });

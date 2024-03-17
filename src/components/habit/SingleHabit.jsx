@@ -35,6 +35,7 @@ const SingleHabit = ({
   // Perform below action when habit is long pressed
   const attrs = useLongPress(
     () => {
+      window.navigator.vibrate(200);
       navigate(`/edit/habit/${id}`);
     },
     { threshold: 500 }
@@ -143,6 +144,7 @@ const SingleHabit = ({
   };
 
   const handleClick = () => {
+    window.navigator.vibrate(200);
     setToggleModal("");
   };
 

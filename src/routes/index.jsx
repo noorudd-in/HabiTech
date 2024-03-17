@@ -14,6 +14,7 @@ import EditGoalPage from "../pages/EditGoalPage";
 import EditPlanPage from "../pages/EditPlanPage";
 import CommingSoon from "../components/layout/CommingSoon";
 import Theme from "../components/setting/Theme";
+import Activity from "../components/setting/Activity";
 
 const HABITECH_ROUTES = createBrowserRouter([
   {
@@ -146,6 +147,16 @@ const HABITECH_ROUTES = createBrowserRouter([
     element: (
       <>
         <Theme />
+        <GlobalFooter />
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/activity",
+    element: (
+      <>
+        <Activity />
         <GlobalFooter />
       </>
     ),

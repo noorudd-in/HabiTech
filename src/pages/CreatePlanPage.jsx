@@ -132,12 +132,19 @@ const CreatePlanPage = () => {
       description: description,
       lastUpdated: Date.now(),
     };
-    console.log(newPlan);
+
+    let newActivity = {
+      action: "create",
+      type: "goal",
+      name: name,
+      time: Date.now(),
+    };
 
     axios
       .put(API_URL, {
         ...state,
         plans: [...state.plans, newPlan],
+        activity: [...state.activity, newActivity],
         lastEdited: Date.now(),
       })
       .then((res) => {
@@ -145,6 +152,7 @@ const CreatePlanPage = () => {
           type: "FETCH_DATA",
           payload: {
             plans: res?.data?.plans,
+            activity: res?.data?.activity,
             lastEdited: res?.data?.lastEdited,
           },
         });

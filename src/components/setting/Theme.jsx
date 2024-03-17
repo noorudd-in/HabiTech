@@ -53,6 +53,13 @@ const Theme = () => {
         }
       });
 
+      let newActivity = {
+        action: "purchase",
+        type: "theme",
+        name: "Theme",
+        time: Date.now(),
+      };
+
       axios
         .put(API_URL, {
           ...state,
@@ -64,6 +71,7 @@ const Theme = () => {
             ...state.user,
             coins: state.user.coins - price,
           },
+          activity: [...state.activity, newActivity],
           theme: name,
           lastEdited: Date.now(),
         })
@@ -73,6 +81,7 @@ const Theme = () => {
             payload: {
               store: res?.data?.store,
               theme: res?.data?.theme,
+              activity: res?.data?.activity,
               lastEdited: res?.data?.lastEdited,
             },
           });

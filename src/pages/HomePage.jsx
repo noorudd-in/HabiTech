@@ -28,6 +28,7 @@ const HomePage = () => {
           goals: data?.goals,
           plan: data?.plan,
           plans: data?.plans,
+          activity: data?.activity,
           lastEdited: data?.lastEdited,
           availableTags: data?.availableTags,
           store: data?.store,

@@ -44,10 +44,18 @@ const CreateHabitPage = () => {
       analytics: [],
     };
 
+    let newActivity = {
+      action: "create",
+      type: "habit",
+      name: habitName,
+      time: Date.now(),
+    };
+
     axios
       .put(API_URL, {
         ...state,
         habits: [...state.habits, newHabit],
+        activity: [...state.activity, newActivity],
         lastEdited: Date.now(),
       })
       .then((res) => {
@@ -55,6 +63,7 @@ const CreateHabitPage = () => {
           type: "FETCH_DATA",
           payload: {
             habits: res?.data?.habits,
+            activity: res?.data?.activity,
             lastEdited: res?.data?.lastEdited,
           },
         });
