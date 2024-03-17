@@ -96,10 +96,18 @@ const EditGoalPage = () => {
       }
     });
 
+    let newActivity = {
+      action: "edit",
+      type: "goal",
+      name: name,
+      time: Date.now(),
+    };
+
     axios
       .put(API_URL, {
         ...state,
         goals: newGoals,
+        activity: [...state.activity, newActivity],
         lastEdited: Date.now(),
       })
       .then((res) => {
@@ -107,6 +115,7 @@ const EditGoalPage = () => {
           type: "FETCH_DATA",
           payload: {
             goals: res?.data?.goals,
+            activity: res?.data?.activity,
             lastEdited: res?.data?.lastEdited,
           },
         });
@@ -120,10 +129,18 @@ const EditGoalPage = () => {
         return goal.id != id;
       });
 
+      let newActivity = {
+        action: "delete",
+        type: "goal",
+        name: name,
+        time: Date.now(),
+      };
+
       axios
         .put(API_URL, {
           ...state,
           goals: newGoals,
+          activity: [...state.activity, newActivity],
           lastEdited: Date.now(),
         })
         .then((res) => {
@@ -131,6 +148,7 @@ const EditGoalPage = () => {
             type: "FETCH_DATA",
             payload: {
               goals: res?.data?.goals,
+              activity: res?.data?.activity,
               lastEdited: res?.data?.lastEdited,
             },
           });

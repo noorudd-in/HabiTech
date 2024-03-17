@@ -55,6 +55,11 @@ const RenderHabits = () => {
   if (appLoading) return <Shimmer />;
   return (
     <div className="mt-5">
+      {state.habits[0] == undefined && (
+        <h1 className="m-10 text-center font-bold text-xl">
+          No habit found! Click on the plus button to add one!
+        </h1>
+      )}
       {state.habits.map(
         ({
           id,

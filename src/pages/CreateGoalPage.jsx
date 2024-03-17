@@ -94,10 +94,18 @@ const CreateGoalPage = () => {
       lastUpdated: Date.now(),
     };
 
+    let newActivity = {
+      action: "create",
+      type: "goal",
+      name: name,
+      time: Date.now(),
+    };
+
     axios
       .put(API_URL, {
         ...state,
         goals: [...state.goals, newGoal],
+        activity: [...state.activity, newActivity],
         lastEdited: Date.now(),
       })
       .then((res) => {
@@ -105,6 +113,7 @@ const CreateGoalPage = () => {
           type: "FETCH_DATA",
           payload: {
             goals: res?.data?.goals,
+            activity: res?.data?.activity,
             lastEdited: res?.data?.lastEdited,
           },
         });

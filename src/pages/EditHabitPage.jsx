@@ -33,10 +33,19 @@ const EditHabitPage = () => {
         habit.difficulty = habitLevel;
       }
     });
+
+    let newActivity = {
+      action: "edit",
+      type: "habit",
+      name: habitName,
+      time: Date.now(),
+    };
+
     axios
       .put(API_URL, {
         ...state,
         habits: newHabits,
+        activity: [...state.activity, newActivity],
         lastEdited: Date.now(),
       })
       .then((res) => {
@@ -44,6 +53,7 @@ const EditHabitPage = () => {
           type: "FETCH_DATA",
           payload: {
             habits: res?.data?.habits,
+            activity: res?.data?.activity,
             lastEdited: res?.data?.lastEdited,
           },
         });
@@ -59,10 +69,18 @@ const EditHabitPage = () => {
         return habit.id != id;
       });
 
+      let newActivity = {
+        action: "delete",
+        type: "habit",
+        name: habitName,
+        time: Date.now(),
+      };
+
       axios
         .put(API_URL, {
           ...state,
           habits: newHabits,
+          activity: [...state.activity, newActivity],
           lastEdited: Date.now(),
         })
         .then((res) => {
@@ -70,6 +88,7 @@ const EditHabitPage = () => {
             type: "FETCH_DATA",
             payload: {
               habits: res?.data?.habits,
+              activity: res?.data?.activity,
               lastEdited: res?.data?.lastEdited,
             },
           });

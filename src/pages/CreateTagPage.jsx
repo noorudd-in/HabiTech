@@ -24,10 +24,18 @@ const CreateTagPage = () => {
       return tag !== givenTag;
     });
 
+    let newActivity = {
+      action: "delete",
+      type: "tag",
+      name: givenTag,
+      time: Date.now(),
+    };
+
     axios
       .put(API_URL, {
         ...state,
         availableTags: newTags,
+        activity: [...state.activity, newActivity],
         lastEdited: Date.now(),
       })
       .then((res) => {
@@ -35,6 +43,7 @@ const CreateTagPage = () => {
           type: "FETCH_DATA",
           payload: {
             availableTags: res?.data?.availableTags,
+            activity: res?.data?.activity,
             lastEdited: res?.data?.lastEdited,
           },
         });

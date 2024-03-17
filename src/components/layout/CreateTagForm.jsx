@@ -21,10 +21,18 @@ const CreateTagForm = () => {
       return;
     }
 
+    let newActivity = {
+      action: "create",
+      type: "tag",
+      name: newTag,
+      time: Date.now(),
+    };
+
     axios
       .put(API_URL, {
         ...state,
         availableTags: [...state.availableTags, newTag],
+        activity: [...state.activity, newActivity],
         lastEdited: Date.now(),
       })
       .then((res) => {
@@ -32,6 +40,7 @@ const CreateTagForm = () => {
           type: "FETCH_DATA",
           payload: {
             availableTags: res?.data?.availableTags,
+            activity: res?.data?.activity,
             lastEdited: res?.data?.lastEdited,
           },
         });

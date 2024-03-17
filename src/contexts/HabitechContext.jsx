@@ -6,6 +6,7 @@ const initialState = {
   habits: [],
   goals: [],
   plans: [],
+  activity: [],
   lastEdited: "",
   availableTags: [],
   store: {},
