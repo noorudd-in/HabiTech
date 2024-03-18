@@ -4,9 +4,10 @@ import toast, { Toaster } from "react-hot-toast";
 import { toastError } from "../components/common/Toast";
 import { HabitechContext } from "../contexts/HabitechContext";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../constants";
+import { useSound } from "../hooks/useSound";
 import dayjs from "dayjs";
 import axios from "axios";
-import { API_URL } from "../constants";
 
 const CreatePlanPage = () => {
   const { state, dispatch } = useContext(HabitechContext);
@@ -24,8 +25,12 @@ const CreatePlanPage = () => {
   const navigate = useNavigate();
 
   const setNow = () => {
-    let now = new Date().toLocaleTimeString().slice(0, 5);
-    setStart(now);
+    let hh = dayjs().hour();
+    let mm = dayjs().minute();
+    if (String(hh).length == 1) {
+      hh = "0" + parseInt(hh);
+    }
+    setStart(hh + ":" + mm);
   };
 
   const setDuration = (value) => {
@@ -98,11 +103,12 @@ const CreatePlanPage = () => {
   };
 
   const createPlan = () => {
+    if (state.user.vibrate) {
+      window.navigator.vibrate(5);
+    }
     //Check is state is loaded or not;
     if (state.user.name == undefined) {
-      navigate(
-        "/?toastType=toastError&toastMessage=Something went wrong. Please try again!"
-      );
+      window.location.replace("/");
       return;
     }
     if (name == "") {
@@ -140,6 +146,12 @@ const CreatePlanPage = () => {
       time: Date.now(),
     };
 
+    if (state.user.sound.enable) {
+      const sound = useSound(state.user.sound.currentSound);
+      sound.volume = state.user.sound.volume;
+      sound.play();
+    }
+
     axios
       .put(API_URL, {
         ...state,
@@ -162,7 +174,7 @@ const CreatePlanPage = () => {
 
   useEffect(() => {
     if (state.user.name == undefined) {
-      navigate("/");
+      window.location.replace("/");
     }
   });
 

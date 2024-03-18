@@ -16,6 +16,9 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
   const index = showActive ? 0 : 1;
 
   const toggleTap = (type) => {
+    if (state.user.vibrate) {
+      window.navigator.vibrate(5);
+    }
     if (dropdown == type) {
       setDropdown(false);
       return;

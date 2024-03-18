@@ -5,6 +5,7 @@ import { toastError } from "../components/common/Toast";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../constants";
 import { useColorTheme } from "../hooks/useColorTheme";
+import { useSound } from "../hooks/useSound";
 import axios from "axios";
 
 const CreateHabitPage = () => {
@@ -15,6 +16,9 @@ const CreateHabitPage = () => {
   const navigate = useNavigate();
 
   const createHabit = () => {
+    if (state.user.vibrate) {
+      window.navigator.vibrate(5);
+    }
     // Check if input field is empty
     if (habitName == "") {
       toast("Habit name cannot be empty!", toastError());
@@ -51,6 +55,12 @@ const CreateHabitPage = () => {
       time: Date.now(),
     };
 
+    if (state.user.sound.enable) {
+      const sound = useSound(state.user.sound.currentSound);
+      sound.volume = state.user.sound.volume;
+      sound.play();
+    }
+
     axios
       .put(API_URL, {
         ...state,
@@ -75,7 +85,7 @@ const CreateHabitPage = () => {
 
   useEffect(() => {
     if (state.user.name == undefined) {
-      navigate("/");
+      window.location.replace("/");
     }
   });
   return (

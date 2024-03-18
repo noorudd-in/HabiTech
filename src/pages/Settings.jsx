@@ -16,11 +16,10 @@ import PrivacyPolicy from "../components/icons/PrivacyPolicyIcon";
 
 const Settings = () => {
   const { state } = useContext(HabitechContext);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (state.user.name == undefined) {
-      navigate("/");
+      window.location.replace("/");
     }
   }, []);
   return (

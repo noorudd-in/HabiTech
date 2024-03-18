@@ -5,6 +5,7 @@ import { useColorTheme } from "../hooks/useColorTheme";
 import toast, { Toaster } from "react-hot-toast";
 import { toastError } from "../components/common/Toast";
 import { API_URL } from "../constants";
+import { useSound } from "../hooks/useSound";
 import dayjs from "dayjs";
 import axios from "axios";
 
@@ -103,11 +104,12 @@ const EditPlanPage = () => {
   };
 
   const updatePlan = () => {
+    if (state.user.vibrate) {
+      window.navigator.vibrate(5);
+    }
     //Check is state is loaded or not;
     if (state.user.name == undefined) {
-      navigate(
-        "/?toastType=toastError&toastMessage=Something went wrong. Please try again!"
-      );
+      window.location.replace("/");
       return;
     }
     if (name == "") {
@@ -147,6 +149,12 @@ const EditPlanPage = () => {
       time: Date.now(),
     };
 
+    if (state.user.sound.enable) {
+      const sound = useSound(state.user.sound.currentSound);
+      sound.volume = state.user.sound.volume;
+      sound.play();
+    }
+
     axios
       .put(API_URL, {
         ...state,
@@ -168,6 +176,9 @@ const EditPlanPage = () => {
   };
 
   const deletePlan = () => {
+    if (state.user.vibrate) {
+      window.navigator.vibrate(5);
+    }
     if (window.confirm(`Are you sure you want to delete the plan: ${name}?`)) {
       let newPlans = state.plans.filter((plan) => {
         return plan.id != id;
@@ -179,6 +190,12 @@ const EditPlanPage = () => {
         name: name,
         time: Date.now(),
       };
+
+      if (state.user.sound.enable) {
+        const sound = useSound(state.user.sound.currentSound);
+        sound.volume = state.user.sound.volume;
+        sound.play();
+      }
 
       axios
         .put(API_URL, {
@@ -204,7 +221,7 @@ const EditPlanPage = () => {
   // Find the plan by ID and autofill the details
   useEffect(() => {
     if (state.user.name == undefined) {
-      navigate("/");
+      window.location.replace("/");
     } else {
       for (const plan of state.plans) {
         if (plan.id == id) {

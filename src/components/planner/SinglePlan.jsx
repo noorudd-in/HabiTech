@@ -5,7 +5,8 @@ import { useColorTheme } from "../../hooks/useColorTheme";
 import { motion } from "framer-motion";
 import { useLongPress } from "@uidotdev/usehooks";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { HabitechContext } from "../../contexts/HabitechContext";
 dayjs.extend(duration);
 
 const SinglePlan = ({
@@ -17,6 +18,7 @@ const SinglePlan = ({
   lastUpdated,
   description,
 }) => {
+  const { state } = useContext(HabitechContext);
   const [toggleModal, setToggleModal] = useState("hidden");
   const navigate = useNavigate();
   const { bgcolor500 } = useColorTheme();
@@ -24,12 +26,18 @@ const SinglePlan = ({
   // Perform below action when habit is long pressed
   const attrs = useLongPress(
     () => {
+      if (state.user.vibrate) {
+        window.navigator.vibrate([5, 200, 20]);
+      }
       navigate(`/edit/plan/${id}`);
     },
     { threshold: 500 }
   );
 
   const handleClick = () => {
+    if (state.user.vibrate) {
+      window.navigator.vibrate(5);
+    }
     setToggleModal("");
   };
 

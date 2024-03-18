@@ -1,19 +1,42 @@
 import { useColorTheme } from "../../hooks/useColorTheme";
 import { useContext, useEffect } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
+import { API_URL } from "../../constants";
 import dayjs from "dayjs";
 import CreateActivityIcon from "../icons/CreateActivityIcon";
 import EditActivityIcon from "../icons/EditActivityIcon";
 import DeleteActivityIcon from "../icons/DeleteActivityIcon";
 import PurchaseActivityIcon from "../icons/PurchaseActivityIcon";
+import CompletedActivityIcon from "../icons/CompletedActivityIcon";
+import axios from "axios";
 
 const Activity = () => {
-  const { state } = useContext(HabitechContext);
+  const { state, dispatch } = useContext(HabitechContext);
   const { bgcolor400, textcolor500 } = useColorTheme();
 
   // Limit the activities to 50 only.
   useEffect(() => {
-    console.log(state.activity.length);
+    if (state.user.name == undefined) {
+      window.location.replace("/");
+    }
+    let len = state.activity.length;
+    if (len > 50) {
+      let updatedActivity = state.activity.slice(len - 50, len);
+
+      axios
+        .put(API_URL, {
+          ...state,
+          activity: updatedActivity,
+        })
+        .then((res) => {
+          dispatch({
+            type: "FETCH_DATA",
+            payload: {
+              activity: res?.data?.activity,
+            },
+          });
+        });
+    }
   }, []);
   return (
     <div className="mb-20">
@@ -43,27 +66,42 @@ const Activity = () => {
                   {ele.action == "purchase" && (
                     <PurchaseActivityIcon className="w-6 h-6 text-white" />
                   )}
+                  {ele.action == "complete" && (
+                    <CompletedActivityIcon className="w-6 h-6 text-white" />
+                  )}
                 </div>
                 <div className={`w-px h-full bg-slate-700 dark:bg-gray-400`} />
               </div>
               <div className="w-full h-12 ml-3 mt-1 mb-5">
                 {ele.action == "create" && (
                   <h1 className="text-lg">
-                    Created new {ele.type}: {ele.name}
+                    Created New {ele.type[0].toUpperCase() + ele.type.slice(1)}:{" "}
+                    {ele.name}
                   </h1>
                 )}
                 {ele.action == "edit" && (
                   <h1 className="text-lg">
-                    Modified {ele.type}: {ele.name}
+                    Modified {ele.type[0].toUpperCase() + ele.type.slice(1)}:{" "}
+                    {ele.name}
                   </h1>
                 )}
                 {ele.action == "delete" && (
                   <h1 className="text-lg">
-                    Deleted {ele.type}: {ele.name}
+                    Deleted {ele.type[0].toUpperCase() + ele.type.slice(1)}:{" "}
+                    {ele.name}
+                  </h1>
+                )}
+                {ele.action == "complete" && (
+                  <h1 className="text-lg">
+                    Completed {ele.type[0].toUpperCase() + ele.type.slice(1)}:{" "}
+                    {ele.name}
                   </h1>
                 )}
                 {ele.action == "purchase" && (
-                  <h1 className="text-lg">Purchased new {ele.type}</h1>
+                  <h1 className="text-lg">
+                    Purchased New{" "}
+                    {ele.type[0].toUpperCase() + ele.type.slice(1)}
+                  </h1>
                 )}
                 <h1 className="text-sm italic">
                   {dayjs(new Date(ele.time)).format("D MMM YYYY, h:mm A")}

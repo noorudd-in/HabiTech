@@ -8,6 +8,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { toastSuccess, toastError, toastInfo } from "../common/Toast";
 import { motion } from "framer-motion";
 import { useColorTheme } from "../../hooks/useColorTheme";
+import { useSound } from "../../hooks/useSound";
 import axios from "axios";
 import MinusIcon from "../icons/MinusIcon";
 import PlusIcon from "../icons/PlusIcon";
@@ -35,7 +36,9 @@ const SingleHabit = ({
   // Perform below action when habit is long pressed
   const attrs = useLongPress(
     () => {
-      window.navigator.vibrate(200);
+      if (state.user.vibrate) {
+        window.navigator.vibrate([5, 200, 20]);
+      }
       navigate(`/edit/habit/${id}`);
     },
     { threshold: 500 }
@@ -72,6 +75,10 @@ const SingleHabit = ({
 
   // Trigger an update to backend with updated habit array.
   const updateHabit = (type) => {
+    if (state.user.vibrate) {
+      window.navigator.vibrate(5);
+    }
+
     if (status != 0) {
       toast(
         "You have already updated this habit today!",
@@ -79,6 +86,7 @@ const SingleHabit = ({
       );
       return;
     }
+
     if (state.user.health + type < 1 || state.user.health - type < 1) {
       toast(
         "Your health is too low to update this habit!. Please buy health first.",
@@ -111,6 +119,19 @@ const SingleHabit = ({
         currentCoins = currentCoins + 1.5;
       }
 
+      if (state.user.sound.enable) {
+        const sound = useSound(state.user.sound.currentSound);
+        sound.volume = state.user.sound.volume;
+        sound.play();
+      }
+
+      let newActivity = {
+        action: "complete",
+        type: "habit",
+        name: name,
+        time: Date.now(),
+      };
+
       // Trigger axios update.
       axios
         .put(API_URL, {
@@ -121,6 +142,7 @@ const SingleHabit = ({
             exp: state.user.exp + expValue * type,
             coins: currentCoins,
           },
+          activity: [...state.activity, newActivity],
           habits: updatedHabits,
           lastEdited: Date.now(),
         })
@@ -130,6 +152,7 @@ const SingleHabit = ({
             payload: {
               user: res?.data?.user,
               habits: res?.data?.habits,
+              activity: res?.data?.activity,
               lastEdited: res?.data?.lastEdited,
             },
           });
@@ -144,7 +167,9 @@ const SingleHabit = ({
   };
 
   const handleClick = () => {
-    window.navigator.vibrate(200);
+    if (state.user.vibrate) {
+      window.navigator.vibrate(5);
+    }
     setToggleModal("");
   };
 
@@ -170,6 +195,7 @@ const SingleHabit = ({
 
       <motion.div whileTap={{ scale: 0.97 }}>
         <div
+          style={{ userSelect: "none" }}
           className={`grid grid-cols-12 my-2 border mx-5 rounded-md ${border400} ${
             status != 0 && bgcolor400
           }`}

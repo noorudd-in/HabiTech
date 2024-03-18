@@ -1,5 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
-import HomePage from "../pages/HomePage";
+import { lazy, Suspense } from "react";
+//import HomePage from "../pages/HomePage";
+const HomePage = lazy(() => import("../pages/HomePage"));
+const AnimatePage = lazy(() => import("../pages/AnimatePage"));
 import ErrorPage from "../pages/ErrorPage";
 import CreatePage from "../pages/CreatePage";
 import Settings from "../pages/Settings";
@@ -8,21 +11,25 @@ import CreateTagPage from "../pages/CreateTagPage";
 import CreateHabitPage from "../pages/CreateHabitPage";
 import CreateGoalPage from "../pages/CreateGoalPage";
 import CreatePlanPage from "../pages/CreatePlanPage";
-import AnimatePage from "../pages/AnimatePage";
+//import AnimatePage from "../pages/AnimatePage";
 import EditHabitPage from "../pages/EditHabitPage";
 import EditGoalPage from "../pages/EditGoalPage";
 import EditPlanPage from "../pages/EditPlanPage";
 import CommingSoon from "../components/layout/CommingSoon";
 import Theme from "../components/setting/Theme";
 import Activity from "../components/setting/Activity";
+import SoundAndVibration from "../components/setting/SoundAndVibration";
+import Shimmer from "../pages/Shimmer";
 
 const HABITECH_ROUTES = createBrowserRouter([
   {
     path: "/",
     element: (
-      <AnimatePage>
-        <HomePage />
-      </AnimatePage>
+      <Suspense fallback={<Shimmer />}>
+        <AnimatePage>
+          <HomePage />
+        </AnimatePage>
+      </Suspense>
     ),
     errorElement: <ErrorPage />,
   },
@@ -186,7 +193,7 @@ const HABITECH_ROUTES = createBrowserRouter([
     path: "/sound",
     element: (
       <>
-        <CommingSoon />
+        <SoundAndVibration />
         <GlobalFooter />
       </>
     ),

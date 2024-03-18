@@ -1,5 +1,5 @@
 import { useColorTheme } from "../../hooks/useColorTheme";
-const CircleTickedIcon = () => {
+const CircleTickedIcon = (props) => {
   const { customcolor } = useColorTheme();
   return (
     <div>
@@ -7,7 +7,7 @@ const CircleTickedIcon = () => {
         viewBox="0 0 1024 1024"
         xmlns="http://www.w3.org/2000/svg"
         fill={customcolor}
-        className="w-8 h-8"
+        {...props}
       >
         <g id="SVGRepo_bgCarrier" strokeWidth={0} />
         <g

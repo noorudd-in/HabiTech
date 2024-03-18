@@ -13,7 +13,7 @@ const CreatePage = () => {
 
   useEffect(() => {
     if (state.user.name == undefined) {
-      navigate("/");
+      window.location.replace("/");
     }
   });
   return (

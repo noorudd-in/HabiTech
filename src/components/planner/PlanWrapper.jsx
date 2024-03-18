@@ -8,7 +8,11 @@ const PlanWrapper = ({ children, status }) => {
     <div className={`px-4 mx-auto ${status == 0 && "animate-pulse"}`}>
       <div className="flex">
         <div className="flex flex-col items-center">
-          {status <= 0 ? <CircleTickedIcon /> : <CircleIcon />}
+          {status <= 0 ? (
+            <CircleTickedIcon className="w-8 h-8" />
+          ) : (
+            <CircleIcon className="w-8 h-8" />
+          )}
           <div
             className={`w-px h-full ${
               status <= 0 ? bgcolor100 : "bg-slate-700 dark:bg-gray-400"
