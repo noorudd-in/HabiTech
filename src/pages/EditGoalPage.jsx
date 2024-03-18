@@ -4,6 +4,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { toastError } from "../components/common/Toast";
 import { API_URL } from "../constants/index";
 import { useNavigate, useParams } from "react-router-dom";
+import { useColorTheme } from "../hooks/useColorTheme";
+import { useSound } from "../hooks/useSound";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -12,7 +14,6 @@ import dayjs from "dayjs";
 import SelectTagsForGoal from "../components/goal/SelectTagsForGoal";
 import CreateSubtaskForGoal from "../components/goal/CreateSubtaskForGoal";
 import AvailableTags from "../components/common/AvailableTags";
-import { useColorTheme } from "../hooks/useColorTheme";
 import AvailableSubtask from "../components/common/AvailableSubtask";
 
 const EditGoalPage = () => {
@@ -61,6 +62,9 @@ const EditGoalPage = () => {
   };
 
   const updateGoals = () => {
+    if (state.user.vibrate) {
+      window.navigator.vibrate(5);
+    }
     if (name == "") {
       toast("Goal name is empty!", toastError());
       return;
@@ -103,6 +107,12 @@ const EditGoalPage = () => {
       time: Date.now(),
     };
 
+    if (state.user.sound.enable) {
+      const sound = useSound(state.user.sound.currentSound);
+      sound.volume = state.user.sound.volume;
+      sound.play();
+    }
+
     axios
       .put(API_URL, {
         ...state,
@@ -124,6 +134,9 @@ const EditGoalPage = () => {
   };
 
   const deleteGoal = () => {
+    if (state.user.vibrate) {
+      window.navigator.vibrate(5);
+    }
     if (window.confirm(`Are you sure you want to delete the goal: ${name}?`)) {
       let newGoals = state.goals.filter((goal) => {
         return goal.id != id;
@@ -135,6 +148,12 @@ const EditGoalPage = () => {
         name: name,
         time: Date.now(),
       };
+
+      if (state.user.sound.enable) {
+        const sound = useSound(state.user.sound.currentSound);
+        sound.volume = state.user.sound.volume;
+        sound.play();
+      }
 
       axios
         .put(API_URL, {
@@ -167,7 +186,7 @@ const EditGoalPage = () => {
   // Find the goal by ID and autofill the details
   useEffect(() => {
     if (state.user.name == undefined) {
-      navigate("/");
+      window.location.replace("/");
     } else {
       for (const goal of state.goals) {
         if (goal.id == id) {

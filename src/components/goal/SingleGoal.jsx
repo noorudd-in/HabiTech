@@ -1,10 +1,13 @@
 import { useContext, useState } from "react";
+import { HabitechContext } from "../../contexts/HabitechContext";
 import { useLongPress } from "@uidotdev/usehooks";
+import { API_URL } from "../../constants";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { toastError, toastSuccess } from "../common/Toast";
 import { useColorTheme } from "../../hooks/useColorTheme";
+import { useSound } from "../../hooks/useSound";
 import UntickIcon from "../icons/UntickIcon";
 import TickIcon from "../icons/TickIcon";
 import dayjs from "dayjs";
@@ -13,9 +16,7 @@ import isTomorrow from "dayjs/plugin/isTomorrow";
 import Badge from "../common/Badge";
 import AvailableTags from "../common/AvailableTags";
 import GoalsSubTask from "./GoalsSubTask";
-import { HabitechContext } from "../../contexts/HabitechContext";
 import axios from "axios";
-import { API_URL } from "../../constants";
 dayjs.extend(isToday);
 dayjs.extend(isTomorrow);
 
@@ -57,6 +58,9 @@ const SingleGoal = ({
 
   const attrs = useLongPress(
     () => {
+      if (state.user.vibrate) {
+        window.navigator.vibrate([5, 200, 20]);
+      }
       navigate(`/edit/goal/${id}`);
     },
     { threshold: 500 }
@@ -87,6 +91,9 @@ const SingleGoal = ({
     }
   };
   const handleUpdate = () => {
+    if (state.user.vibrate) {
+      window.navigator.vibrate(5);
+    }
     if (status == 1) {
       return;
     }
@@ -142,6 +149,19 @@ const SingleGoal = ({
           newHealth = 100;
         }
 
+        if (state.user.sound.enable) {
+          const sound = useSound(state.user.sound.currentSound);
+          sound.volume = state.user.sound.volume;
+          sound.play();
+        }
+
+        let newActivity = {
+          action: "complete",
+          type: "goal",
+          name: name,
+          time: Date.now(),
+        };
+
         axios
           .put(API_URL, {
             ...state,
@@ -152,6 +172,7 @@ const SingleGoal = ({
               exp: state.user.exp + newExp,
               health: newHealth,
             },
+            activity: [...state.activity, newActivity],
             lastEdited: Date.now(),
           })
           .then((res) => {
@@ -160,6 +181,7 @@ const SingleGoal = ({
               payload: {
                 user: res?.data?.user,
                 goals: res?.data?.goals,
+                activity: res?.data?.activity,
                 lastEdited: res?.data?.lastEdited,
               },
             });
@@ -205,7 +227,14 @@ const SingleGoal = ({
           {(showTask || toggleGoal) && (
             <div id="goals-description" className="mt-2">
               {subtasks.map((task) => {
-                return <GoalsSubTask key={task.id} task={task} goalId={id} />;
+                return (
+                  <GoalsSubTask
+                    key={task.id}
+                    task={task}
+                    goalId={id}
+                    status={status}
+                  />
+                );
               })}
             </div>
           )}

@@ -4,6 +4,7 @@ import { useColorTheme } from "../hooks/useColorTheme";
 import { useNavigate, useParams } from "react-router-dom";
 import { toastError } from "../components/common/Toast";
 import { API_URL } from "../constants";
+import { useSound } from "../hooks/useSound";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
@@ -16,6 +17,9 @@ const EditHabitPage = () => {
   let { id } = useParams();
 
   const updateHabit = () => {
+    if (state.user.vibrate) {
+      window.navigator.vibrate(5);
+    }
     if (habitName == "") {
       toast("Habit name cannot be empty!", toastError());
       return;
@@ -41,6 +45,12 @@ const EditHabitPage = () => {
       time: Date.now(),
     };
 
+    if (state.user.sound.enable) {
+      const sound = useSound(state.user.sound.currentSound);
+      sound.volume = state.user.sound.volume;
+      sound.play();
+    }
+
     axios
       .put(API_URL, {
         ...state,
@@ -62,6 +72,9 @@ const EditHabitPage = () => {
   };
 
   const deleteHabit = () => {
+    if (state.user.vibrate) {
+      window.navigator.vibrate(5);
+    }
     if (
       window.confirm(`Are you sure you want to delete the habit: ${habitName}?`)
     ) {
@@ -75,6 +88,12 @@ const EditHabitPage = () => {
         name: habitName,
         time: Date.now(),
       };
+
+      if (state.user.sound.enable) {
+        const sound = useSound(state.user.sound.currentSound);
+        sound.volume = state.user.sound.volume;
+        sound.play();
+      }
 
       axios
         .put(API_URL, {
@@ -100,7 +119,7 @@ const EditHabitPage = () => {
   // Find the habit by ID and autofill the details
   useEffect(() => {
     if (state.user.name == undefined) {
-      navigate("/");
+      window.location.replace("/");
     } else {
       for (const habit of state.habits) {
         if (habit.id == id) {
@@ -115,11 +134,12 @@ const EditHabitPage = () => {
     <>
       <Toaster />
       <div
+        style={{ userSelect: "none" }}
         className={`text-center mt-10 ml-5 text-2xl font-bold ${textcolor500}`}
       >
         <h1>Whoopsie... Let's fix this habit!</h1>
       </div>
-      <div className="ml-5 mt-2">
+      <div className="ml-5 mt-2" style={{ userSelect: "none" }}>
         <label className="text-2xl block" htmlFor="habit">
           What's the habit?
         </label>

@@ -1,8 +1,18 @@
 import dayjs from "dayjs";
 import { useColorTheme } from "../../hooks/useColorTheme";
+import { useContext } from "react";
+import { HabitechContext } from "../../contexts/HabitechContext";
 
 const PlannersHeader = ({ toggleData, setToggleData }) => {
   const { bgcolor500 } = useColorTheme();
+  const { state } = useContext(HabitechContext);
+
+  const toggleChange = (value) => {
+    if (state.user.vibrate) {
+      window.navigator.vibrate(5);
+    }
+    setToggleData(value);
+  };
   return (
     <>
       <div className="flex justify-center">
@@ -12,7 +22,7 @@ const PlannersHeader = ({ toggleData, setToggleData }) => {
               ? `${bgcolor500} text-black`
               : "border-black dark:border-gray-300"
           }`}
-          onClick={() => setToggleData("yesterday")}
+          onClick={() => toggleChange("yesterday")}
         >
           <div>{dayjs().subtract(1, "day").format("ddd")}</div>
           <div>{dayjs().subtract(1, "day").format("DD MMM")}</div>
@@ -24,7 +34,7 @@ const PlannersHeader = ({ toggleData, setToggleData }) => {
               ? `${bgcolor500} text-black`
               : "border-black dark:border-gray-300"
           }`}
-          onClick={() => setToggleData("today")}
+          onClick={() => toggleChange("today")}
         >
           <div>{dayjs().format("ddd")}</div>
           <div>{dayjs().format("DD MMM")}</div>
@@ -36,7 +46,7 @@ const PlannersHeader = ({ toggleData, setToggleData }) => {
               ? `${bgcolor500} text-black`
               : "border-black dark:border-gray-300"
           }`}
-          onClick={() => setToggleData("tomorrow")}
+          onClick={() => toggleChange("tomorrow")}
         >
           <div>{dayjs().add(1, "day").format("ddd")}</div>
           <div>{dayjs().add(1, "day").format("DD MMM")}</div>

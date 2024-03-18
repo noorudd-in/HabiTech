@@ -4,6 +4,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { toastError } from "../components/common/Toast";
 import { API_URL } from "../constants/index";
 import { useNavigate } from "react-router-dom";
+import { useSound } from "../hooks/useSound";
+import { useColorTheme } from "../hooks/useColorTheme";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -12,7 +14,6 @@ import dayjs from "dayjs";
 import SelectTagsForGoal from "../components/goal/SelectTagsForGoal";
 import CreateSubtaskForGoal from "../components/goal/CreateSubtaskForGoal";
 import AvailableTags from "../components/common/AvailableTags";
-import { useColorTheme } from "../hooks/useColorTheme";
 import AvailableSubtask from "../components/common/AvailableSubtask";
 
 const CreateGoalPage = () => {
@@ -61,6 +62,9 @@ const CreateGoalPage = () => {
   };
 
   const handleCreateGoal = () => {
+    if (state.user.vibrate) {
+      window.navigator.vibrate(5);
+    }
     if (name == "") {
       toast("Goal name is empty!", toastError());
       return;
@@ -101,6 +105,12 @@ const CreateGoalPage = () => {
       time: Date.now(),
     };
 
+    if (state.user.sound.enable) {
+      const sound = useSound(state.user.sound.currentSound);
+      sound.volume = state.user.sound.volume;
+      sound.play();
+    }
+
     axios
       .put(API_URL, {
         ...state,
@@ -126,12 +136,11 @@ const CreateGoalPage = () => {
       return tag != givenTag;
     });
     setTags(newTags);
-    console.log("Done");
   };
 
   useEffect(() => {
     if (state.user.name == undefined) {
-      navigate("/");
+      window.location.replace("/");
     }
   });
 
@@ -144,7 +153,7 @@ const CreateGoalPage = () => {
         <h1>Let's create a goal for you!</h1>
       </div>
 
-      <div className="ml-5 mt-2">
+      <div className="ml-5 mt-2 mb-40">
         <label className="text-xl flex" htmlFor="goalname">
           Goal Name
           <p className="text-red-500 ml-1">*</p>

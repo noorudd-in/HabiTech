@@ -1,12 +1,13 @@
-import SingleTheme from "../layout/SingleTheme";
 import { useColorTheme } from "../../hooks/useColorTheme";
 import { useContext, useEffect } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import { toast, Toaster } from "react-hot-toast";
 import { toastError } from "../common/Toast";
-import axios from "axios";
 import { API_URL } from "../../constants";
 import { useNavigate } from "react-router-dom";
+import { useSound } from "../../hooks/useSound";
+import SingleTheme from "../layout/SingleTheme";
+import axios from "axios";
 
 const Theme = () => {
   const { state, dispatch } = useContext(HabitechContext);
@@ -14,12 +15,20 @@ const Theme = () => {
   const navigate = useNavigate();
 
   const handleThemeClick = (name, color, price, isPurchased) => {
+    if (state.user.vibrate) {
+      window.navigator.vibrate(5);
+    }
     // ignore if theme is same as selected.
     if (isPurchased && state.theme == name) {
       return;
     }
     // Change Theme if already owned.
     if (isPurchased && state.theme != name) {
+      if (state.user.sound.enable) {
+        const sound = useSound(state.user.sound.currentSound);
+        sound.volume = state.user.sound.volume;
+        sound.play();
+      }
       axios
         .put(API_URL, {
           ...state,
@@ -59,6 +68,12 @@ const Theme = () => {
         name: "Theme",
         time: Date.now(),
       };
+
+      if (state.user.sound.enable) {
+        const sound = useSound("Purchase");
+        sound.volume = state.user.sound.volume;
+        sound.play();
+      }
 
       axios
         .put(API_URL, {

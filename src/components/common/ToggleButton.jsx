@@ -1,16 +1,26 @@
+import { useContext } from "react";
 import { useColorTheme } from "../../hooks/useColorTheme";
+import { HabitechContext } from "../../contexts/HabitechContext";
 
-const ToggleButton = ({ showTask, setShowTask, name }) => {
+const ToggleButton = ({ toggle, setToggle, name }) => {
+  const { state } = useContext(HabitechContext);
   const { checkedcolor } = useColorTheme();
+
+  const toggleChange = () => {
+    if (state.user.vibrate) {
+      window.navigator.vibrate([5, 200, 20]);
+    }
+    setToggle(!toggle);
+  };
   return (
     <div>
       <label className="relative inline-flex items-center me-5 cursor-pointer">
         <input
           type="checkbox"
-          value={showTask}
-          checked={showTask ? "checked" : ""}
+          value={toggle}
+          checked={toggle ? "checked" : ""}
           className={`sr-only peer`}
-          onChange={() => setShowTask(!showTask)}
+          onChange={toggleChange}
         />
 
         <div
