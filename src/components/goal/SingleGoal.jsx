@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { Suspense, lazy, useContext, useState } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import { useLongPress } from "@uidotdev/usehooks";
 import { API_URL } from "../../constants";
@@ -7,16 +7,16 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { toastError, toastSuccess } from "../common/Toast";
 import { useColorTheme } from "../../hooks/useColorTheme";
-import { useSound } from "../../hooks/useSound";
-import UntickIcon from "../icons/UntickIcon";
-import TickIcon from "../icons/TickIcon";
+const UntickIcon = lazy(() => import("../icons/UntickIcon"));
+const TickIcon = lazy(() => import("../icons/TickIcon"));
 import dayjs from "dayjs";
 import isToday from "dayjs/plugin/isToday";
 import isTomorrow from "dayjs/plugin/isTomorrow";
 import Badge from "../common/Badge";
-import AvailableTags from "../common/AvailableTags";
-import GoalsSubTask from "./GoalsSubTask";
+const AvailableTags = lazy(() => import("../common/AvailableTags"));
+const GoalsSubTask = lazy(() => import("./GoalsSubTask"));
 import axios from "axios";
+import Shimmer from "../../pages/Shimmer";
 dayjs.extend(isToday);
 dayjs.extend(isTomorrow);
 
@@ -30,7 +30,7 @@ const SingleGoal = ({
   description,
   subtasks,
   status,
-  timeline,
+  type,
   lastUpdated,
   toggleUpdate,
   setToggleUpdate,
@@ -99,24 +99,21 @@ const SingleGoal = ({
     }
 
     let coins = {
-      weekly: { low: 1, medium: 2, high: 3 },
-      monthly: { low: 5, medium: 10, high: 15 },
-      quarterly: { low: 15, medium: 25, high: 35 },
-      yearly: { low: 50, medium: 100, high: 150 },
+      short: { low: 1, medium: 2, high: 3 },
+      mid: { low: 15, medium: 25, high: 35 },
+      long: { low: 50, medium: 100, high: 150 },
     };
 
     let exp = {
-      weekly: { low: 2, medium: 4, high: 6 },
-      monthly: { low: 10, medium: 20, high: 30 },
-      quarterly: { low: 30, medium: 50, high: 70 },
-      yearly: { low: 100, medium: 200, high: 300 },
+      short: { low: 2, medium: 4, high: 6 },
+      mid: { low: 30, medium: 50, high: 70 },
+      long: { low: 100, medium: 200, high: 300 },
     };
 
     let health = {
-      weekly: 1,
-      monthly: 5,
-      quarterly: 15,
-      yearly: 50,
+      short: 1,
+      mid: 15,
+      long: 50,
     };
 
     if (
@@ -138,8 +135,8 @@ const SingleGoal = ({
           newCoins = 0;
           newExp = 0;
         } else {
-          newCoins = coins[timeline][priority];
-          newExp = exp[timeline][priority];
+          newCoins = coins[type][priority];
+          newExp = exp[type][priority];
         }
 
         // If health surpass 100 after adding new health, set the new health to 100.
@@ -150,7 +147,9 @@ const SingleGoal = ({
         }
 
         if (state.user.sound.enable) {
-          const sound = useSound(state.user.sound.currentSound);
+          const sound = new Audio(
+            `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+          );
           sound.volume = state.user.sound.volume;
           sound.play();
         }
@@ -208,9 +207,11 @@ const SingleGoal = ({
   return (
     <>
       <motion.div {...attrs} className="flex" whileTap={{ scale: 0.98 }}>
-        <div onClick={handleUpdate}>
-          {status == 0 ? <UntickIcon /> : <TickIcon />}
-        </div>
+        <Suspense fallback={<Shimmer />}>
+          <div onClick={handleUpdate}>
+            {status == 0 ? <UntickIcon /> : <TickIcon />}
+          </div>
+        </Suspense>
         <div className="ml-3">
           <div
             className={`text-lg ${status == 1 && "line-through"}`}
@@ -222,18 +223,22 @@ const SingleGoal = ({
             <Badge deadline={getDate} />
             <h1 className="mx-2">|</h1>
             <Badge priority={priority} />
+            <h1 className="mx-2">|</h1>
+            <Badge type={type} />
           </div>
 
           {(showTask || toggleGoal) && (
             <div id="goals-description" className="mt-2">
               {subtasks.map((task) => {
                 return (
-                  <GoalsSubTask
-                    key={task.id}
-                    task={task}
-                    goalId={id}
-                    status={status}
-                  />
+                  <Suspense fallback={<Shimmer />}>
+                    <GoalsSubTask
+                      key={task.id}
+                      task={task}
+                      goalId={id}
+                      status={status}
+                    />
+                  </Suspense>
                 );
               })}
             </div>
@@ -241,20 +246,22 @@ const SingleGoal = ({
 
           {toggleGoal && (
             <>
-              <p className="text-xs italic my-1">{description}</p>
-              <AvailableTags tagData={tags} />
-              <p className="mt-2 text-xs text-center">
-                Created on{" "}
-                {dayjs(new Date(id)).format("DD MMM YYYY, hh:mm:ss A")}
-              </p>
-              {status != 0 && (
-                <p className="text-xs text-center">
-                  Completed on{" "}
-                  {dayjs(new Date(lastUpdated)).format(
-                    "DD MMM YYYY, hh:mm:ss A"
-                  )}
+              <Suspense fallback={<Shimmer />}>
+                <p className="text-xs italic my-1">{description}</p>
+                <AvailableTags tagData={tags} />
+                <p className="mt-2 text-xs text-center">
+                  Created on{" "}
+                  {dayjs(new Date(id)).format("DD MMM YYYY, hh:mm:ss A")}
                 </p>
-              )}
+                {status != 0 && (
+                  <p className="text-xs text-center">
+                    Completed on{" "}
+                    {dayjs(new Date(lastUpdated)).format(
+                      "DD MMM YYYY, hh:mm:ss A"
+                    )}
+                  </p>
+                )}
+              </Suspense>
             </>
           )}
         </div>

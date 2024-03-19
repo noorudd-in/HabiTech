@@ -9,7 +9,7 @@ import axios from "axios";
 const CreateTagForm = () => {
   const { state, dispatch } = useContext(HabitechContext);
   const [newTag, setNewTag] = useState("");
-  const { bgcolor500, lighttext, customcolor, textcolor500 } = useColorTheme();
+  const { bgcolor500, customcolor, textcolor500 } = useColorTheme();
 
   const creatTag = () => {
     if (state.availableTags.includes(newTag.toLowerCase())) {
@@ -63,13 +63,13 @@ const CreateTagForm = () => {
         <input
           type="text"
           value={newTag}
-          className="my-1 p-1 bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-md dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+          className="my-1 p-1 border text-md rounded-md bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
           placeholder="Example: Work"
           onChange={(e) => setNewTag(e.target.value)}
           required
         />
         <button
-          className={`block my-3 p-2 ${bgcolor500} ${lighttext} text-lg rounded-lg`}
+          className={`block my-3 p-2 ${bgcolor500} text-black text-lg rounded-lg`}
           onClick={creatTag}
         >
           Create

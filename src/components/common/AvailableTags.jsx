@@ -11,7 +11,7 @@ const AvailableTags = ({ tagData, deleteIcon, handleDelete }) => {
         return (
           <span
             key={tag}
-            className={`inline-block max-w-96 ${bgcolor100} dark:bg-gray-700 border ${border400} ${textcolor500} text-xs font-medium me-2 px-2 py-0.5 rounded-full `}
+            className={`inline-block max-w-96 ${bgcolor100} bg-gray-700 border ${border400} ${textcolor500} text-xs font-medium me-2 px-2 py-0.5 rounded-full `}
           >
             #{tag}{" "}
             {deleteIcon != undefined && (

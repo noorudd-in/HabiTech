@@ -109,7 +109,7 @@ const GoalsByTags = ({ showTask, showActive }) => {
                     description,
                     subtasks,
                     status,
-                    timeline,
+                    type,
                     lastUpdated,
                   }) => {
                     return (
@@ -124,7 +124,7 @@ const GoalsByTags = ({ showTask, showActive }) => {
                           description,
                           subtasks,
                           status,
-                          timeline,
+                          type,
                           lastUpdated,
                           showTask,
                           toggleUpdate,

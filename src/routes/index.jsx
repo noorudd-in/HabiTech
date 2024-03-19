@@ -1,25 +1,25 @@
 import { createBrowserRouter } from "react-router-dom";
 import { lazy, Suspense } from "react";
-//import HomePage from "../pages/HomePage";
+import ErrorPage from "../pages/ErrorPage";
+import Shimmer from "../pages/Shimmer";
 const HomePage = lazy(() => import("../pages/HomePage"));
 const AnimatePage = lazy(() => import("../pages/AnimatePage"));
-import ErrorPage from "../pages/ErrorPage";
-import CreatePage from "../pages/CreatePage";
-import Settings from "../pages/Settings";
-import GlobalFooter from "../components/layout/GlobalFooter";
-import CreateTagPage from "../pages/CreateTagPage";
-import CreateHabitPage from "../pages/CreateHabitPage";
-import CreateGoalPage from "../pages/CreateGoalPage";
-import CreatePlanPage from "../pages/CreatePlanPage";
-//import AnimatePage from "../pages/AnimatePage";
-import EditHabitPage from "../pages/EditHabitPage";
-import EditGoalPage from "../pages/EditGoalPage";
-import EditPlanPage from "../pages/EditPlanPage";
-import CommingSoon from "../components/layout/CommingSoon";
-import Theme from "../components/setting/Theme";
-import Activity from "../components/setting/Activity";
-import SoundAndVibration from "../components/setting/SoundAndVibration";
-import Shimmer from "../pages/Shimmer";
+const CreatePage = lazy(() => import("../pages/CreatePage"));
+const Settings = lazy(() => import("../pages/Settings"));
+const GlobalFooter = lazy(() => import("../components/layout/GlobalFooter"));
+const CreateTagPage = lazy(() => import("../pages/CreateTagPage"));
+const CreateHabitPage = lazy(() => import("../pages/CreateHabitPage"));
+const CreateGoalPage = lazy(() => import("../pages/CreateGoalPage"));
+const CreatePlanPage = lazy(() => import("../pages/CreatePlanPage"));
+const EditHabitPage = lazy(() => import("../pages/EditHabitPage"));
+const EditGoalPage = lazy(() => import("../pages/EditGoalPage"));
+const EditPlanPage = lazy(() => import("../pages/EditPlanPage"));
+const CommingSoon = lazy(() => import("../components/layout/CommingSoon"));
+const Theme = lazy(() => import("../components/setting/Theme"));
+const Activity = lazy(() => import("../components/setting/Activity"));
+const SoundAndVibration = lazy(() =>
+  import("../components/setting/SoundAndVibration")
+);
 
 const HABITECH_ROUTES = createBrowserRouter([
   {
@@ -36,40 +36,48 @@ const HABITECH_ROUTES = createBrowserRouter([
   {
     path: "/calender",
     element: (
-      <AnimatePage>
-        <CommingSoon />
-        <GlobalFooter />
-      </AnimatePage>
+      <Suspense fallback={<Shimmer />}>
+        <AnimatePage>
+          <CommingSoon />
+          <GlobalFooter />
+        </AnimatePage>
+      </Suspense>
     ),
     errorElement: <ErrorPage />,
   },
   {
     path: "/pomodoro",
     element: (
-      <AnimatePage>
-        <CommingSoon />
-        <GlobalFooter />
-      </AnimatePage>
+      <Suspense fallback={<Shimmer />}>
+        <AnimatePage>
+          <CommingSoon />
+          <GlobalFooter />
+        </AnimatePage>
+      </Suspense>
     ),
     errorElement: <ErrorPage />,
   },
   {
     path: "/setting",
     element: (
-      <AnimatePage>
-        <Settings />
-        <GlobalFooter />
-      </AnimatePage>
+      <Suspense fallback={<Shimmer />}>
+        <AnimatePage>
+          <Settings />
+          <GlobalFooter />
+        </AnimatePage>
+      </Suspense>
     ),
     errorElement: <ErrorPage />,
   },
   {
     path: "/create",
     element: (
-      <AnimatePage>
-        <CreatePage />
-        <GlobalFooter />
-      </AnimatePage>
+      <Suspense fallback={<Shimmer />}>
+        <AnimatePage>
+          <CreatePage />
+          <GlobalFooter />
+        </AnimatePage>
+      </Suspense>
     ),
     errorElement: <ErrorPage />,
   },
@@ -77,8 +85,10 @@ const HABITECH_ROUTES = createBrowserRouter([
     path: "/create/tag",
     element: (
       <>
-        <CreateTagPage />
-        <GlobalFooter />
+        <Suspense fallback={<Shimmer />}>
+          <CreateTagPage />
+          <GlobalFooter />
+        </Suspense>
       </>
     ),
     errorElement: <ErrorPage />,
@@ -87,8 +97,10 @@ const HABITECH_ROUTES = createBrowserRouter([
     path: "/create/habit",
     element: (
       <>
-        <CreateHabitPage />
-        <GlobalFooter />
+        <Suspense fallback={<Shimmer />}>
+          <CreateHabitPage />
+          <GlobalFooter />
+        </Suspense>
       </>
     ),
     errorElement: <ErrorPage />,
@@ -97,8 +109,10 @@ const HABITECH_ROUTES = createBrowserRouter([
     path: "/create/goal",
     element: (
       <>
-        <CreateGoalPage />
-        <GlobalFooter />
+        <Suspense fallback={<Shimmer />}>
+          <CreateGoalPage />
+          <GlobalFooter />
+        </Suspense>
       </>
     ),
     errorElement: <ErrorPage />,
@@ -107,8 +121,10 @@ const HABITECH_ROUTES = createBrowserRouter([
     path: "/create/plan",
     element: (
       <>
-        <CreatePlanPage />
-        <GlobalFooter />
+        <Suspense fallback={<Shimmer />}>
+          <CreatePlanPage />
+          <GlobalFooter />
+        </Suspense>
       </>
     ),
     errorElement: <ErrorPage />,
@@ -117,10 +133,12 @@ const HABITECH_ROUTES = createBrowserRouter([
     path: "/edit/habit/:id",
     element: (
       <>
-        <AnimatePage>
-          <EditHabitPage />
-          <GlobalFooter />
-        </AnimatePage>
+        <Suspense fallback={<Shimmer />}>
+          <AnimatePage>
+            <EditHabitPage />
+            <GlobalFooter />
+          </AnimatePage>
+        </Suspense>
       </>
     ),
     errorElement: <ErrorPage />,
@@ -129,10 +147,12 @@ const HABITECH_ROUTES = createBrowserRouter([
     path: "/edit/goal/:id",
     element: (
       <>
-        <AnimatePage>
-          <EditGoalPage />
-          <GlobalFooter />
-        </AnimatePage>
+        <Suspense fallback={<Shimmer />}>
+          <AnimatePage>
+            <EditGoalPage />
+            <GlobalFooter />
+          </AnimatePage>
+        </Suspense>
       </>
     ),
     errorElement: <ErrorPage />,
@@ -141,10 +161,12 @@ const HABITECH_ROUTES = createBrowserRouter([
     path: "/edit/plan/:id",
     element: (
       <>
-        <AnimatePage>
-          <EditPlanPage />
-          <GlobalFooter />
-        </AnimatePage>
+        <Suspense fallback={<Shimmer />}>
+          <AnimatePage>
+            <EditPlanPage />
+            <GlobalFooter />
+          </AnimatePage>
+        </Suspense>
       </>
     ),
     errorElement: <ErrorPage />,
@@ -153,8 +175,10 @@ const HABITECH_ROUTES = createBrowserRouter([
     path: "/theme",
     element: (
       <>
-        <Theme />
-        <GlobalFooter />
+        <Suspense fallback={<Shimmer />}>
+          <Theme />
+          <GlobalFooter />
+        </Suspense>
       </>
     ),
     errorElement: <ErrorPage />,
@@ -163,8 +187,10 @@ const HABITECH_ROUTES = createBrowserRouter([
     path: "/activity",
     element: (
       <>
-        <Activity />
-        <GlobalFooter />
+        <Suspense fallback={<Shimmer />}>
+          <Activity />
+          <GlobalFooter />
+        </Suspense>
       </>
     ),
     errorElement: <ErrorPage />,
@@ -173,8 +199,10 @@ const HABITECH_ROUTES = createBrowserRouter([
     path: "/avatar",
     element: (
       <>
-        <CommingSoon />
-        <GlobalFooter />
+        <Suspense fallback={<Shimmer />}>
+          <CommingSoon />
+          <GlobalFooter />
+        </Suspense>
       </>
     ),
     errorElement: <ErrorPage />,
@@ -183,8 +211,10 @@ const HABITECH_ROUTES = createBrowserRouter([
     path: "/reward",
     element: (
       <>
-        <CommingSoon />
-        <GlobalFooter />
+        <Suspense fallback={<Shimmer />}>
+          <CommingSoon />
+          <GlobalFooter />
+        </Suspense>
       </>
     ),
     errorElement: <ErrorPage />,
@@ -193,8 +223,10 @@ const HABITECH_ROUTES = createBrowserRouter([
     path: "/sound",
     element: (
       <>
-        <SoundAndVibration />
-        <GlobalFooter />
+        <Suspense fallback={<Shimmer />}>
+          <SoundAndVibration />
+          <GlobalFooter />
+        </Suspense>
       </>
     ),
     errorElement: <ErrorPage />,
@@ -203,8 +235,22 @@ const HABITECH_ROUTES = createBrowserRouter([
     path: "/lock",
     element: (
       <>
-        <CommingSoon />
-        <GlobalFooter />
+        <Suspense fallback={<Shimmer />}>
+          <CommingSoon />
+          <GlobalFooter />
+        </Suspense>
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/about",
+    element: (
+      <>
+        <Suspense fallback={<Shimmer />}>
+          <CommingSoon />
+          <GlobalFooter />
+        </Suspense>
       </>
     ),
     errorElement: <ErrorPage />,
@@ -213,8 +259,10 @@ const HABITECH_ROUTES = createBrowserRouter([
     path: "/terms",
     element: (
       <>
-        <CommingSoon />
-        <GlobalFooter />
+        <Suspense fallback={<Shimmer />}>
+          <CommingSoon />
+          <GlobalFooter />
+        </Suspense>
       </>
     ),
     errorElement: <ErrorPage />,
@@ -223,8 +271,10 @@ const HABITECH_ROUTES = createBrowserRouter([
     path: "/privacy",
     element: (
       <>
-        <CommingSoon />
-        <GlobalFooter />
+        <Suspense fallback={<Shimmer />}>
+          <CommingSoon />
+          <GlobalFooter />
+        </Suspense>
       </>
     ),
     errorElement: <ErrorPage />,

@@ -14,6 +14,7 @@ const GroupByGoals = ({ groupBy, setGroupBy }) => {
         onChange={(e) => setGroupBy(e.target.value)}
       >
         <option value="timeline">Timeline</option>
+        <option value="type">Type</option>
         <option value="priority">Priority</option>
         <option value="tags">Tags</option>
       </select>

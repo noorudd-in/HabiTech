@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { lazy, useContext, useState, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLongPress } from "@uidotdev/usehooks";
 import { useTimeDifference } from "../../hooks/useTimeDifference";
@@ -8,13 +8,13 @@ import toast, { Toaster } from "react-hot-toast";
 import { toastSuccess, toastError, toastInfo } from "../common/Toast";
 import { motion } from "framer-motion";
 import { useColorTheme } from "../../hooks/useColorTheme";
-import { useSound } from "../../hooks/useSound";
 import axios from "axios";
 import MinusIcon from "../icons/MinusIcon";
 import PlusIcon from "../icons/PlusIcon";
 import Badge from "../common/Badge";
 import HabitTimeBar from "./HabitTimeBar";
-import Modal from "../common/Modal";
+import Shimmer from "../../pages/Shimmer";
+const Modal = lazy(() => import("../common/Modal"));
 
 const SingleHabit = ({
   id,
@@ -31,7 +31,7 @@ const SingleHabit = ({
   const { state, dispatch } = useContext(HabitechContext);
   const navigate = useNavigate();
   const value = useTimeDifference(lastUpdated);
-  const { bgcolor400, lighttext, border400, customcolor } = useColorTheme();
+  const { bgcolor400, border400, customcolor } = useColorTheme();
 
   // Perform below action when habit is long pressed
   const attrs = useLongPress(
@@ -120,7 +120,9 @@ const SingleHabit = ({
       }
 
       if (state.user.sound.enable) {
-        const sound = useSound(state.user.sound.currentSound);
+        const sound = new Audio(
+          `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+        );
         sound.volume = state.user.sound.volume;
         sound.play();
       }
@@ -177,21 +179,25 @@ const SingleHabit = ({
     <>
       <Toaster />
 
-      <Modal
-        toggleModal={toggleModal}
-        setToggleModal={setToggleModal}
-        data={{
-          id: id,
-          name: name,
-          status: status,
-          difficulty: difficulty,
-          lastUpdated: lastUpdated,
-          expValue: expValue,
-          posCount: posCount,
-          negCount: negCount,
-          analytics: analytics,
-        }}
-      />
+      {toggleModal != "hidden" && (
+        <Suspense fallback={<Shimmer />}>
+          <Modal
+            toggleModal={toggleModal}
+            setToggleModal={setToggleModal}
+            data={{
+              id: id,
+              name: name,
+              status: status,
+              difficulty: difficulty,
+              lastUpdated: lastUpdated,
+              expValue: expValue,
+              posCount: posCount,
+              negCount: negCount,
+              analytics: analytics,
+            }}
+          />
+        </Suspense>
+      )}
 
       <motion.div whileTap={{ scale: 0.97 }}>
         <div
@@ -209,14 +215,14 @@ const SingleHabit = ({
 
           <div
             {...attrs}
-            className={`col-span-10 m-3 ${status != 0 ? lighttext : ""}`}
+            className={`col-span-10 m-3 ${status != 0 ? "text-black" : ""}`}
           >
             <div className="flex justify-between" onClick={handleClick}>
               <h1 className="text-xl">{name}</h1>
               <Badge difficulty={difficulty} />
             </div>
             <div>
-              <div className="w-full bg-gray-200 h-2 dark:bg-gray-700 mt-3 -mb-3 rounded-t">
+              <div className="w-full h-2 bg-gray-700 mt-3 -mb-3 rounded-t">
                 <HabitTimeBar value={parseInt(value)} status={status} />
               </div>
             </div>

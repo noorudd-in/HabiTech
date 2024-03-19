@@ -15,7 +15,7 @@ const PlanWrapper = ({ children, status }) => {
           )}
           <div
             className={`w-px h-full ${
-              status <= 0 ? bgcolor100 : "bg-slate-700 dark:bg-gray-400"
+              status <= 0 ? bgcolor100 : "bg-gray-400"
             }`}
           />
         </div>

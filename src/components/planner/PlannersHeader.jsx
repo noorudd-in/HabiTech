@@ -20,7 +20,7 @@ const PlannersHeader = ({ toggleData, setToggleData }) => {
           className={`border m-2 p-2 text-center text-sm rounded-full ${
             toggleData == "yesterday"
               ? `${bgcolor500} text-black`
-              : "border-black dark:border-gray-300"
+              : "border-gray-300"
           }`}
           onClick={() => toggleChange("yesterday")}
         >
@@ -32,7 +32,7 @@ const PlannersHeader = ({ toggleData, setToggleData }) => {
           className={`border m-2 p-2 text-center text-sm rounded-full ${
             toggleData == "today"
               ? `${bgcolor500} text-black`
-              : "border-black dark:border-gray-300"
+              : " border-gray-300"
           }`}
           onClick={() => toggleChange("today")}
         >
@@ -44,7 +44,7 @@ const PlannersHeader = ({ toggleData, setToggleData }) => {
           className={`border m-2 p-2 text-center text-sm rounded-full ${
             toggleData == "tomorrow"
               ? `${bgcolor500} text-black`
-              : "border-black dark:border-gray-300"
+              : "border-gray-300"
           }`}
           onClick={() => toggleChange("tomorrow")}
         >

@@ -1,12 +1,14 @@
+import { lazy, useContext, useState, Suspense } from "react";
+import { HabitechContext } from "../../contexts/HabitechContext";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
-import Modal from "../common/Modal";
+const Modal = lazy(() => import("../common/Modal"));
+import Shimmer from "../../pages/Shimmer";
 import { useColorTheme } from "../../hooks/useColorTheme";
 import { motion } from "framer-motion";
 import { useLongPress } from "@uidotdev/usehooks";
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-import { HabitechContext } from "../../contexts/HabitechContext";
+
 dayjs.extend(duration);
 
 const SinglePlan = ({
@@ -53,18 +55,22 @@ const SinglePlan = ({
 
   return (
     <>
-      <Modal
-        toggleModal={toggleModal}
-        setToggleModal={setToggleModal}
-        data={{
-          id: id,
-          name: name,
-          start: start,
-          end: end,
-          description: description,
-          lastUpdated: lastUpdated,
-        }}
-      />
+      {toggleModal != "hidden" && (
+        <Suspense fallback={<Shimmer />}>
+          <Modal
+            toggleModal={toggleModal}
+            setToggleModal={setToggleModal}
+            data={{
+              id: id,
+              name: name,
+              start: start,
+              end: end,
+              description: description,
+              lastUpdated: lastUpdated,
+            }}
+          />
+        </Suspense>
+      )}
 
       <motion.div whileTap={{ scale: 0.95 }}>
         <div

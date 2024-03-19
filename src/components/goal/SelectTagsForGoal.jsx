@@ -15,13 +15,13 @@ const SelectTagsForGoal = ({ allTags, tags, setTags }) => {
   };
   return (
     <>
-      <div className="mt-1 bg-white rounded-lg shadow dark:bg-gray-700">
+      <div className="mt-1 rounded-lg shadow bg-gray-700">
         <p className="mx-2">Select from the list available tags.</p>
         {allTags.map((tag) => {
           return (
             <ul
               key={tag}
-              className="px-4 py-0.5 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"
+              className="px-4 py-0.5 overflow-y-auto text-sm text-gray-200"
             >
               <li>
                 <div className="items-center rounded">
@@ -35,7 +35,7 @@ const SelectTagsForGoal = ({ allTags, tags, setTags }) => {
                   />
                   <label
                     htmlFor={tag}
-                    className="w-full ms-2 text-base font-medium text-gray-900 rounded dark:text-gray-300"
+                    className="w-full ms-2 text-base font-medium rounded text-gray-300"
                   >
                     {tag}
                   </label>

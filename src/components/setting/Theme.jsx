@@ -5,7 +5,6 @@ import { toast, Toaster } from "react-hot-toast";
 import { toastError } from "../common/Toast";
 import { API_URL } from "../../constants";
 import { useNavigate } from "react-router-dom";
-import { useSound } from "../../hooks/useSound";
 import SingleTheme from "../layout/SingleTheme";
 import axios from "axios";
 
@@ -25,7 +24,9 @@ const Theme = () => {
     // Change Theme if already owned.
     if (isPurchased && state.theme != name) {
       if (state.user.sound.enable) {
-        const sound = useSound(state.user.sound.currentSound);
+        const sound = new Audio(
+          `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+        );
         sound.volume = state.user.sound.volume;
         sound.play();
       }
@@ -70,7 +71,7 @@ const Theme = () => {
       };
 
       if (state.user.sound.enable) {
-        const sound = useSound("Purchase");
+        const sound = new Audio(`../../../assets/sounds/purchase.mp3`);
         sound.volume = state.user.sound.volume;
         sound.play();
       }

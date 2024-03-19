@@ -5,7 +5,6 @@ import { toastError } from "../components/common/Toast";
 import { API_URL } from "../constants/index";
 import { useNavigate, useParams } from "react-router-dom";
 import { useColorTheme } from "../hooks/useColorTheme";
-import { useSound } from "../hooks/useSound";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -17,13 +16,12 @@ import AvailableTags from "../components/common/AvailableTags";
 import AvailableSubtask from "../components/common/AvailableSubtask";
 
 const EditGoalPage = () => {
-  const { bgcolor500, lighttext, textcolor500 } = useColorTheme();
+  const { bgcolor500, textcolor500 } = useColorTheme();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState("");
   const [priority, setPriority] = useState("");
   const [duedate, setDuedate] = useState("");
-  const [maxDate, setMaxDate] = useState("");
   const [tags, setTags] = useState([]);
   const [task, setTask] = useState([]);
   const [dropdown, setDropdown] = useState(false);
@@ -31,30 +29,6 @@ const EditGoalPage = () => {
   const { state, dispatch } = useContext(HabitechContext);
   const navigate = useNavigate();
   let { id } = useParams();
-
-  const setGoalType = (type) => {
-    setType(type);
-    if (type == "weekly") {
-      setMaxDate(dayjs().add(1, "week").format("YYYY-MM-DD"));
-    }
-    if (type == "monthly") {
-      setMaxDate(dayjs().add(1, "month").format("YYYY-MM-DD"));
-    }
-    if (type == "quarterly") {
-      setMaxDate(dayjs().add(3, "month").format("YYYY-MM-DD"));
-    }
-    if (type == "yearly") {
-      setMaxDate(dayjs().add(1, "year").format("YYYY-MM-DD"));
-    }
-  };
-
-  const setDueDate = (date) => {
-    if (type == "" || type == "select") {
-      toast("First select the goal type.", toastError());
-      return;
-    }
-    setDuedate(date);
-  };
 
   const toggleDropdown = (type) => {
     setToggleModal("");
@@ -91,7 +65,7 @@ const EditGoalPage = () => {
       if (goal.id == id) {
         goal.name = name;
         goal.duedate = Date.parse(duedate);
-        goal.timeline = type;
+        goal.type = type;
         goal.priority = priority;
         goal.tags = tags;
         goal.description = description;
@@ -108,7 +82,9 @@ const EditGoalPage = () => {
     };
 
     if (state.user.sound.enable) {
-      const sound = useSound(state.user.sound.currentSound);
+      const sound = new Audio(
+        `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+      );
       sound.volume = state.user.sound.volume;
       sound.play();
     }
@@ -150,7 +126,9 @@ const EditGoalPage = () => {
       };
 
       if (state.user.sound.enable) {
-        const sound = useSound(state.user.sound.currentSound);
+        const sound = new Audio(
+          `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+        );
         sound.volume = state.user.sound.volume;
         sound.play();
       }
@@ -221,7 +199,7 @@ const EditGoalPage = () => {
           id="goalname"
           type="text"
           value={name}
-          className="my-1 p-1 border w-3/4 text-black text-md rounded-md dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+          className="my-1 p-1 border w-3/4text-md rounded-md bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
           placeholder="Email all students"
           onChange={(e) => setName(e.target.value)}
           required
@@ -234,7 +212,7 @@ const EditGoalPage = () => {
           id="description"
           type="text"
           value={description}
-          className="my-1 p-1 border w-3/4 text-black text-md rounded-md dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+          className="my-1 p-1 border w-3/4 text-md rounded-md bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
           placeholder="Make an excel sheet with name and roll number of all students"
           onChange={(e) => setDescription(e.target.value)}
           required
@@ -249,14 +227,13 @@ const EditGoalPage = () => {
             <select
               id="type"
               value={type}
-              className=" my-1 p-1 w-3/4 border border-gray-300 text-gray-900 text-md rounded-md block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-              onChange={(e) => setGoalType(e.target.value)}
+              className=" my-1 p-1 w-3/4 border text-md rounded-md block bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
+              onChange={(e) => setType(e.target.value)}
             >
               <option value="select">Select</option>
-              <option value="weekly">Weekly</option>
-              <option value="monthly">Monthly</option>
-              <option value="quarterly">Quarterly</option>
-              <option value="yearly">Yearly</option>
+              <option value="weekly">Short Term</option>
+              <option value="monthly">Intermediate</option>
+              <option value="quarterly">Long Term</option>
             </select>
           </div>
 
@@ -268,7 +245,7 @@ const EditGoalPage = () => {
             <select
               id="priority"
               value={priority}
-              className=" my-1 p-1 w-3/4 border border-gray-300 text-gray-900 text-md rounded-md block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+              className=" my-1 p-1 w-3/4 border text-md rounded-md block bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
               onChange={(e) => setPriority(e.target.value)}
             >
               <option value="select">Select</option>
@@ -289,12 +266,11 @@ const EditGoalPage = () => {
           </div>
           <DatePicker
             selected={duedate}
-            onChange={(date) => setDueDate(date)}
+            onChange={(date) => setDuedate(date)}
             minDate={dayjs().format("YYYY-MM-DD")}
-            maxDate={maxDate}
             placeholderText="Select Due Date"
             onFocus={(e) => (e.target.readOnly = true)}
-            className="my-1 p-1 border text-black text-md rounded-md dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            className="my-1 p-1 border text-md rounded-md bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
           >
             <div className="text-center text-red-500">
               {type == "weekly" && <h1>Select any date in a week</h1>}
@@ -369,11 +345,9 @@ const EditGoalPage = () => {
           <div
             className={`${toggleModal} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full bg-gray-300 bg-opacity-50`}
           >
-            <div className="mx-10 lg:mx-40 my-32 relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div className="mx-10 lg:mx-40 my-32 relative rounded-lg shadow bg-gray-700">
               <div className="text-center p-4 md:p-5 rounded-t">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                  Add Tags
-                </h3>
+                <h3 className="text-xl font-semibold text-white">Add Tags</h3>
               </div>
 
               <div>
@@ -389,10 +363,10 @@ const EditGoalPage = () => {
                 )}
               </div>
 
-              <div className="text-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+              <div className="text-center p-4 md:p-5 border-t rounded-b border-gray-600">
                 <button
                   type="button"
-                  className={`${lighttext} focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center ${bgcolor500}`}
+                  className={`text-black focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center ${bgcolor500}`}
                   onClick={() => setToggleModal("hidden")}
                 >
                   Done

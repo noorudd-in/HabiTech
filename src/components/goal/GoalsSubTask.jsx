@@ -4,7 +4,6 @@ import { HabitechContext } from "../../contexts/HabitechContext";
 import { API_URL } from "../../constants/index";
 import { toast } from "react-hot-toast";
 import { toastSuccess } from "../common/Toast";
-import { useSound } from "../../hooks/useSound";
 import axios from "axios";
 
 const GoalsSubTask = ({ task, goalId, status }) => {
@@ -28,7 +27,9 @@ const GoalsSubTask = ({ task, goalId, status }) => {
     });
 
     if (state.user.sound.enable) {
-      const sound = useSound(state.user.sound.currentSound);
+      const sound = new Audio(
+        `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+      );
       sound.volume = state.user.sound.volume;
       sound.play();
     }

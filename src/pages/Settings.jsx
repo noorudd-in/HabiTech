@@ -25,7 +25,7 @@ const Settings = () => {
   return (
     <div>
       <GlobalHeader />
-      <div className="m-2 mt p-2 bg-gray-300 dark:bg-gray-700 rounded">
+      <div className="m-2 mt p-2 bg-gray-700 rounded">
         <Link to="/activity">
           <div className="flex px-1 text-lg my-2">
             <ActivityFeedIcon className="w-6 h-7" />
@@ -69,7 +69,7 @@ const Settings = () => {
         </Link>
       </div>
 
-      <div className="m-2 mt p-2 bg-gray-300 dark:bg-gray-700 rounded">
+      <div className="m-2 mt p-2  bg-gray-700 rounded">
         <Link to="/about">
           <div className="flex px-1 text-lg my-2">
             <div className="w-6 h-6">
@@ -98,7 +98,7 @@ const Settings = () => {
         </Link>
       </div>
 
-      <div className="m-2 mt p-2 bg-gray-300 dark:bg-gray-700 rounded">
+      <div className="m-2 mt p-2 bg-gray-700 rounded">
         <Link to="/terms">
           <div className="flex px-1 text-lg my-2">
             <TermsAndConditionIcon className="w-6 h-7" />

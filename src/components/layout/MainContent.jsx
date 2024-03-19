@@ -1,10 +1,11 @@
-import { useState } from "react";
-import RenderHabits from "../habit/RenderHabits";
-import RenderGoals from "../goal/RenderGoals";
+import { Suspense, lazy, useState } from "react";
 import RenderPlanner from "../planner/RenderPlanner";
-import GoalsHeader from "../goal/GoalsHeader";
 import Activity from "./ShowLastActivity";
 import AnimatedTabs from "../common/AnimatedTabs";
+import Shimmer from "../../pages/Shimmer";
+const RenderHabits = lazy(() => import("../habit/RenderHabits"));
+const RenderGoals = lazy(() => import("../goal/RenderGoals"));
+const GoalsHeader = lazy(() => import("../goal/GoalsHeader"));
 
 const MainContent = () => {
   const [currentTab, setCurrentTab] = useState("planner");
@@ -16,16 +17,22 @@ const MainContent = () => {
       <div className="flex justify-center">
         <AnimatedTabs setCurrentTab={setCurrentTab} />
       </div>
-      {currentTab == "habits" && <RenderHabits />}
+      {currentTab == "habits" && (
+        <Suspense fallback={<Shimmer />}>
+          <RenderHabits />
+        </Suspense>
+      )}
       {currentTab == "goals" && (
         <>
-          <GoalsHeader
-            showTask={showTask}
-            setShowTask={setShowTask}
-            groupBy={groupBy}
-            setGroupBy={setGroupBy}
-          />
-          <RenderGoals showTask={showTask} groupBy={groupBy} />
+          <Suspense fallback={<Shimmer />}>
+            <GoalsHeader
+              showTask={showTask}
+              setShowTask={setShowTask}
+              groupBy={groupBy}
+              setGroupBy={setGroupBy}
+            />
+            <RenderGoals showTask={showTask} groupBy={groupBy} />
+          </Suspense>
         </>
       )}
 

@@ -4,7 +4,6 @@ import { useColorTheme } from "../hooks/useColorTheme";
 import { useNavigate, useParams } from "react-router-dom";
 import { toastError } from "../components/common/Toast";
 import { API_URL } from "../constants";
-import { useSound } from "../hooks/useSound";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
@@ -12,7 +11,7 @@ const EditHabitPage = () => {
   const [habitName, setHabitName] = useState("");
   const [habitLevel, setHabitLevel] = useState("");
   const { state, dispatch } = useContext(HabitechContext);
-  const { bgcolor500, lighttext, textcolor500 } = useColorTheme();
+  const { bgcolor500, textcolor500 } = useColorTheme();
   const navigate = useNavigate();
   let { id } = useParams();
 
@@ -46,7 +45,9 @@ const EditHabitPage = () => {
     };
 
     if (state.user.sound.enable) {
-      const sound = useSound(state.user.sound.currentSound);
+      const sound = new Audio(
+        `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+      );
       sound.volume = state.user.sound.volume;
       sound.play();
     }
@@ -90,7 +91,9 @@ const EditHabitPage = () => {
       };
 
       if (state.user.sound.enable) {
-        const sound = useSound(state.user.sound.currentSound);
+        const sound = new Audio(
+          `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+        );
         sound.volume = state.user.sound.volume;
         sound.play();
       }
@@ -147,7 +150,7 @@ const EditHabitPage = () => {
           id="habit"
           type="text"
           value={habitName}
-          className="my-1 p-1 border w-3/4 text-black text-md rounded-md dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+          className="my-1 p-1 border w-3/4 text-md rounded-md bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
           placeholder="Read 10 pages daily"
           onChange={(e) => setHabitName(e.target.value)}
           required
@@ -158,7 +161,7 @@ const EditHabitPage = () => {
         <select
           id="habit-level"
           value={habitLevel}
-          className=" my-1 p-1 w-3/4 border border-gray-300 text-gray-900 text-md rounded-md block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+          className=" my-1 p-1 w-3/4 border text-md rounded-md block bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
           onChange={(e) => setHabitLevel(e.target.value)}
         >
           <option value="select">Select</option>
@@ -169,7 +172,7 @@ const EditHabitPage = () => {
 
         <div>
           <button
-            className={`text-center my-3 p-2 ${bgcolor500} ${lighttext} text-lg rounded-lg items-center`}
+            className={`text-center my-3 p-2 ${bgcolor500} text-black text-lg rounded-lg items-center`}
             onClick={updateHabit}
           >
             Update

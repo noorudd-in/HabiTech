@@ -5,7 +5,6 @@ import { useColorTheme } from "../hooks/useColorTheme";
 import toast, { Toaster } from "react-hot-toast";
 import { toastError } from "../components/common/Toast";
 import { API_URL } from "../constants";
-import { useSound } from "../hooks/useSound";
 import dayjs from "dayjs";
 import axios from "axios";
 
@@ -21,7 +20,7 @@ const EditPlanPage = () => {
   const [toggleDate, setToggleDate] = useState("today");
   const [durationValue, setDurationValue] = useState("select");
   const { state, dispatch } = useContext(HabitechContext);
-  const { bgcolor500, border400, lighttext, textcolor500 } = useColorTheme();
+  const { bgcolor500, border400, textcolor500 } = useColorTheme();
   const navigate = useNavigate();
   let { id } = useParams();
 
@@ -150,7 +149,9 @@ const EditPlanPage = () => {
     };
 
     if (state.user.sound.enable) {
-      const sound = useSound(state.user.sound.currentSound);
+      const sound = new Audio(
+        `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+      );
       sound.volume = state.user.sound.volume;
       sound.play();
     }
@@ -192,7 +193,9 @@ const EditPlanPage = () => {
       };
 
       if (state.user.sound.enable) {
-        const sound = useSound(state.user.sound.currentSound);
+        const sound = new Audio(
+          `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+        );
         sound.volume = state.user.sound.volume;
         sound.play();
       }
@@ -286,7 +289,7 @@ const EditPlanPage = () => {
             id="planname"
             type="text"
             value={name}
-            className="my-1 p-1 border w-3/4 text-black text-md rounded-md dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            className="my-1 p-1 border w-3/4  text-md rounded-md bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
             placeholder="Repair Fan"
             onChange={(e) => setName(e.target.value)}
             required
@@ -307,7 +310,7 @@ const EditPlanPage = () => {
             type="time"
             value={start}
             max="23:55"
-            className="text-black dark:text-white p-1 rounded dark:bg-gray-700 dark:border-gray-600"
+            className="text-white p-1 rounded bg-gray-700 border-gray-600"
             onChange={(e) => setStart(e.target.value)}
           />
 
@@ -338,7 +341,7 @@ const EditPlanPage = () => {
                   <select
                     value={durationValue}
                     id="type"
-                    className=" my-1 p-1 border border-gray-300 text-gray-900 text-md rounded-md block dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                    className=" my-1 p-1 border text-md rounded-md block bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
                     onChange={(e) => setDuration(e.target.value)}
                   >
                     <option value="select">Select</option>
@@ -363,7 +366,7 @@ const EditPlanPage = () => {
                     value={end}
                     min={start}
                     max="23:55"
-                    className="text-black dark:text-white p-1 rounded dark:bg-gray-700 dark:border-gray-600"
+                    className="text-white p-1 rounded bg-gray-700 border-gray-600"
                     onChange={(e) => settingEndTime(e.target.value)}
                   />
                 </div>
@@ -383,7 +386,7 @@ const EditPlanPage = () => {
                   className={`px-2 py-1 border rounded-s-lg ${
                     toggleRepeat == "once"
                       ? bgcolor500 + " " + border400 + " " + "text-gray-900"
-                      : "border-gray-700 dark:bg-gray-800 dark:text-white"
+                      : "border-gray-700 bg-gray-800 text-white"
                   }`}
                 >
                   Once
@@ -393,7 +396,7 @@ const EditPlanPage = () => {
                   className={`px-2 py-1 border rounded-e-lg ${
                     toggleRepeat == "daily"
                       ? bgcolor500 + " " + border400 + " " + "text-gray-900"
-                      : "border-gray-700 dark:bg-gray-800 dark:text-white"
+                      : "border-gray-700 bg-gray-800 text-white"
                   }`}
                 >
                   Daily
@@ -411,7 +414,7 @@ const EditPlanPage = () => {
                   className={`px-2 py-1 border rounded-s-lg ${
                     toggleDate == "today"
                       ? bgcolor500 + " " + border400 + " " + "text-gray-900"
-                      : "border-gray-700 dark:bg-gray-800 dark:text-white"
+                      : "border-gray-700 bg-gray-800 text-white"
                   }`}
                 >
                   Today
@@ -421,7 +424,7 @@ const EditPlanPage = () => {
                   className={`px-2 py-1 border rounded-e-lg ${
                     toggleDate == "tomorrow"
                       ? bgcolor500 + " " + border400 + " " + "text-gray-900"
-                      : "border-gray-700 dark:bg-gray-800 dark:text-white"
+                      : "border-gray-700 bg-gray-800 text-white"
                   }`}
                 >
                   Tomorrow
@@ -437,7 +440,7 @@ const EditPlanPage = () => {
             id="description"
             type="text"
             value={description}
-            className="my-1 p-1 border w-3/4 text-black text-md rounded-md dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            className="my-1 p-1 border w-3/4 text-md rounded-md bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
             placeholder="Call electrician and repair the fan."
             onChange={(e) => setDescription(e.target.value)}
             required
@@ -446,7 +449,7 @@ const EditPlanPage = () => {
 
         <div>
           <button
-            className={`text-center my-3 p-2 ${bgcolor500} ${lighttext} text-lg rounded-lg items-center`}
+            className={`text-center my-3 p-2 ${bgcolor500} text-black text-lg rounded-lg items-center`}
             onClick={updatePlan}
           >
             Update

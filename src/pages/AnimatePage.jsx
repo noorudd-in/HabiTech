@@ -79,7 +79,7 @@ const AnimatePage = ({ children }) => {
               <motion.div
                 key={i}
                 {...animations(expand, column - i)}
-                className={`relative h-full w-full bg-slate-200 bg-opacity-90 dark:bg-gray-500 dark:bg-opacity-90`}
+                className={`relative h-full w-full  bg-gray-500 bg-opacity-90`}
               />
             );
           })}
