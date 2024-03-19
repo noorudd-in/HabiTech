@@ -1,7 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import { API_URL } from "../../constants";
-import { useSound } from "../../hooks/useSound";
 import { useColorTheme } from "../../hooks/useColorTheme";
 import axios from "axios";
 import ToggleButton from "../common/ToggleButton";
@@ -9,20 +8,20 @@ import CircleIcon from "../icons/CircleIcon";
 import CircleTickedIcon from "../icons/CircleTickedIcon";
 
 const soundData = [
-  "Twinkle",
-  "Retro",
-  "Archive",
-  "Excite",
-  "Shallow",
-  "Ping",
-  "Pop",
-  "Progress",
-  "Tap",
-  "Success",
-  "Tuck",
-  "Answer",
-  "Notify",
-  "Click",
+  "twinkle",
+  "retro",
+  "archive",
+  "excite",
+  "shallow",
+  "ping",
+  "pop",
+  "progress",
+  "tap",
+  "success",
+  "tuck",
+  "answer",
+  "notify",
+  "click",
 ];
 
 const Sound = () => {
@@ -61,9 +60,9 @@ const Sound = () => {
       return;
     }
     setCurrentSound(value);
-    const getSound = useSound(value);
-    getSound.volume = state.user.sound.volume;
-    getSound.play();
+    const sound = new Audio(`../../../assets/sounds/${value}.mp3`);
+    sound.volume = state.user.sound.volume;
+    sound.play();
     // API Call to set current sound
     axios
       .put(API_URL, {
@@ -152,7 +151,7 @@ const Sound = () => {
               max="1"
               value={volume}
               step="0.1"
-              className={`w-full h-2 bg-gray-200 rounded-lg cursor-pointer dark:bg-gray-700 ${checkboxcolor}`}
+              className={`w-full h-2 rounded-lg cursor-pointer bg-gray-700 ${checkboxcolor}`}
               onChange={(e) => updateSound(e)}
             />
           </div>

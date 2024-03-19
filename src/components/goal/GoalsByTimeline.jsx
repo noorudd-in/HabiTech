@@ -6,6 +6,7 @@ import SingleGoal from "./SingleGoal";
 import Shimmer from "../../pages/Shimmer";
 import UpIcon from "../icons/UpIcon";
 import DownIcon from "../icons/DownIcon";
+import dayjs from "dayjs";
 
 const GoalsByTimeline = ({ showTask, showActive }) => {
   const [dropdown, setDropdown] = useState("weekly");
@@ -30,22 +31,68 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
     const sortedByDueDate = state.goals.toSorted(function compare(a, b) {
       return a.duedate - b.duedate;
     });
-    const activeGoals = {};
-    const inactiveGoals = {};
+
+    const endOfWeek = dayjs().add(1, "week");
+    const endOfMonth = dayjs().add(1, "month");
+    const endOfQuarter = dayjs().add(3, "month");
+
+    const activeGoals = {
+      weekly: [],
+      monthly: [],
+      quarterly: [],
+      yearly: [],
+    };
+    const inactiveGoals = {
+      weekly: [],
+      monthly: [],
+      quarterly: [],
+      yearly: [],
+    };
+
     sortedByDueDate.map((goal) => {
+      // If goal is active
       if (goal.status == 0) {
-        if (activeGoals[goal.timeline]) {
-          activeGoals[goal.timeline].push(goal);
-        } else {
-          activeGoals[goal.timeline] = [goal];
+        let currentDate = dayjs(new Date(goal.duedate));
+        if (currentDate.isBefore(endOfWeek)) {
+          activeGoals.weekly.push(goal);
+        }
+        if (
+          currentDate.isAfter(endOfWeek) &&
+          currentDate.isBefore(endOfMonth)
+        ) {
+          activeGoals.monthly.push(goal);
+        }
+        if (
+          currentDate.isAfter(endOfMonth) &&
+          currentDate.isBefore(endOfQuarter)
+        ) {
+          activeGoals.quarterly.push(goal);
+        }
+        if (currentDate.isAfter(endOfQuarter)) {
+          activeGoals.yearly.push(goal);
         }
       }
 
+      // If goal is inactive.
       if (goal.status == 1) {
-        if (inactiveGoals[goal.timeline]) {
-          inactiveGoals[goal.timeline].push(goal);
-        } else {
-          inactiveGoals[goal.timeline] = [goal];
+        let currentDate = dayjs(new Date(goal.duedate));
+        if (currentDate.isBefore(endOfWeek)) {
+          inactiveGoals.weekly.push(goal);
+        }
+        if (
+          currentDate.isAfter(endOfWeek) &&
+          currentDate.isBefore(endOfMonth)
+        ) {
+          inactiveGoals.monthly.push(goal);
+        }
+        if (
+          currentDate.isAfter(endOfMonth) &&
+          currentDate.isBefore(endOfQuarter)
+        ) {
+          inactiveGoals.quarterly.push(goal);
+        }
+        if (currentDate.isAfter(endOfQuarter)) {
+          inactiveGoals.yearly.push(goal);
         }
       }
     });
@@ -70,14 +117,14 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
             className={`flex text-lg ${bgcolor400} justify-between px-2 rounded-sm`}
             onClick={() => toggleTap("weekly")}
           >
-            <h1 className=" text-black mr-5">Weekly Goals</h1>
+            <h1 className=" text-black mr-5">Less than a week</h1>
             {dropdown == "weekly" ? <DownIcon /> : <UpIcon />}
           </motion.div>
 
           {dropdown == "weekly" && (
             <>
-              <p className="text-xs mb-5 mt-1 italic dark:text-gray-300 text-center">
-                Very short-term goals i.e. Daily or Weekly!
+              <p className="text-xs mb-5 mt-1 italic text-gray-300 text-center">
+                Goals with a deadline less than a week!
               </p>
               {goalsData?.[index]?.weekly == undefined && (
                 <h1 className="text-center">No Goals Found</h1>
@@ -93,7 +140,7 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
                   description,
                   subtasks,
                   status,
-                  timeline,
+                  type,
                   lastUpdated,
                 }) => {
                   return (
@@ -108,7 +155,7 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
                         description,
                         subtasks,
                         status,
-                        timeline,
+                        type,
                         lastUpdated,
                         showTask,
                         toggleUpdate,
@@ -128,14 +175,14 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
             className={`flex text-lg ${bgcolor400} justify-between px-2 rounded-sm`}
             onClick={() => toggleTap("monthly")}
           >
-            <h1 className=" text-black mr-3">Monthly Goals</h1>
+            <h1 className=" text-black mr-3">Less than a month</h1>
             {dropdown == "monthly" ? <DownIcon /> : <UpIcon />}
           </motion.div>
 
           {dropdown == "monthly" && (
             <>
-              <p className="text-xs mb-5 mt-1 italic dark:text-gray-300 text-center">
-                Short-term goals with a duration of a month or two!
+              <p className="text-xs mb-5 mt-1 italic text-gray-300 text-center">
+                Goals with a deadline less than a month!
               </p>
               {goalsData?.[index]?.monthly == undefined && (
                 <h1 className="text-center">No Goals Found</h1>
@@ -151,7 +198,7 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
                   description,
                   subtasks,
                   status,
-                  timeline,
+                  type,
                   lastUpdated,
                 }) => {
                   return (
@@ -166,7 +213,7 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
                         description,
                         subtasks,
                         status,
-                        timeline,
+                        type,
                         lastUpdated,
                         showTask,
                         toggleUpdate,
@@ -186,13 +233,13 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
             className={`flex text-lg ${bgcolor400} justify-between px-2 rounded-sm`}
             onClick={() => toggleTap("quarterly")}
           >
-            <h1 className=" text-black mr-3">Quarterly Goals</h1>
+            <h1 className=" text-black mr-3">Less than a quarter</h1>
             {dropdown == "quarterly" ? <DownIcon /> : <UpIcon />}
           </motion.div>
           {dropdown == "quarterly" && (
             <>
-              <p className="text-xs mb-5 mt-1 italic dark:text-gray-300 text-center">
-                Mid-term goals with 3 to 6 months of period.
+              <p className="text-xs mb-5 mt-1 italic text-gray-300 text-center">
+                Goals with a deadline less than a qaurter!
               </p>
               {goalsData?.[index]?.quarterly == undefined && (
                 <h1 className="text-center">No Goals Found</h1>
@@ -208,7 +255,7 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
                   description,
                   subtasks,
                   status,
-                  timeline,
+                  type,
                   lastUpdated,
                 }) => {
                   return (
@@ -223,7 +270,7 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
                         description,
                         subtasks,
                         status,
-                        timeline,
+                        type,
                         lastUpdated,
                         showTask,
                         toggleUpdate,
@@ -243,12 +290,12 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
             className={`flex text-lg ${bgcolor400} justify-between px-2 rounded-sm`}
             onClick={() => toggleTap("yearly")}
           >
-            <h1 className=" text-black mr-8">Yearly Goals</h1>
+            <h1 className=" text-black mr-8">A year or more</h1>
             {dropdown == "yearly" ? <DownIcon /> : <UpIcon />}
           </motion.div>
           {dropdown == "yearly" && (
             <>
-              <p className="text-xs mb-5 mt-1 italic dark:text-gray-300 text-center">
+              <p className="text-xs mb-5 mt-1 italic text-gray-300 text-center">
                 Long-term goals with annual period.
               </p>
               {goalsData?.[index]?.yearly == undefined && (
@@ -265,7 +312,7 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
                   description,
                   subtasks,
                   status,
-                  timeline,
+                  type,
                   lastUpdated,
                 }) => {
                   return (
@@ -280,7 +327,7 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
                         description,
                         subtasks,
                         status,
-                        timeline,
+                        type,
                         lastUpdated,
                         showTask,
                         toggleUpdate,

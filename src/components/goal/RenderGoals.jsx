@@ -1,9 +1,10 @@
-import { useContext, useState } from "react";
+import { Suspense, lazy, useContext, useState } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import Shimmer from "../../pages/Shimmer";
-import GoalsByTimeline from "./GoalsByTimeline";
-import GoalsByPriority from "./GoalsByPriority";
-import GoalsByTags from "./GoalsByTags";
+const GoalsByTags = lazy(() => import("./GoalsByTags"));
+const GoalsByPriority = lazy(() => import("./GoalsByPriority"));
+const GoalsByTimeline = lazy(() => import("./GoalsByTimeline"));
+const GoalsByType = lazy(() => import("./GoalsByType"));
 import TabSwitchForGoals from "../layout/TabSwitchForGoals";
 
 const RenderGoals = ({ showTask, groupBy }) => {
@@ -19,12 +20,25 @@ const RenderGoals = ({ showTask, groupBy }) => {
           <TabSwitchForGoals {...{ showActive, setShowActive }} />
         </div>
         {groupBy == "timeline" && (
-          <GoalsByTimeline {...{ showTask, showActive }} />
+          <Suspense fallback={<Shimmer />}>
+            <GoalsByTimeline {...{ showTask, showActive }} />
+          </Suspense>
+        )}
+        {groupBy == "type" && (
+          <Suspense fallback={<Shimmer />}>
+            <GoalsByType {...{ showTask, showActive }} />
+          </Suspense>
         )}
         {groupBy == "priority" && (
-          <GoalsByPriority {...{ showTask, showActive }} />
+          <Suspense fallback={<Shimmer />}>
+            <GoalsByPriority {...{ showTask, showActive }} />
+          </Suspense>
         )}
-        {groupBy == "tags" && <GoalsByTags {...{ showTask, showActive }} />}
+        {groupBy == "tags" && (
+          <Suspense fallback={<Shimmer />}>
+            <GoalsByTags {...{ showTask, showActive }} />{" "}
+          </Suspense>
+        )}
       </div>
     </>
   );

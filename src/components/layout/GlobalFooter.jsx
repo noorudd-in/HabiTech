@@ -19,7 +19,7 @@ const GlobalFooter = () => {
     }
   };
   return (
-    <div className="fixed z-50 w-10/12 h-16 max-w-lg -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600">
+    <div className="fixed z-50 w-10/12 h-16 max-w-lg -translate-x-1/2 border rounded-full bottom-4 left-1/2 bg-gray-700 border-gray-600">
       <div
         className="grid h-full max-w-lg grid-cols-5 mx-auto"
         onClick={setVibrate}

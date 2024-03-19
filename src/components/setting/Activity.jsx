@@ -70,7 +70,7 @@ const Activity = () => {
                     <CompletedActivityIcon className="w-6 h-6 text-white" />
                   )}
                 </div>
-                <div className={`w-px h-full bg-slate-700 dark:bg-gray-400`} />
+                <div className={`w-px h-full bg-gray-400`} />
               </div>
               <div className="w-full h-12 ml-3 mt-1 mb-5">
                 {ele.action == "create" && (

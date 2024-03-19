@@ -12,7 +12,7 @@ let tabs = [
 const AnimatedTabs = ({ setCurrentTab }) => {
   const { state } = useContext(HabitechContext);
   let [activeTab, setActiveTab] = useState(tabs[0].id);
-  const { bgcolor100, bgcolor400, lighttext } = useColorTheme();
+  const { bgcolor100, bgcolor400 } = useColorTheme();
 
   const setTab = (id) => {
     setActiveTab(id);
@@ -40,15 +40,13 @@ const AnimatedTabs = ({ setCurrentTab }) => {
           {activeTab === tab.id && (
             <motion.div
               layoutId="bubble"
-              className={`absolute inset-0 z-10 ${bgcolor400} ${lighttext}`}
+              className={`absolute inset-0 z-10 ${bgcolor400} text-black`}
               style={{ borderRadius: 9999 }}
               transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
             />
           )}
           <span
-            className={`relative z-20 ${
-              activeTab === tab.id && `${lighttext}`
-            }`}
+            className={`relative z-20 ${activeTab === tab.id && `text-black`}`}
           >
             {tab.label}
           </span>
