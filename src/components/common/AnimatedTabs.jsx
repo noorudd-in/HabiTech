@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useColorTheme } from "../../hooks/useColorTheme";
-import { HabitechContext } from "../../contexts/HabitechContext";
 
 let tabs = [
   { id: "planner", label: "Planner" },
@@ -10,7 +9,6 @@ let tabs = [
 ];
 
 const AnimatedTabs = ({ setCurrentTab }) => {
-  const { state } = useContext(HabitechContext);
   let [activeTab, setActiveTab] = useState(tabs[0].id);
   const { bgcolor100, bgcolor400 } = useColorTheme();
 
@@ -21,7 +19,7 @@ const AnimatedTabs = ({ setCurrentTab }) => {
 
   // Set Haptic Feedback
   const setVibrate = () => {
-    if (state.user.vibrate) {
+    if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate(5);
     }
   };

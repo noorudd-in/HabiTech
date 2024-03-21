@@ -1,5 +1,4 @@
-import { lazy, useContext, useState, Suspense } from "react";
-import { HabitechContext } from "../../contexts/HabitechContext";
+import { lazy, useState, Suspense } from "react";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 const Modal = lazy(() => import("../common/Modal"));
@@ -20,7 +19,6 @@ const SinglePlan = ({
   lastUpdated,
   description,
 }) => {
-  const { state } = useContext(HabitechContext);
   const [toggleModal, setToggleModal] = useState("hidden");
   const navigate = useNavigate();
   const { bgcolor500 } = useColorTheme();
@@ -28,7 +26,7 @@ const SinglePlan = ({
   // Perform below action when habit is long pressed
   const attrs = useLongPress(
     () => {
-      if (state.user.vibrate) {
+      if (localStorage.getItem("userVibrate") == "true") {
         window.navigator.vibrate([5, 200, 20]);
       }
       navigate(`/edit/plan/${id}`);
@@ -37,7 +35,7 @@ const SinglePlan = ({
   );
 
   const handleClick = () => {
-    if (state.user.vibrate) {
+    if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate(5);
     }
     setToggleModal("");

@@ -15,7 +15,7 @@ const CreateHabitPage = () => {
   const navigate = useNavigate();
 
   const createHabit = () => {
-    if (state.user.vibrate) {
+    if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate(5);
     }
     // Check if input field is empty
@@ -54,11 +54,11 @@ const CreateHabitPage = () => {
       time: Date.now(),
     };
 
-    if (state.user.sound.enable) {
+    if (localStorage.getItem("userSound") == "true") {
       const sound = new Audio(
-        `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+        `../../../assets/sounds/${localStorage.getItem("userCurrentSound")}.mp3`
       );
-      sound.volume = state.user.sound.volume;
+      sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
       sound.play();
     }
 

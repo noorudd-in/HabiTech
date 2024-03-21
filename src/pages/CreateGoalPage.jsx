@@ -43,7 +43,7 @@ const CreateGoalPage = () => {
   };
 
   const handleCreateGoal = () => {
-    if (state.user.vibrate) {
+    if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate(5);
     }
     if (name == "") {
@@ -86,11 +86,11 @@ const CreateGoalPage = () => {
       time: Date.now(),
     };
 
-    if (state.user.sound.enable) {
+    if (localStorage.getItem("userSound") == "true") {
       const sound = new Audio(
-        `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+        `../../../assets/sounds/${localStorage.getItem("userCurrentSound")}.mp3`
       );
-      sound.volume = state.user.sound.volume;
+      sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
       sound.play();
     }
 
@@ -177,7 +177,7 @@ const CreateGoalPage = () => {
             >
               <option value="select">Select</option>
               <option value="short">Short Term</option>
-              <option value="mid">Intermediate</option>
+              <option value="mid">Mid Term</option>
               <option value="long">Long Term</option>
             </select>
           </div>

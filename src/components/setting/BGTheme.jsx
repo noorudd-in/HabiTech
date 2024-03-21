@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../../index.css";
+import { BGTopography, BGGraph, BGCircuit, BGPuzzle } from "../../constants";
 
 const BGTheme = () => {
   const [bg, setBg] = useState("");
@@ -15,9 +15,7 @@ const BGTheme = () => {
   };
 
   useEffect(() => {
-    let rootNode = document.getElementById("root");
-
-    let bodyNode = document.querySelector("body");
+    localStorage.setItem("bgImageData", JSON.stringify(BGPuzzle));
   }, []);
 
   return (

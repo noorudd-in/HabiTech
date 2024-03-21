@@ -1,38 +1,21 @@
 import { useContext, useEffect, useState } from "react";
 import ToggleButton from "../common/ToggleButton";
 import { HabitechContext } from "../../contexts/HabitechContext";
-import axios from "axios";
-import { API_URL } from "../../constants";
 const Vibration = () => {
   const [vibration, setVibration] = useState("");
-  const { state, dispatch } = useContext(HabitechContext);
+  const { state } = useContext(HabitechContext);
 
   useEffect(() => {
     if (state.user.name == undefined) {
       window.location.replace("/");
     } else {
-      setVibration(state.user.vibrate);
+      setVibration(localStorage.getItem("userVibrate") == "true");
     }
-  }, [state]);
+  }, []);
 
   const updateVibration = (value) => {
     setVibration(value);
-    axios
-      .put(API_URL, {
-        ...state,
-        user: {
-          ...state.user,
-          vibrate: value,
-        },
-      })
-      .then((res) => {
-        dispatch({
-          type: "FETCH_DATA",
-          payload: {
-            user: res?.data?.user,
-          },
-        });
-      });
+    localStorage.setItem("userVibrate", value);
   };
 
   return (

@@ -2,11 +2,12 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useColorTheme } from "../hooks/useColorTheme";
 import { HabitechContext } from "../contexts/HabitechContext";
+import "../index.css";
 
 const CreatePage = () => {
   const { state } = useContext(HabitechContext);
   const navigate = useNavigate();
-  const { bgcolor500 } = useColorTheme();
+  const { bgcolor500, gradient } = useColorTheme();
   function redirectPage(url) {
     navigate(url);
   }
@@ -18,39 +19,32 @@ const CreatePage = () => {
   });
   return (
     <>
-      <div className="mt-40">
-        <div className="text-center">
-          <button
-            className={`py-2 px-3 m-2 ${bgcolor500} text-black text-2xl rounded-lg`}
+      <div className="my-20">
+        <div className="grid grid-rows-4 sm:grid-rows-2 sm:grid-cols-2">
+          <div
+            className={`col-span-1 m-5 p-5 h-24 rounded-lg bg-[conic-gradient(at_top,_var(--tw-gradient-stops))] ${gradient} cursor-pointer`}
             onClick={() => redirectPage("/create/plan")}
           >
-            <h1 className="ml-2 mr-1">Create Plan</h1>
-          </button>
-        </div>
-        <div className="text-center">
-          <button
-            className={`p-2 m-2 ${bgcolor500} text-black text-2xl rounded-lg`}
+            <h1 className="text-black text-4xl font-semibold">Create Plan</h1>
+          </div>
+          <div
+            className={`col-span-1 m-5 p-5 h-24 rounded-lg bg-[conic-gradient(at_top,_var(--tw-gradient-stops))] ${gradient} cursor-pointer`}
             onClick={() => redirectPage("/create/habit")}
           >
-            <h1 className="ml-2 mr-1">Create Habit</h1>
-          </button>
-        </div>
-        <div className="text-center">
-          <button
-            className={`py-2 px-3 m-2 ${bgcolor500} text-black text-2xl rounded-lg`}
+            <h1 className="text-black text-4xl font-semibold">Create Habit</h1>
+          </div>
+          <div
+            className={`col-span-1 m-5 p-5 h-24 rounded-lg bg-[conic-gradient(at_top,_var(--tw-gradient-stops))] ${gradient} cursor-pointer`}
             onClick={() => redirectPage("/create/goal")}
           >
-            <h1 className="ml-2 mr-1">Create Goal</h1>
-          </button>
-        </div>
-
-        <div className="text-center">
-          <button
-            className={`py-2 px-4 m-2 ${bgcolor500} text-black text-2xl rounded-lg`}
+            <h1 className="text-black text-4xl font-semibold">Create Goal</h1>
+          </div>
+          <div
+            className={`col-span-1 m-5 p-5 h-24 rounded-lg bg-[conic-gradient(at_top,_var(--tw-gradient-stops))] ${gradient} cursor-pointer`}
             onClick={() => redirectPage("/create/tag")}
           >
-            <h1 className="ml-2 mr-1">Create Tag</h1>
-          </button>
+            <h1 className="text-black text-4xl font-semibold">Create Tag</h1>
+          </div>
         </div>
       </div>
     </>

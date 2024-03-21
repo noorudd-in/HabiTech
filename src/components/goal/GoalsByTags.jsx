@@ -15,7 +15,7 @@ const GoalsByTags = ({ showTask, showActive }) => {
   const index = showActive ? 0 : 1;
 
   const toggleTap = (type) => {
-    if (state.user.vibrate) {
+    if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate(5);
     }
     if (dropdown == type) {

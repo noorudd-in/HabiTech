@@ -36,7 +36,7 @@ const SingleHabit = ({
   // Perform below action when habit is long pressed
   const attrs = useLongPress(
     () => {
-      if (state.user.vibrate) {
+      if (localStorage.getItem("userVibrate") == "true") {
         window.navigator.vibrate([5, 200, 20]);
       }
       navigate(`/edit/habit/${id}`);
@@ -75,7 +75,7 @@ const SingleHabit = ({
 
   // Trigger an update to backend with updated habit array.
   const updateHabit = (type) => {
-    if (state.user.vibrate) {
+    if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate(5);
     }
 
@@ -119,11 +119,13 @@ const SingleHabit = ({
         currentCoins = currentCoins + 1.5;
       }
 
-      if (state.user.sound.enable) {
+      if (localStorage.getItem("userSound") == "true") {
         const sound = new Audio(
-          `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+          `../../../assets/sounds/${localStorage.getItem(
+            "userCurrentSound"
+          )}.mp3`
         );
-        sound.volume = state.user.sound.volume;
+        sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
         sound.play();
       }
 
@@ -169,7 +171,7 @@ const SingleHabit = ({
   };
 
   const handleClick = () => {
-    if (state.user.vibrate) {
+    if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate(5);
     }
     setToggleModal("");

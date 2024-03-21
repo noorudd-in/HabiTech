@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import { HabitechContext } from "../../contexts/HabitechContext";
 import { useNavigate } from "react-router-dom";
 import HomeIcon from "../icons/HomeIcon";
 import CalenderIcon from "../icons/CalenderIcon";
@@ -8,13 +6,12 @@ import SettingIcon from "../icons/SettingIcon";
 import CreateIcon from "../icons/CreateIcon";
 
 const GlobalFooter = () => {
-  const { state } = useContext(HabitechContext);
   const navigate = useNavigate();
   const currentURL = window.location.pathname;
 
   // Set Haptic Feedback
   const setVibrate = () => {
-    if (state.user.vibrate) {
+    if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate(5);
     }
   };

@@ -4,48 +4,128 @@ import { HabitechContext } from "../../contexts/HabitechContext";
 import { toast, Toaster } from "react-hot-toast";
 import { toastError } from "../common/Toast";
 import { API_URL } from "../../constants";
-import { useNavigate } from "react-router-dom";
 import SingleTheme from "../layout/SingleTheme";
 import axios from "axios";
+
+let colorThemes = [
+  {
+    name: "red",
+    color: "bg-red-500",
+    price: 50,
+  },
+  {
+    name: "teal",
+    color: "bg-teal-500",
+    price: 80,
+  },
+  {
+    name: "cyan",
+    color: "bg-cyan-500",
+    price: 120,
+  },
+  {
+    name: "violet",
+    color: "bg-violet-500",
+    price: 100,
+  },
+  {
+    name: "emerald",
+    color: "bg-emerald-500",
+    price: 200,
+  },
+  {
+    name: "orange",
+    color: "bg-orange-500",
+    price: 200,
+  },
+  {
+    name: "purple",
+    color: "bg-purple-500",
+    price: 150,
+  },
+  {
+    name: "blue",
+    color: "bg-blue-500",
+    price: 100,
+  },
+  {
+    name: "sky",
+    color: "bg-sky-500",
+    price: 70,
+  },
+  {
+    name: "lime",
+    color: "bg-lime-500",
+    price: 50,
+  },
+  {
+    name: "amber",
+    color: "bg-amber-500",
+    price: 20,
+  },
+  {
+    name: "rose",
+    color: "bg-rose-500",
+    price: 150,
+  },
+  {
+    name: "green",
+    color: "bg-green-500",
+    price: 70,
+  },
+  {
+    name: "pink",
+    color: "bg-pink-500",
+    price: 50,
+  },
+  {
+    name: "indigo",
+    color: "bg-indigo-500",
+    price: 60,
+  },
+  {
+    name: "yellow",
+    color: "bg-yellow-500",
+    price: 0,
+  },
+];
 
 const Theme = () => {
   const { state, dispatch } = useContext(HabitechContext);
   const { textcolor500 } = useColorTheme();
-  const navigate = useNavigate();
+  let currentTheme = localStorage.getItem("userTheme");
 
-  const handleThemeClick = (name, color, price, isPurchased) => {
-    if (state.user.vibrate) {
+  const handleThemeClick = (name, price, isPurchased) => {
+    if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate(5);
     }
     // ignore if theme is same as selected.
-    if (isPurchased && state.theme == name) {
+    if (isPurchased && atob(currentTheme) == name) {
       return;
     }
     // Change Theme if already owned.
-    if (isPurchased && state.theme != name) {
-      if (state.user.sound.enable) {
+    if (isPurchased && atob(currentTheme) != name) {
+      if (localStorage.getItem("userSound") == "true") {
         const sound = new Audio(
-          `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+          `../../../assets/sounds/${localStorage.getItem(
+            "userCurrentSound"
+          )}.mp3`
         );
-        sound.volume = state.user.sound.volume;
+        sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
         sound.play();
       }
-      axios
-        .put(API_URL, {
-          ...state,
-          lastEdited: Date.now(),
-          theme: name,
-        })
-        .then((res) => {
-          dispatch({
-            type: "FETCH_DATA",
-            payload: {
-              theme: res?.data?.theme,
-              lastEdited: res?.data?.lastEdited,
-            },
-          });
-          toast("Theme Applied!");
-        });
+      localStorage.setItem("userTheme", btoa(name));
+      dispatch({
+        type: "FETCH_DATA",
+        payload: {
+          user: {
+            ...state.user,
+            theme: name,
+          },
+        },
+      });
+      toast("Theme Applied!");
+
       return;
     }
     // Buy Theme if not owned.
@@ -56,12 +136,6 @@ const Theme = () => {
         toast("Not enough coins!", toastError());
         return;
       }
-      let updatedTheme = [...state.store.theme];
-      updatedTheme.map((theme) => {
-        if (theme.color == color) {
-          theme.isPurchased = true;
-        }
-      });
 
       let newActivity = {
         action: "purchase",
@@ -70,9 +144,9 @@ const Theme = () => {
         time: Date.now(),
       };
 
-      if (state.user.sound.enable) {
+      if (localStorage.getItem("userSound") == "true") {
         const sound = new Audio(`../../../assets/sounds/purchase.mp3`);
-        sound.volume = state.user.sound.volume;
+        sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
         sound.play();
       }
 
@@ -81,22 +155,22 @@ const Theme = () => {
           ...state,
           store: {
             ...state.store,
-            theme: updatedTheme,
+            theme: [...state.store.theme, btoa(name)],
           },
           user: {
             ...state.user,
             coins: state.user.coins - price,
           },
           activity: [...state.activity, newActivity],
-          theme: name,
           lastEdited: Date.now(),
         })
         .then((res) => {
+          localStorage.setItem("userTheme", btoa(name));
           dispatch({
             type: "FETCH_DATA",
             payload: {
               store: res?.data?.store,
-              theme: res?.data?.theme,
+              user: res?.data?.user,
               activity: res?.data?.activity,
               lastEdited: res?.data?.lastEdited,
             },
@@ -108,7 +182,7 @@ const Theme = () => {
 
   useEffect(() => {
     if (state.user.name == undefined) {
-      navigate("/");
+      window.location.replace("/");
     }
   }, []);
   return (
@@ -120,21 +194,20 @@ const Theme = () => {
         Select your favourite color to apply!
       </h1>
       <div className="flex flex-wrap text-center justify-center">
-        {state.store.theme?.map((theme) => {
+        {colorThemes?.map((theme) => {
           return (
             <SingleTheme
               key={theme.color}
               name={theme.name}
               color={theme.color}
               price={theme.price}
-              isPurchased={theme.isPurchased}
-              selected={state.theme}
+              isPurchased={state?.store?.theme?.includes(btoa(theme.name))}
+              selected={atob(currentTheme)}
               handleClick={() =>
                 handleThemeClick(
                   theme.name,
-                  theme.color,
                   theme.price,
-                  theme.isPurchased
+                  state?.store?.theme?.includes(btoa(theme.name))
                 )
               }
             />
