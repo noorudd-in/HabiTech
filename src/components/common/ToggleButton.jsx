@@ -1,13 +1,12 @@
-import { useContext } from "react";
 import { useColorTheme } from "../../hooks/useColorTheme";
-import { HabitechContext } from "../../contexts/HabitechContext";
 
 const ToggleButton = ({ toggle, setToggle, name }) => {
-  const { state } = useContext(HabitechContext);
   const { checkedcolor } = useColorTheme();
+  const userVibrate = localStorage.getItem("userVibrate");
+  console.log(toggle);
 
   const toggleChange = () => {
-    if (state.user.vibrate) {
+    if (Boolean(userVibrate)) {
       window.navigator.vibrate([5, 200, 20]);
     }
     setToggle(!toggle);

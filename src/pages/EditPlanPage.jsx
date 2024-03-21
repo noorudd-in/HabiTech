@@ -103,7 +103,7 @@ const EditPlanPage = () => {
   };
 
   const updatePlan = () => {
-    if (state.user.vibrate) {
+    if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate(5);
     }
     //Check is state is loaded or not;
@@ -148,11 +148,11 @@ const EditPlanPage = () => {
       time: Date.now(),
     };
 
-    if (state.user.sound.enable) {
+    if (localStorage.getItem("userSound") == "true") {
       const sound = new Audio(
-        `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+        `../../../assets/sounds/${localStorage.getItem("userCurrentSound")}.mp3`
       );
-      sound.volume = state.user.sound.volume;
+      sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
       sound.play();
     }
 
@@ -177,7 +177,7 @@ const EditPlanPage = () => {
   };
 
   const deletePlan = () => {
-    if (state.user.vibrate) {
+    if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate(5);
     }
     if (window.confirm(`Are you sure you want to delete the plan: ${name}?`)) {
@@ -192,11 +192,13 @@ const EditPlanPage = () => {
         time: Date.now(),
       };
 
-      if (state.user.sound.enable) {
+      if (localStorage.getItem("userSound") == "true") {
         const sound = new Audio(
-          `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+          `../../../assets/sounds/${localStorage.getItem(
+            "userCurrentSound"
+          )}.mp3`
         );
-        sound.volume = state.user.sound.volume;
+        sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
         sound.play();
       }
 

@@ -1,8 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
-import { API_URL } from "../../constants";
 import { useColorTheme } from "../../hooks/useColorTheme";
-import axios from "axios";
 import ToggleButton from "../common/ToggleButton";
 import CircleIcon from "../icons/CircleIcon";
 import CircleTickedIcon from "../icons/CircleTickedIcon";
@@ -26,95 +24,39 @@ const soundData = [
 
 const Sound = () => {
   const [enableSound, setEnableSound] = useState(false);
-  const [currentSound, setCurrentSound] = useState("Retro");
+  const [currentSound, setCurrentSound] = useState("retro");
   const [volume, setVolume] = useState(0);
-  const { state, dispatch } = useContext(HabitechContext);
+  const { state } = useContext(HabitechContext);
   const { checkboxcolor } = useColorTheme();
 
   const updateEnableSound = (value) => {
     setEnableSound(value);
-    // API Call to set enable or disable sound setting
-    axios
-      .put(API_URL, {
-        ...state,
-        user: {
-          ...state.user,
-          sound: {
-            ...state.user.sound,
-            enable: value,
-          },
-        },
-      })
-      .then((res) => {
-        dispatch({
-          type: "FETCH_DATA",
-          payload: {
-            user: res?.data?.user,
-          },
-        });
-      });
+    localStorage.setItem("userSound", value);
   };
 
   const changeSound = (value) => {
+    console.log(value);
     if (value == currentSound) {
       return;
     }
     setCurrentSound(value);
     const sound = new Audio(`../../../assets/sounds/${value}.mp3`);
-    sound.volume = state.user.sound.volume;
+    sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
+
     sound.play();
-    // API Call to set current sound
-    axios
-      .put(API_URL, {
-        ...state,
-        user: {
-          ...state.user,
-          sound: {
-            ...state.user.sound,
-            currentSound: value,
-          },
-        },
-      })
-      .then((res) => {
-        dispatch({
-          type: "FETCH_DATA",
-          payload: {
-            user: res?.data?.user,
-          },
-        });
-      });
+    localStorage.setItem("userCurrentSound", value);
   };
   var timer;
-  // Debounce to reduce API Calls
+  // Debounce to reduce operations
   const updateSound = useCallback(
     (e) => {
-      if (state.user.vibrate) {
+      if (localStorage.getItem("userVibrate") == "true") {
         window.navigator.vibrate([5, 200, 20]);
       }
       clearTimeout(timer);
       setVolume(e.target.value);
       timer = setTimeout(() => {
-        // API Call to set volume
-        axios
-          .put(API_URL, {
-            ...state,
-            user: {
-              ...state.user,
-              sound: {
-                ...state.user.sound,
-                currentSound: currentSound,
-                volume: parseFloat(e.target.value),
-              },
-            },
-          })
-          .then((res) => {
-            dispatch({
-              type: "FETCH_DATA",
-              payload: {
-                user: res?.data?.user,
-              },
-            });
-          });
+        localStorage.setItem("userCurrentVolume", e.target.value);
       }, 700);
     },
     [currentSound]
@@ -124,9 +66,9 @@ const Sound = () => {
     if (state.user.name == undefined) {
       window.location.replace("/");
     } else {
-      setEnableSound(state.user.sound.enable);
-      setCurrentSound(state.user.sound.currentSound);
-      setVolume(state.user.sound.volume);
+      setEnableSound(localStorage.getItem("userSound") == "true");
+      setCurrentSound(localStorage.getItem("userCurrentSound"));
+      setVolume(parseFloat(localStorage.getItem("userCurrentVolume")));
     }
   }, [state]);
   return (
@@ -169,7 +111,7 @@ const Sound = () => {
                     />
                   )}
                   <h1 className="ml-2" onClick={() => changeSound(sound)}>
-                    {sound}
+                    {sound[0].toUpperCase() + sound.slice(1)}
                   </h1>
                 </div>
               );

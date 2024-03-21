@@ -14,9 +14,16 @@ const colors = {
   customcolor: "",
   checkedcolor: "",
   checkboxcolor: "",
+  gradient: "",
 };
 export const useColorTheme = () => {
   const { state } = useContext(HabitechContext);
+  let currentTheme = localStorage.getItem("userTheme");
+  if (currentTheme == null || currentTheme == undefined) {
+    currentTheme = "yellow";
+  } else {
+    currentTheme = atob(currentTheme);
+  }
 
   let colors = {
     lighttext: "",
@@ -31,8 +38,9 @@ export const useColorTheme = () => {
     customcolor: "",
     checkedcolor: "",
     checkboxcolor: "",
+    gradient: "",
   };
-  switch (state.theme) {
+  switch (currentTheme) {
     case "stone":
       colors.lighttext = "text-black";
       colors.darktext = "dark:text-white";
@@ -46,6 +54,7 @@ export const useColorTheme = () => {
       colors.customcolor = "#d4d4d4";
       colors.checkedcolor = "peer-checked:bg-stone-400";
       colors.checkboxcolor = "accent-stone-500";
+      colors.gradient = "from-stone-900 via-stone-100 to-stone-900";
       break;
 
     case "red":
@@ -61,6 +70,7 @@ export const useColorTheme = () => {
       colors.customcolor = "#ef4444";
       colors.checkedcolor = "peer-checked:bg-red-400";
       colors.checkboxcolor = "accent-red-500";
+      colors.gradient = "from-red-900 via-red-100 to-red-900";
       break;
 
     case "orange":
@@ -76,6 +86,7 @@ export const useColorTheme = () => {
       colors.customcolor = "#f97316";
       colors.checkedcolor = "peer-checked:bg-orange-400";
       colors.checkboxcolor = "accent-orange-500";
+      colors.gradient = "from-orange-900 via-orange-100 to-orange-900";
       break;
 
     case "lime":
@@ -91,6 +102,7 @@ export const useColorTheme = () => {
       colors.customcolor = "#84cc16";
       colors.checkedcolor = "peer-checked:bg-lime-400";
       colors.checkboxcolor = "accent-lime-500";
+      colors.gradient = "from-lime-900 via-lime-100 to-lime-900";
       break;
 
     case "green":
@@ -106,6 +118,7 @@ export const useColorTheme = () => {
       colors.customcolor = "#22c55e";
       colors.checkedcolor = "peer-checked:bg-green-400";
       colors.checkboxcolor = "accent-green-500";
+      colors.gradient = "from-green-900 via-green-100 to-green-900";
       break;
 
     case "teal":
@@ -121,6 +134,7 @@ export const useColorTheme = () => {
       colors.customcolor = "#14b8a6";
       colors.checkedcolor = "peer-checked:bg-teal-400";
       colors.checkboxcolor = "accent-teal-500";
+      colors.gradient = "from-teal-900 via-teal-100 to-teal-900";
       break;
 
     case "emerald":
@@ -136,6 +150,7 @@ export const useColorTheme = () => {
       colors.customcolor = "#10b981";
       colors.checkedcolor = "peer-checked:bg-emerald-400";
       colors.checkboxcolor = "accent-emerald-500";
+      colors.gradient = "from-emerald-900 via-emerald-100 to-emerald-900";
       break;
 
     case "amber":
@@ -151,6 +166,7 @@ export const useColorTheme = () => {
       colors.customcolor = "#f59e0b";
       colors.checkedcolor = "peer-checked:bg-amber-400";
       colors.checkboxcolor = "accent-amber-500";
+      colors.gradient = "from-amber-900 via-amber-100 to-amber-900";
       break;
 
     case "yellow":
@@ -166,6 +182,7 @@ export const useColorTheme = () => {
       colors.customcolor = "#eab308";
       colors.checkedcolor = "peer-checked:bg-yellow-400";
       colors.checkboxcolor = "accent-yellow-500";
+      colors.gradient = "from-yellow-900 via-yellow-100 to-yellow-900";
       break;
 
     case "cyan":
@@ -181,6 +198,7 @@ export const useColorTheme = () => {
       colors.customcolor = "#06b6d4";
       colors.checkedcolor = "peer-checked:bg-cyan-400";
       colors.checkboxcolor = "accent-cyan-500";
+      colors.gradient = "from-cyan-900 via-cyan-100 to-cyan-900";
       break;
 
     case "blue":
@@ -196,6 +214,7 @@ export const useColorTheme = () => {
       colors.customcolor = "#3b82f6";
       colors.checkedcolor = "peer-checked:bg-blue-400";
       colors.checkboxcolor = "accent-blue-500";
+      colors.gradient = "from-blue-900 via-blue-100 to-blue-900";
       break;
 
     case "sky":
@@ -211,6 +230,7 @@ export const useColorTheme = () => {
       colors.customcolor = "#0ea5e9";
       colors.checkedcolor = "peer-checked:bg-sky-400";
       colors.checkboxcolor = "accent-sky-500";
+      colors.gradient = "from-sky-900 via-sky-100 to-sky-900";
       break;
 
     case "indigo":
@@ -226,6 +246,7 @@ export const useColorTheme = () => {
       colors.customcolor = "#6366f1";
       colors.checkedcolor = "peer-checked:bg-indigo-400";
       colors.checkboxcolor = "accent-indigo-500";
+      colors.gradient = "from-indigo-900 via-indigo-100 to-indigo-900";
       break;
 
     case "violet":
@@ -241,6 +262,7 @@ export const useColorTheme = () => {
       colors.customcolor = "#8b5cf6";
       colors.checkedcolor = "peer-checked:bg-violet-400";
       colors.checkboxcolor = "accent-violet-500";
+      colors.gradient = "from-violet-900 via-violet-100 to-violet-900";
       break;
 
     case "purple":
@@ -256,6 +278,7 @@ export const useColorTheme = () => {
       colors.customcolor = "#a855f7";
       colors.checkedcolor = "peer-checked:bg-purple-400";
       colors.checkboxcolor = "accent-purple-500";
+      colors.gradient = "from-purple-900 via-purple-100 to-purple-900";
       break;
 
     case "rose":
@@ -271,6 +294,7 @@ export const useColorTheme = () => {
       colors.customcolor = "#f43f5e";
       colors.checkedcolor = "peer-checked:bg-rose-400";
       colors.checkboxcolor = "accent-rose-500";
+      colors.gradient = "from-rose-900 via-rose-100 to-rose-900";
       break;
 
     case "pink":
@@ -286,6 +310,7 @@ export const useColorTheme = () => {
       colors.customcolor = "#ec4899";
       colors.checkedcolor = "peer-checked:bg-pink-400";
       colors.checkboxcolor = "accent-pink-500";
+      colors.gradient = "from-pink-900 via-pink-100 to-pink-900";
       break;
 
     default:

@@ -26,11 +26,11 @@ const GoalsSubTask = ({ task, goalId, status }) => {
       }
     });
 
-    if (state.user.sound.enable) {
+    if (localStorage.getItem("userSound") == "true") {
       const sound = new Audio(
-        `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+        `../../../assets/sounds/${localStorage.getItem("userCurrentSound")}.mp3`
       );
-      sound.volume = state.user.sound.volume;
+      sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
       sound.play();
     }
     axios

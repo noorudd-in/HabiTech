@@ -1,14 +1,11 @@
 import dayjs from "dayjs";
 import { useColorTheme } from "../../hooks/useColorTheme";
-import { useContext } from "react";
-import { HabitechContext } from "../../contexts/HabitechContext";
 
 const PlannersHeader = ({ toggleData, setToggleData }) => {
   const { bgcolor500 } = useColorTheme();
-  const { state } = useContext(HabitechContext);
 
   const toggleChange = (value) => {
-    if (state.user.vibrate) {
+    if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate(5);
     }
     setToggleData(value);

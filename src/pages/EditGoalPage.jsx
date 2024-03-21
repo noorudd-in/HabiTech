@@ -36,7 +36,7 @@ const EditGoalPage = () => {
   };
 
   const updateGoals = () => {
-    if (state.user.vibrate) {
+    if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate(5);
     }
     if (name == "") {
@@ -81,11 +81,11 @@ const EditGoalPage = () => {
       time: Date.now(),
     };
 
-    if (state.user.sound.enable) {
+    if (localStorage.getItem("userSound") == "true") {
       const sound = new Audio(
-        `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+        `../../../assets/sounds/${localStorage.getItem("userCurrentSound")}.mp3`
       );
-      sound.volume = state.user.sound.volume;
+      sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
       sound.play();
     }
 
@@ -110,7 +110,7 @@ const EditGoalPage = () => {
   };
 
   const deleteGoal = () => {
-    if (state.user.vibrate) {
+    if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate(5);
     }
     if (window.confirm(`Are you sure you want to delete the goal: ${name}?`)) {
@@ -125,11 +125,13 @@ const EditGoalPage = () => {
         time: Date.now(),
       };
 
-      if (state.user.sound.enable) {
+      if (localStorage.getItem("userSound") == "true") {
         const sound = new Audio(
-          `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+          `../../../assets/sounds/${localStorage.getItem(
+            "userCurrentSound"
+          )}.mp3`
         );
-        sound.volume = state.user.sound.volume;
+        sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
         sound.play();
       }
 
@@ -232,7 +234,7 @@ const EditGoalPage = () => {
             >
               <option value="select">Select</option>
               <option value="weekly">Short Term</option>
-              <option value="monthly">Intermediate</option>
+              <option value="monthly">Mid Term</option>
               <option value="quarterly">Long Term</option>
             </select>
           </div>

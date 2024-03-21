@@ -16,7 +16,7 @@ const EditHabitPage = () => {
   let { id } = useParams();
 
   const updateHabit = () => {
-    if (state.user.vibrate) {
+    if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate(5);
     }
     if (habitName == "") {
@@ -44,11 +44,11 @@ const EditHabitPage = () => {
       time: Date.now(),
     };
 
-    if (state.user.sound.enable) {
+    if (localStorage.getItem("userSound") == "true") {
       const sound = new Audio(
-        `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+        `../../../assets/sounds/${localStorage.getItem("userCurrentSound")}.mp3`
       );
-      sound.volume = state.user.sound.volume;
+      sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
       sound.play();
     }
 
@@ -73,7 +73,7 @@ const EditHabitPage = () => {
   };
 
   const deleteHabit = () => {
-    if (state.user.vibrate) {
+    if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate(5);
     }
     if (
@@ -90,11 +90,13 @@ const EditHabitPage = () => {
         time: Date.now(),
       };
 
-      if (state.user.sound.enable) {
+      if (localStorage.getItem("userSound") == "true") {
         const sound = new Audio(
-          `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+          `../../../assets/sounds/${localStorage.getItem(
+            "userCurrentSound"
+          )}.mp3`
         );
-        sound.volume = state.user.sound.volume;
+        sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
         sound.play();
       }
 

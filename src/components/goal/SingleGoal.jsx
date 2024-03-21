@@ -58,7 +58,7 @@ const SingleGoal = ({
 
   const attrs = useLongPress(
     () => {
-      if (state.user.vibrate) {
+      if (localStorage.getItem("userVibrate") == "true") {
         window.navigator.vibrate([5, 200, 20]);
       }
       navigate(`/edit/goal/${id}`);
@@ -91,7 +91,7 @@ const SingleGoal = ({
     }
   };
   const handleUpdate = () => {
-    if (state.user.vibrate) {
+    if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate(5);
     }
     if (status == 1) {
@@ -146,11 +146,13 @@ const SingleGoal = ({
           newHealth = 100;
         }
 
-        if (state.user.sound.enable) {
+        if (localStorage.getItem("userSound") == "true") {
           const sound = new Audio(
-            `../../../assets/sounds/${state.user.sound.currentSound}.mp3`
+            `../../../assets/sounds/${localStorage.getItem(
+              "userCurrentSound"
+            )}.mp3`
           );
-          sound.volume = state.user.sound.volume;
+          sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
           sound.play();
         }
 
