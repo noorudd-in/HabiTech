@@ -3,6 +3,12 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        whisper: ["Whisper", "cursive"],
+        oswald: ["Oswald", "sans-serif"],
+        slackside: ["Slackside One", "cursive"],
+        madimi: ["Madimi One", "sans-serif"],
+      },
       animation: {
         progress: "progress 1s infinite linear",
       },

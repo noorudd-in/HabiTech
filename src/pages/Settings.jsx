@@ -1,6 +1,6 @@
 import { useEffect, useContext } from "react";
 import { HabitechContext } from "../contexts/HabitechContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import GlobalHeader from "../components/layout/GlobalHeader";
 import ActivityFeedIcon from "../components/icons/ActivityFeedIcon";
 import ThemeIcon from "../components/icons/ThemeIcon";
@@ -33,10 +33,10 @@ const Settings = () => {
           </div>
         </Link>
 
-        <Link to="/theme">
+        <Link to="/appearance">
           <div className="flex px-1 text-lg my-2">
             <ThemeIcon className="w-6 h-7" />
-            <h1 className="ml-2">Theme</h1>
+            <h1 className="ml-2">Appearance</h1>
           </div>
         </Link>
 

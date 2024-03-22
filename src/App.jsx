@@ -2,13 +2,12 @@ import { RouterProvider } from "react-router-dom";
 import HABITECH_ROUTES from "./routes";
 import { AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
-import { BGCircuit } from "./constants";
 
 function App() {
   useEffect(() => {
-    let bgImage = localStorage.getItem("bgImageData");
+    const userBG = localStorage.getItem("userBackground");
     let bodyNode = document.querySelector("body");
-    bodyNode.style.backgroundImage = `url("${BGCircuit}")`;
+    bodyNode.style.backgroundImage = `url("${userBG}")`;
   }, []);
   return (
     <AnimatePresence mode="wait">

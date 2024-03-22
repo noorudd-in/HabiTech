@@ -20,6 +20,8 @@ const Activity = lazy(() => import("../components/setting/Activity"));
 const SoundAndVibration = lazy(() =>
   import("../components/setting/SoundAndVibration")
 );
+const Appearance = lazy(() => import("../components/setting/Appearance"));
+const Background = lazy(() => import("../components/setting/Background"));
 
 const HABITECH_ROUTES = createBrowserRouter([
   {
@@ -172,11 +174,35 @@ const HABITECH_ROUTES = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
+    path: "/appearance",
+    element: (
+      <>
+        <Suspense fallback={<Shimmer />}>
+          <Appearance />
+          <GlobalFooter />
+        </Suspense>
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
     path: "/theme",
     element: (
       <>
         <Suspense fallback={<Shimmer />}>
           <Theme />
+          <GlobalFooter />
+        </Suspense>
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/background",
+    element: (
+      <>
+        <Suspense fallback={<Shimmer />}>
+          <Background />
           <GlobalFooter />
         </Suspense>
       </>

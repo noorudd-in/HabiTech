@@ -7,7 +7,7 @@ import "../index.css";
 const CreatePage = () => {
   const { state } = useContext(HabitechContext);
   const navigate = useNavigate();
-  const { bgcolor500, gradient } = useColorTheme();
+  const { gradient } = useColorTheme();
   function redirectPage(url) {
     navigate(url);
   }
