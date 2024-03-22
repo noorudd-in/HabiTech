@@ -233,13 +233,8 @@ const SingleGoal = ({
             <div id="goals-description" className="mt-2">
               {subtasks.map((task) => {
                 return (
-                  <Suspense fallback={<Shimmer />}>
-                    <GoalsSubTask
-                      key={task.id}
-                      task={task}
-                      goalId={id}
-                      status={status}
-                    />
+                  <Suspense key={task.id} fallback={<Shimmer />}>
+                    <GoalsSubTask task={task} goalId={id} status={status} />
                   </Suspense>
                 );
               })}

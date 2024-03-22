@@ -3,7 +3,6 @@ import { useColorTheme } from "../../hooks/useColorTheme";
 const ToggleButton = ({ toggle, setToggle, name }) => {
   const { checkedcolor } = useColorTheme();
   const userVibrate = localStorage.getItem("userVibrate");
-  console.log(toggle);
 
   const toggleChange = () => {
     if (Boolean(userVibrate)) {

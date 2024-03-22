@@ -35,14 +35,12 @@ const Sound = () => {
   };
 
   const changeSound = (value) => {
-    console.log(value);
     if (value == currentSound) {
       return;
     }
     setCurrentSound(value);
     const sound = new Audio(`../../../assets/sounds/${value}.mp3`);
     sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
-
     sound.play();
     localStorage.setItem("userCurrentSound", value);
   };
@@ -57,6 +55,9 @@ const Sound = () => {
       setVolume(e.target.value);
       timer = setTimeout(() => {
         localStorage.setItem("userCurrentVolume", e.target.value);
+        const sound = new Audio(`../../../assets/sounds/${currentSound}.mp3`);
+        sound.volume = e.target.value;
+        sound.play();
       }, 700);
     },
     [currentSound]

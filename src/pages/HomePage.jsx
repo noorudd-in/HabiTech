@@ -38,6 +38,7 @@ const HomePage = () => {
       // Run if app redirects to home page from other route.
       let type = searchParams.get("toastType");
       let message = searchParams.get("toastMessage");
+      let userSound = searchParams.get("sound");
       if (type != null && message != null && type != "") {
         toast(
           message,
@@ -45,7 +46,22 @@ const HomePage = () => {
             ? toastError()
             : toastSuccess(customcolor == undefined ? "#fff" : customcolor)
         );
-        setSearchParams({ toastType: "", toastMessage: "" });
+        if (userSound == "purchase" || userSound == "current") {
+          if (localStorage.getItem("userSound") == "true") {
+            const sound = new Audio(
+              `../../../assets/sounds/${
+                userSound == "purchase"
+                  ? "purchase"
+                  : localStorage.getItem("userCurrentSound")
+              }.mp3`
+            );
+            sound.volume = parseFloat(
+              localStorage.getItem("userCurrentVolume")
+            );
+            sound.play();
+          }
+        }
+        setSearchParams({ toastType: "", toastMessage: "", sound: "" });
       }
     }
   }, [data]);
