@@ -15,13 +15,18 @@ const EditHabitPage = lazy(() => import("../pages/EditHabitPage"));
 const EditGoalPage = lazy(() => import("../pages/EditGoalPage"));
 const EditPlanPage = lazy(() => import("../pages/EditPlanPage"));
 const CommingSoon = lazy(() => import("../components/layout/CommingSoon"));
-const Theme = lazy(() => import("../components/setting/Theme"));
+const Theme = lazy(() => import("../components/setting/appearance/Theme"));
 const Activity = lazy(() => import("../components/setting/Activity"));
 const SoundAndVibration = lazy(() =>
   import("../components/setting/SoundAndVibration")
 );
 const Appearance = lazy(() => import("../components/setting/Appearance"));
-const Background = lazy(() => import("../components/setting/Background"));
+const Background = lazy(() =>
+  import("../components/setting/appearance/Background")
+);
+const LockAndUnlockApp = lazy(() =>
+  import("../components/setting/LockAndUnlockApp")
+);
 
 const HABITECH_ROUTES = createBrowserRouter([
   {
@@ -258,11 +263,11 @@ const HABITECH_ROUTES = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/lock",
+    path: "/applock",
     element: (
       <>
         <Suspense fallback={<Shimmer />}>
-          <CommingSoon />
+          <LockAndUnlockApp />
           <GlobalFooter />
         </Suspense>
       </>

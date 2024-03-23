@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HabitechContext } from "../contexts/HabitechContext";
 import { useHabitechData } from "../hooks/useHabitechData";
 import { useSearchParams } from "react-router-dom";
@@ -10,8 +10,11 @@ import HorizontalLine from "../components/common/HorizontalLine";
 import MainContent from "../components/layout/MainContent";
 import GlobalFooter from "../components/layout/GlobalFooter";
 import toast, { Toaster } from "react-hot-toast";
+import VerifyPassword from "../components/setting/password/VerifyPassword";
+import dayjs from "dayjs";
 
 const HomePage = () => {
+  const [lockApp, setLockApp] = useState(false);
   const { dispatch, setAppLoading } = useContext(HabitechContext);
   const { data, loading } = useHabitechData();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -66,15 +69,33 @@ const HomePage = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    // Lock app if onlock time has expired!
+    if (localStorage.getItem("userLock") == "true") {
+      let lastUnlock = new Date(parseInt(localStorage.getItem("lastUnlock")));
+      let userLockDuration = localStorage.getItem("userLockDuration");
+      let newLockTime = dayjs(lastUnlock).add(userLockDuration, "minutes");
+      if (newLockTime.isBefore(dayjs())) {
+        setLockApp(true);
+      }
+    }
+  }, []);
+
   if (loading) return <Shimmer />;
 
   return (
     <>
-      <Toaster />
-      <GlobalHeader />
-      <HorizontalLine />
-      <MainContent />
-      <GlobalFooter />
+      {lockApp ? (
+        <VerifyPassword setLockApp={setLockApp} />
+      ) : (
+        <>
+          <Toaster />
+          <GlobalHeader />
+          <HorizontalLine />
+          <MainContent />
+          <GlobalFooter />
+        </>
+      )}
     </>
   );
 };

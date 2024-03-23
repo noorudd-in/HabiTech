@@ -1,10 +1,10 @@
-import { useColorTheme } from "../../hooks/useColorTheme";
+import { useColorTheme } from "../../../hooks/useColorTheme";
 import { useContext, useEffect } from "react";
-import { HabitechContext } from "../../contexts/HabitechContext";
+import { HabitechContext } from "../../../contexts/HabitechContext";
 import { toast, Toaster } from "react-hot-toast";
-import { toastError } from "../common/Toast";
-import { API_URL } from "../../constants";
-import SingleTheme from "../layout/SingleTheme";
+import { toastError } from "../../common/Toast";
+import { API_URL } from "../../../constants";
+import SingleTheme from "../../layout/SingleTheme";
 import axios from "axios";
 
 let colorThemes = [

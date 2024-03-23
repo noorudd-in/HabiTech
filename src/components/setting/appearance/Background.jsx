@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-import CoinIcon from "../icons/CoinIcon";
-import { useColorTheme } from "../../hooks/useColorTheme";
-import { HabitechContext } from "../../contexts/HabitechContext";
+import CoinIcon from "../../icons/CoinIcon";
+import { useColorTheme } from "../../../hooks/useColorTheme";
+import { HabitechContext } from "../../../contexts/HabitechContext";
 import {
   API_URL,
   BGAnchor,
@@ -42,10 +42,10 @@ import {
   BGWall,
   BGWallpaper,
   BGWiggle,
-} from "../../constants";
+} from "../../../constants";
 import axios from "axios";
 import { toast, Toaster } from "react-hot-toast";
-import { toastError } from "../common/Toast";
+import { toastError } from "../../common/Toast";
 
 const BGData = [
   {
@@ -340,7 +340,7 @@ const Background = () => {
       return;
     }
     // Change Background and reload if already owned
-    if (state.store.background.includes(bgName)) {
+    if (state.store.background?.includes(bgName)) {
       localStorage.setItem("userBackground", getBGData(bgName));
       localStorage.setItem("userCurrentBackground", bgName);
       window.location.replace(
@@ -438,7 +438,7 @@ const Background = () => {
               ></div>
               <div className="flex justify-between my-1">
                 <h1 className="ml-1 text-lg font-bold">{bg.name}</h1>
-                {state.store.background.includes(bg.name) ? (
+                {state.store.background?.includes(bg.name) ? (
                   <h1 className="mr-1 text-lg font-bold">Owned</h1>
                 ) : (
                   <div className="mr-1 flex">

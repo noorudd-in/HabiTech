@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import ToggleButton from "../common/ToggleButton";
-import { HabitechContext } from "../../contexts/HabitechContext";
+import ToggleButton from "../../common/ToggleButton";
+import { HabitechContext } from "../../../contexts/HabitechContext";
 const Vibration = () => {
   const [vibration, setVibration] = useState("");
   const { state } = useContext(HabitechContext);
