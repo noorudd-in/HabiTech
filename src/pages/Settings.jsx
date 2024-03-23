@@ -61,7 +61,7 @@ const Settings = () => {
           </div>
         </Link>
 
-        <Link to="/sound">
+        <Link to="/applock">
           <div className="flex px-1 text-lg my-2">
             <LockIcon className="w-6 h-7" />
             <h1 className="ml-2">Lock</h1>

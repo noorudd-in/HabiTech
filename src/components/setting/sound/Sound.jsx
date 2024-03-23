@@ -1,9 +1,9 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { HabitechContext } from "../../contexts/HabitechContext";
-import { useColorTheme } from "../../hooks/useColorTheme";
-import ToggleButton from "../common/ToggleButton";
-import CircleIcon from "../icons/CircleIcon";
-import CircleTickedIcon from "../icons/CircleTickedIcon";
+import { HabitechContext } from "../../../contexts/HabitechContext";
+import { useColorTheme } from "../../../hooks/useColorTheme";
+import ToggleButton from "../../common/ToggleButton";
+import CircleIcon from "../../icons/CircleIcon";
+import CircleTickedIcon from "../../icons/CircleTickedIcon";
 
 const soundData = [
   "twinkle",

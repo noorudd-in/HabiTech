@@ -8,9 +8,7 @@ import "./index.css";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <HabitechContextProvider>
-      <div>
-        <App />
-      </div>
+      <App />
     </HabitechContextProvider>
   </React.StrictMode>
 );
