@@ -245,7 +245,7 @@ const HABITECH_ROUTES = createBrowserRouter([
     element: (
       <>
         <Suspense fallback={<Shimmer />}>
-          <CommingSoon />
+          <Badge />
           <GlobalFooter />
         </Suspense>
       </>

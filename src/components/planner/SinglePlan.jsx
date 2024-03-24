@@ -1,12 +1,14 @@
 import { lazy, useState, Suspense } from "react";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
-const Modal = lazy(() => import("../common/Modal"));
+
 import Shimmer from "../../pages/Shimmer";
 import { useColorTheme } from "../../hooks/useColorTheme";
 import { motion } from "framer-motion";
 import { useLongPress } from "@uidotdev/usehooks";
 import { useNavigate } from "react-router-dom";
+const Modal = lazy(() => import("../common/Modal"));
+const PlanModalContent = lazy(() => import("./PlanModalContent"));
 
 dayjs.extend(duration);
 
@@ -58,15 +60,19 @@ const SinglePlan = ({
           <Modal
             toggleModal={toggleModal}
             setToggleModal={setToggleModal}
-            data={{
-              id: id,
-              name: name,
-              start: start,
-              end: end,
-              description: description,
-              lastUpdated: lastUpdated,
-            }}
-          />
+            heading={name}
+            footer={"Got it!"}
+          >
+            <PlanModalContent
+              data={{
+                id: id,
+                start: start,
+                end: end,
+                description: description,
+                lastUpdated: lastUpdated,
+              }}
+            />
+          </Modal>
         </Suspense>
       )}
 

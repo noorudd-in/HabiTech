@@ -14,6 +14,7 @@ import PlusIcon from "../icons/PlusIcon";
 import Badge from "../common/Badge";
 import HabitTimeBar from "./HabitTimeBar";
 import Shimmer from "../../pages/Shimmer";
+const HabitModalContent = lazy(() => import("./HabitModalContent"));
 const Modal = lazy(() => import("../common/Modal"));
 
 const SingleHabit = ({
@@ -186,18 +187,23 @@ const SingleHabit = ({
           <Modal
             toggleModal={toggleModal}
             setToggleModal={setToggleModal}
-            data={{
-              id: id,
-              name: name,
-              status: status,
-              difficulty: difficulty,
-              lastUpdated: lastUpdated,
-              expValue: expValue,
-              posCount: posCount,
-              negCount: negCount,
-              analytics: analytics,
-            }}
-          />
+            heading={name}
+            footer={"Got it"}
+          >
+            <HabitModalContent
+              data={{
+                id: id,
+                name: name,
+                status: status,
+                difficulty: difficulty,
+                lastUpdated: lastUpdated,
+                expValue: expValue,
+                posCount: posCount,
+                negCount: negCount,
+                analytics: analytics,
+              }}
+            />
+          </Modal>
         </Suspense>
       )}
 
