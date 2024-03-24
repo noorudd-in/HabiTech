@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useColorTheme } from "../../../hooks/useColorTheme";
 import { Toaster, toast } from "react-hot-toast";
 import { toastError } from "../../common/Toast";
 import { useHabitechData } from "../../../hooks/useHabitechData";
 import Shimmer from "../../../pages/Shimmer";
+import { HabitechContext } from "../../../contexts/HabitechContext";
 
 const VerifyPassword = ({ setLockApp }) => {
+  const { state, appLoading } = useContext(HabitechContext);
   const { data, loading } = useHabitechData();
   const { textcolor500, bgcolor500 } = useColorTheme();
   const [verifyPassword, setVerifyPassword] = useState("");
@@ -16,10 +18,10 @@ const VerifyPassword = ({ setLockApp }) => {
       return;
     }
 
-    if (data) {
-      let newPassword = data?.user?.name + "$-$-$" + verifyPassword;
+    if (state.user.name != undefined) {
+      let newPassword = state?.user?.name + "$-$-$" + verifyPassword;
       let encryptedHash = btoa(btoa(newPassword));
-      if (encryptedHash == data.user.userHash) {
+      if (encryptedHash == state.user.userHash) {
         setLockApp(false);
         localStorage.setItem("lastUnlock", Date.now());
       } else {

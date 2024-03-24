@@ -49,6 +49,7 @@ const SetupPassword = ({
         ...state,
         user: {
           ...state.user,
+          userLock: true,
           userHash: encryptedHash,
         },
         lastEdited: Date.now(),
@@ -61,7 +62,6 @@ const SetupPassword = ({
             lastEdited: res?.data?.lastEdited,
           },
         });
-        localStorage.setItem("userLock", true);
         if (setLockDuration) {
           localStorage.setItem("userLockDuration", 10);
         }
