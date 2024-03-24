@@ -66,20 +66,28 @@ const HomePage = () => {
         }
         setSearchParams({ toastType: "", toastMessage: "", sound: "" });
       }
-    }
-  }, [data]);
 
-  useEffect(() => {
-    // Lock app if onlock time has expired!
-    if (localStorage.getItem("userLock") == "true") {
-      let lastUnlock = new Date(parseInt(localStorage.getItem("lastUnlock")));
-      let userLockDuration = localStorage.getItem("userLockDuration");
-      let newLockTime = dayjs(lastUnlock).add(userLockDuration, "minutes");
-      if (newLockTime.isBefore(dayjs())) {
-        setLockApp(true);
+      // Lock app if onlock time is expired or
+      // userLock is true but new device detected.
+      if (data.user.userLock) {
+        let lastUnlock = localStorage.getItem("lastUnlock");
+        if (lastUnlock == "null" || lastUnlock == null) {
+          localStorage.setItem("userLockDuration", 10);
+          setLockApp(true);
+        } else {
+          let lastUnlockTime = new Date(parseInt(lastUnlock));
+          let userLockDuration = localStorage.getItem("userLockDuration");
+          let newLockTime = dayjs(lastUnlockTime).add(
+            userLockDuration,
+            "minutes"
+          );
+          if (newLockTime.isBefore(dayjs())) {
+            setLockApp(true);
+          }
+        }
       }
     }
-  }, []);
+  }, [data]);
 
   if (loading) return <Shimmer />;
 

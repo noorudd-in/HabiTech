@@ -27,6 +27,8 @@ const Background = lazy(() =>
 const LockAndUnlockApp = lazy(() =>
   import("../components/setting/LockAndUnlockApp")
 );
+const Avatar = lazy(() => import("../components/setting/appearance/Avatar"));
+const Badge = lazy(() => import("../components/setting/Badge"));
 
 const HABITECH_ROUTES = createBrowserRouter([
   {
@@ -231,7 +233,7 @@ const HABITECH_ROUTES = createBrowserRouter([
     element: (
       <>
         <Suspense fallback={<Shimmer />}>
-          <CommingSoon />
+          <Avatar />
           <GlobalFooter />
         </Suspense>
       </>

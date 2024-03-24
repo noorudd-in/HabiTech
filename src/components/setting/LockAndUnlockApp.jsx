@@ -6,16 +6,18 @@ import VerifyPassword from "./password/VerifyPassword";
 import { useColorTheme } from "../../hooks/useColorTheme";
 import UpIcon from "../icons/UpIcon";
 import DownIcon from "../icons/DownIcon";
+import axios from "axios";
+import { API_URL } from "../../constants";
 
 const LockAndUnlockApp = () => {
-  const { state } = useContext(HabitechContext);
+  const { state, dispatch } = useContext(HabitechContext);
   const [enableLock, setEnableLock] = useState(false);
   const [showPasswordFeild, setShowPasswordField] = useState(false);
   const [passwordCreated, setPasswordCreated] = useState(false);
   const [lockApp, setLockApp] = useState(false);
   const [lockDuration, setLockDuration] = useState(null);
   const [dropdown, setDropdown] = useState(false);
-  const { bgcolor500, bgcolor50, bgcolor400 } = useColorTheme();
+  const { bgcolor50, bgcolor400 } = useColorTheme();
 
   const updateEnableLock = (value) => {
     if (localStorage.getItem("userVibrate") == "true") {
@@ -25,9 +27,24 @@ const LockAndUnlockApp = () => {
     if (value) {
       setShowPasswordField("new");
     } else {
+      axios
+        .put(API_URL, {
+          ...state,
+          user: {
+            ...state.user,
+            userLock: false,
+          },
+        })
+        .then((res) => {
+          dispatch({
+            type: "FETCH_DATA",
+            payload: {
+              user: res?.data?.user,
+            },
+          });
+        });
       setPasswordCreated(false);
       setShowPasswordField(false);
-      localStorage.removeItem("userLock");
       localStorage.removeItem("userLockDuration");
       localStorage.removeItem("lastUnlock");
     }
@@ -51,9 +68,9 @@ const LockAndUnlockApp = () => {
     if (state.user.name == undefined) {
       window.location.replace("/");
     } else {
-      const userLock = localStorage.getItem("userLock");
+      const userLock = state.user.userLock;
       setLockDuration(localStorage.getItem("userLockDuration"));
-      if (userLock == "true") {
+      if (userLock) {
         setEnableLock(true);
         setPasswordCreated(true);
         setLockApp(true);
