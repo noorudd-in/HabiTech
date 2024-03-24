@@ -1,7 +1,11 @@
-import React from "react";
+import SingleBadge from "./badge/SingleBadge";
 
 const Badge = () => {
-  return <div>Badge</div>;
+  return (
+    <div>
+      <SingleBadge />
+    </div>
+  );
 };
 
 export default Badge;
