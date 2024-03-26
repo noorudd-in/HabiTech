@@ -87,6 +87,12 @@ const CreateGoalPage = () => {
       time: Date.now(),
     };
 
+    let updatedAnalytics = { ...state.user.analytics };
+    updatedAnalytics.goals[type][0] = updatedAnalytics.goals[type][0] + 1;
+    updatedAnalytics.goals[priority][0] =
+      updatedAnalytics.goals[priority][0] + 1;
+    updatedAnalytics.goals.total[0] = updatedAnalytics.goals.total[0] + 1;
+
     if (localStorage.getItem("userSound") == "true") {
       const sound = new Audio(
         `../../../assets/sounds/${localStorage.getItem("userCurrentSound")}.mp3`

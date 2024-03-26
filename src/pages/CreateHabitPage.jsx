@@ -54,6 +54,11 @@ const CreateHabitPage = () => {
       time: Date.now(),
     };
 
+    let updatedAnalytics = { ...state.user.analytics };
+    updatedAnalytics.habits[habitLevel][0] =
+      updatedAnalytics.habits[habitLevel][0] + 1;
+    updatedAnalytics.habits.total[0] = updatedAnalytics.habits.total[0] + 1;
+
     if (localStorage.getItem("userSound") == "true") {
       const sound = new Audio(
         `../../../assets/sounds/${localStorage.getItem("userCurrentSound")}.mp3`
@@ -65,6 +70,10 @@ const CreateHabitPage = () => {
     axios
       .put(API_URL, {
         ...state,
+        user: {
+          ...state.user,
+          analytics: updatedAnalytics,
+        },
         habits: [...state.habits, newHabit],
         activity: [...state.activity, newActivity],
         lastEdited: Date.now(),
@@ -73,6 +82,7 @@ const CreateHabitPage = () => {
         dispatch({
           type: "FETCH_DATA",
           payload: {
+            user: res?.data?.user,
             habits: res?.data?.habits,
             activity: res?.data?.activity,
             lastEdited: res?.data?.lastEdited,

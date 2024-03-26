@@ -24,14 +24,22 @@ const soundData = [
 
 const Sound = () => {
   const [enableSound, setEnableSound] = useState(false);
-  const [currentSound, setCurrentSound] = useState("retro");
-  const [volume, setVolume] = useState(0);
+  const [currentSound, setCurrentSound] = useState("archive");
+  const [volume, setVolume] = useState(0.5);
   const { state } = useContext(HabitechContext);
   const { checkboxcolor } = useColorTheme();
 
   const updateEnableSound = (value) => {
     setEnableSound(value);
-    localStorage.setItem("userSound", value);
+    if (value) {
+      localStorage.setItem("userSound", value);
+      localStorage.setItem("userCurrentSound", "archive");
+      localStorage.setItem("userCurrentVolume", 0.5);
+    } else {
+      localStorage.removeItem("userSound");
+      localStorage.removeItem("userCurrentSound");
+      localStorage.removeItem("userCurrentVolume");
+    }
   };
 
   const changeSound = (value) => {
@@ -66,7 +74,7 @@ const Sound = () => {
   useEffect(() => {
     if (state.user.name == undefined) {
       window.location.replace("/");
-    } else {
+    } else if (localStorage.getItem("userSound") == "true") {
       setEnableSound(localStorage.getItem("userSound") == "true");
       setCurrentSound(localStorage.getItem("userCurrentSound"));
       setVolume(parseFloat(localStorage.getItem("userCurrentVolume")));

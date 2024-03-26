@@ -63,8 +63,12 @@ const EditGoalPage = () => {
 
     let newGoals = [...state.goals];
 
+    let oldType;
+    let oldPriority;
     newGoals.map((goal) => {
       if (goal.id == id) {
+        oldType = goal.type;
+        oldPriority = goal.priority;
         goal.name = name;
         goal.duedate = Date.parse(duedate);
         goal.type = type;
@@ -75,6 +79,15 @@ const EditGoalPage = () => {
         goal.lastUpdated = Date.now();
       }
     });
+
+    let updatedAnalytics = { ...state.user.analytics };
+    updatedAnalytics.goals[oldType][0] = updatedAnalytics.goals[oldType][0] - 1;
+    updatedAnalytics.goals[type][0] = updatedAnalytics.goals[type][0] + 1;
+
+    updatedAnalytics.goals[oldPriority][0] =
+      updatedAnalytics.goals[oldPriority][0] - 1;
+    updatedAnalytics.goals[priority][0] =
+      updatedAnalytics.goals[priority][0] + 1;
 
     let newActivity = {
       action: "edit",
@@ -94,6 +107,10 @@ const EditGoalPage = () => {
     axios
       .put(API_URL, {
         ...state,
+        user: {
+          ...state.user,
+          analytics: updatedAnalytics,
+        },
         goals: newGoals,
         activity: [...state.activity, newActivity],
         lastEdited: Date.now(),
@@ -102,6 +119,7 @@ const EditGoalPage = () => {
         dispatch({
           type: "FETCH_DATA",
           payload: {
+            user: res?.data?.user,
             goals: res?.data?.goals,
             activity: res?.data?.activity,
             lastEdited: res?.data?.lastEdited,
@@ -174,7 +192,7 @@ const EditGoalPage = () => {
         if (goal.id == id) {
           setName(goal.name);
           setDescription(goal.description);
-          setType(goal.timeline);
+          setType(goal.type);
           setPriority(goal.priority);
           setDuedate(new Date(goal.duedate));
           setTags(goal.tags);
@@ -235,9 +253,9 @@ const EditGoalPage = () => {
               onChange={(e) => setType(e.target.value)}
             >
               <option value="select">Select</option>
-              <option value="weekly">Short Term</option>
-              <option value="monthly">Mid Term</option>
-              <option value="quarterly">Long Term</option>
+              <option value="short">Short Term</option>
+              <option value="mid">Mid Term</option>
+              <option value="long">Long Term</option>
             </select>
           </div>
 
