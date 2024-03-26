@@ -2,7 +2,7 @@ import { useContext, useState, useEffect, useCallback } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import { motion } from "framer-motion";
 import Shimmer from "../../pages/Shimmer";
-import UpIcon from "../icons/UpIcon";
+import RightIcon from "../icons/RightIcon";
 import DownIcon from "../icons/DownIcon";
 import SingleGoal from "./SingleGoal";
 
@@ -94,7 +94,11 @@ const GoalsByTags = ({ showTask, showActive }) => {
               <h1 className=" text-black mr-5">
                 {tag[0].toUpperCase() + tag.slice(1)}
               </h1>
-              {dropdown == tag ? <DownIcon /> : <UpIcon />}
+              {dropdown == tag ? (
+                <DownIcon className="w-7 h-7 text-gray-800" />
+              ) : (
+                <RightIcon className="w-7 h-7 text-gray-800" />
+              )}
             </motion.div>
 
             {dropdown == tag && (

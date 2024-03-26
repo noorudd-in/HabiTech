@@ -1,7 +1,7 @@
 import { useState, useContext, useCallback, useEffect } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import { motion } from "framer-motion";
-import UpIcon from "../icons/UpIcon";
+import RightIcon from "../icons/RightIcon";
 import DownIcon from "../icons/DownIcon";
 import Shimmer from "../../pages/Shimmer";
 import SingleGoal from "./SingleGoal";
@@ -69,7 +69,11 @@ const GoalsByPriority = ({ showTask, showActive }) => {
             onClick={() => toggleTap("high")}
           >
             <h1 className=" text-black mr-5">High Priority Goals</h1>
-            {dropdown == "high" ? <DownIcon /> : <UpIcon />}
+            {dropdown == "high" ? (
+              <DownIcon className="w-7 h-7 text-gray-800" />
+            ) : (
+              <RightIcon className="w-7 h-7 text-gray-800" />
+            )}
           </motion.div>
 
           {dropdown == "high" && (
@@ -124,7 +128,11 @@ const GoalsByPriority = ({ showTask, showActive }) => {
             onClick={() => toggleTap("medium")}
           >
             <h1 className=" text-black mr-5">Medium Priority Goals</h1>
-            {dropdown == "medium" ? <DownIcon /> : <UpIcon />}
+            {dropdown == "medium" ? (
+              <DownIcon className="w-7 h-7 text-gray-800" />
+            ) : (
+              <RightIcon className="w-7 h-7 text-gray-800" />
+            )}
           </motion.div>
 
           {dropdown == "medium" && (
@@ -179,7 +187,11 @@ const GoalsByPriority = ({ showTask, showActive }) => {
             onClick={() => toggleTap("low")}
           >
             <h1 className=" text-black mr-5">Low Priority Goals</h1>
-            {dropdown == "low" ? <DownIcon /> : <UpIcon />}
+            {dropdown == "low" ? (
+              <DownIcon className="w-7 h-7 text-gray-800" />
+            ) : (
+              <RightIcon className="w-7 h-7 text-gray-800" />
+            )}
           </motion.div>
 
           {dropdown == "low" && (

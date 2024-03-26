@@ -140,8 +140,8 @@ const SingleGoal = ({
         }
 
         // If health surpass 100 after adding new health, set the new health to 100.
-        if (state.user.health + health[timeline] <= 100) {
-          newHealth = state.user.health + health[timeline];
+        if (state.user.health + health[type] <= 100) {
+          newHealth = state.user.health + health[type];
         } else {
           newHealth = 100;
         }
@@ -163,6 +163,15 @@ const SingleGoal = ({
           time: Date.now(),
         };
 
+        // Add record to user analytics;
+        let newRecords = { ...state.user.analytics.goals.records };
+        let todaysDate = dayjs().format("DD MMM");
+        if (newRecords[todaysDate]) {
+          newRecords[todaysDate] += 1;
+        } else {
+          newRecords[todaysDate] = 1;
+        }
+
         axios
           .put(API_URL, {
             ...state,
@@ -172,6 +181,15 @@ const SingleGoal = ({
               coins: state.user.coins + newCoins,
               exp: state.user.exp + newExp,
               health: newHealth,
+              analytics: {
+                ...state.user.analytics,
+                goals: {
+                  ...state.user.analytics.goals,
+                  records: newRecords,
+                },
+                totalMoneyEarned:
+                  state.user.analytics.totalMoneyEarned + newCoins,
+              },
             },
             activity: [...state.activity, newActivity],
             lastEdited: Date.now(),

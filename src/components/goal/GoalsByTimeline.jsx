@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useColorTheme } from "../../hooks/useColorTheme";
 import SingleGoal from "./SingleGoal";
 import Shimmer from "../../pages/Shimmer";
-import UpIcon from "../icons/UpIcon";
+import RightIcon from "../icons/RightIcon";
 import DownIcon from "../icons/DownIcon";
 import dayjs from "dayjs";
 
@@ -118,7 +118,11 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
             onClick={() => toggleTap("weekly")}
           >
             <h1 className=" text-black mr-5">Less than a week</h1>
-            {dropdown == "weekly" ? <DownIcon /> : <UpIcon />}
+            {dropdown == "weekly" ? (
+              <DownIcon className="w-7 h-7 text-gray-800" />
+            ) : (
+              <RightIcon className="w-7 h-7 text-gray-800" />
+            )}
           </motion.div>
 
           {dropdown == "weekly" && (
@@ -176,7 +180,11 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
             onClick={() => toggleTap("monthly")}
           >
             <h1 className=" text-black mr-3">Less than a month</h1>
-            {dropdown == "monthly" ? <DownIcon /> : <UpIcon />}
+            {dropdown == "monthly" ? (
+              <DownIcon className="w-7 h-7 text-gray-800" />
+            ) : (
+              <RightIcon className="w-7 h-7 text-gray-800" />
+            )}
           </motion.div>
 
           {dropdown == "monthly" && (
@@ -234,7 +242,11 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
             onClick={() => toggleTap("quarterly")}
           >
             <h1 className=" text-black mr-3">Less than a quarter</h1>
-            {dropdown == "quarterly" ? <DownIcon /> : <UpIcon />}
+            {dropdown == "quarterly" ? (
+              <DownIcon className="w-7 h-7 text-gray-800" />
+            ) : (
+              <RightIcon className="w-7 h-7 text-gray-800" />
+            )}
           </motion.div>
           {dropdown == "quarterly" && (
             <>
@@ -291,7 +303,11 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
             onClick={() => toggleTap("yearly")}
           >
             <h1 className=" text-black mr-8">A year or more</h1>
-            {dropdown == "yearly" ? <DownIcon /> : <UpIcon />}
+            {dropdown == "yearly" ? (
+              <DownIcon className="w-7 h-7 text-gray-800" />
+            ) : (
+              <RightIcon className="w-7 h-7 text-gray-800" />
+            )}
           </motion.div>
           {dropdown == "yearly" && (
             <>
