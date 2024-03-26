@@ -4,7 +4,7 @@ import SetupPassword from "./password/SetupPassword";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import VerifyPassword from "./password/VerifyPassword";
 import { useColorTheme } from "../../hooks/useColorTheme";
-import UpIcon from "../icons/UpIcon";
+import RightIcon from "../icons/RightIcon";
 import DownIcon from "../icons/DownIcon";
 import axios from "axios";
 import { API_URL } from "../../constants";
@@ -131,7 +131,11 @@ const LockAndUnlockApp = () => {
                   onClick={handleChangePassword}
                 >
                   <h1 className=" text-black mr-5">Change Password</h1>
-                  {dropdown ? <DownIcon /> : <UpIcon />}
+                  {dropdown ? (
+                    <DownIcon className="w-7 h-7 text-gray-800" />
+                  ) : (
+                    <RightIcon className="w-7 h-7 text-gray-800" />
+                  )}
                 </div>
               </div>
             </>

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import Shimmer from "../../pages/Shimmer";
 import { motion } from "framer-motion";
-import UpIcon from "../icons/UpIcon";
+import RightIcon from "../icons/RightIcon";
 import DownIcon from "../icons/DownIcon";
 import SingleGoal from "./SingleGoal";
 
@@ -70,7 +70,11 @@ const GoalsByType = ({ showTask, showActive }) => {
             onClick={() => toggleTap("short")}
           >
             <h1 className=" text-black mr-5">Short-Term Goals</h1>
-            {dropdown == "short" ? <DownIcon /> : <UpIcon />}
+            {dropdown == "short" ? (
+              <DownIcon className="w-7 h-7 text-gray-800" />
+            ) : (
+              <RightIcon className="w-7 h-7 text-gray-800" />
+            )}
           </motion.div>
 
           {dropdown == "short" && (
@@ -125,7 +129,11 @@ const GoalsByType = ({ showTask, showActive }) => {
             onClick={() => toggleTap("mid")}
           >
             <h1 className=" text-black mr-5">Mid-Term Goals</h1>
-            {dropdown == "mid" ? <DownIcon /> : <UpIcon />}
+            {dropdown == "mid" ? (
+              <DownIcon className="w-7 h-7 text-gray-800" />
+            ) : (
+              <RightIcon className="w-7 h-7 text-gray-800" />
+            )}
           </motion.div>
 
           {dropdown == "mid" && (
@@ -180,7 +188,11 @@ const GoalsByType = ({ showTask, showActive }) => {
             onClick={() => toggleTap("long")}
           >
             <h1 className=" text-black mr-5">Long-Term Goals</h1>
-            {dropdown == "long" ? <DownIcon /> : <UpIcon />}
+            {dropdown == "long" ? (
+              <DownIcon className="w-7 h-7 text-gray-800" />
+            ) : (
+              <RightIcon className="w-7 h-7 text-gray-800" />
+            )}
           </motion.div>
 
           {dropdown == "long" && (

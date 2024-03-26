@@ -14,6 +14,7 @@ import PlusIcon from "../icons/PlusIcon";
 import Badge from "../common/Badge";
 import HabitTimeBar from "./HabitTimeBar";
 import Shimmer from "../../pages/Shimmer";
+import dayjs from "dayjs";
 const HabitModalContent = lazy(() => import("./HabitModalContent"));
 const Modal = lazy(() => import("../common/Modal"));
 
@@ -100,6 +101,8 @@ const SingleHabit = ({
         `Do you want to update your habit: ${name}? This cannot be undone.`
       )
     ) {
+      console.log("Clicked");
+
       const updatedHabits = findAndUpdateHabit(type);
 
       // Update Health based on action type
@@ -111,13 +114,13 @@ const SingleHabit = ({
       }
 
       // Update coins based on difficulty,
-      let currentCoins = state.user.coins;
+      let newCoins;
       if (difficulty == "easy") {
-        currentCoins = currentCoins + 0.5;
+        newCoins = 0.5;
       } else if (difficulty == "decent") {
-        currentCoins = currentCoins + 1;
+        newCoins = 1;
       } else if (difficulty == "hard") {
-        currentCoins = currentCoins + 1.5;
+        newCoins = 1.5;
       }
 
       if (localStorage.getItem("userSound") == "true") {
@@ -142,6 +145,15 @@ const SingleHabit = ({
         updatedAnalytics.habits[difficulty][1] + 1;
       updatedAnalytics.habits.total[1] = updatedAnalytics.habits.total[1] + 1;
 
+      // Add record to user analytics;
+      let newRecords = { ...state.user.analytics.habits.records };
+      let todaysDate = dayjs().format("DD MMM");
+      if (newRecords[todaysDate]) {
+        newRecords[todaysDate] += 1;
+      } else {
+        newRecords[todaysDate] = 1;
+      }
+
       // Trigger axios update.
       axios
         .put(API_URL, {
@@ -150,7 +162,16 @@ const SingleHabit = ({
             ...state.user,
             health: currentHealth,
             exp: state.user.exp + expValue * type,
-            coins: currentCoins,
+            coins: state.user.coins + newCoins,
+            analytics: {
+              ...state.user.analytics,
+              habits: {
+                ...state.user.analytics.habits,
+                records: newRecords,
+              },
+              totalMoneyEarned:
+                state.user.analytics.totalMoneyEarned + newCoins,
+            },
           },
           activity: [...state.activity, newActivity],
           habits: updatedHabits,

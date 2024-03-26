@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import ErrorPage from "../pages/ErrorPage";
 import Shimmer from "../pages/Shimmer";
+const StatisticsPage = lazy(() => import("../pages/StatisticsPage"));
 const HomePage = lazy(() => import("../pages/HomePage"));
 const AnimatePage = lazy(() => import("../pages/AnimatePage"));
 const CreatePage = lazy(() => import("../pages/CreatePage"));
@@ -47,7 +48,7 @@ const HABITECH_ROUTES = createBrowserRouter([
     element: (
       <Suspense fallback={<Shimmer />}>
         <AnimatePage>
-          <CommingSoon />
+          <StatisticsPage />
           <GlobalFooter />
         </AnimatePage>
       </Suspense>

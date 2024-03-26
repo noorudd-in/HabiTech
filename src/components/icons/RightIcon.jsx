@@ -1,10 +1,10 @@
 import React from "react";
 
-const UpIcon = () => {
+const RightIcon = (props) => {
   return (
     <div>
       <svg
-        className="w-7 h-7 text-gray-800"
+        {...props}
         aria-hidden="true"
         xmlns="http://www.w3.org/2000/svg"
         fill="currentColor"
@@ -20,4 +20,4 @@ const UpIcon = () => {
   );
 };
 
-export default UpIcon;
+export default RightIcon;

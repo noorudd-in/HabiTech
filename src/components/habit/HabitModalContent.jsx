@@ -21,7 +21,12 @@ const HabitModalContent = ({ data }) => {
             </h1>
           ) : (
             <Suspense fallback={<Shimmer />}>
-              <AreaGraph data={data.analytics} />
+              <AreaGraph
+                data={data.analytics}
+                xkey={"count"}
+                modal={true}
+                height={150}
+              />
             </Suspense>
           )}
         </div>
