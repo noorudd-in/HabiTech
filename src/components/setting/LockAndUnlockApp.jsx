@@ -17,7 +17,7 @@ const LockAndUnlockApp = () => {
   const [lockApp, setLockApp] = useState(false);
   const [lockDuration, setLockDuration] = useState(null);
   const [dropdown, setDropdown] = useState(false);
-  const { bgcolor50, bgcolor400 } = useColorTheme();
+  const { bgcolor50, bgcolor400, textcolor500 } = useColorTheme();
 
   const updateEnableLock = (value) => {
     if (localStorage.getItem("userVibrate") == "true") {
@@ -83,7 +83,12 @@ const LockAndUnlockApp = () => {
       {lockApp ? (
         <VerifyPassword setLockApp={setLockApp} />
       ) : (
-        <div className="mx-5 mt-20 text-lg">
+        <div className="mx-5 mt-10 text-lg">
+          <h1
+            className={`text-center my-10 text-2xl font-bold ${textcolor500}`}
+          >
+            Privacy?... Yes it matters! 🔒
+          </h1>
           <div className="flex justify-between">
             <h1>Enable Lock</h1>
             <ToggleButton

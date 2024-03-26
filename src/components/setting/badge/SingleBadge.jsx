@@ -1,21 +1,35 @@
-import { useColorTheme } from "../../../hooks/useColorTheme";
+import { lazy, useState, Suspense } from "react";
 import SingleBadgeIcon from "../../icons/SingleBadgeIcon";
-const SingleBadge = () => {
-  const { textcolor500 } = useColorTheme();
+import Shimmer from "../../../pages/Shimmer";
+const Modal = lazy(() => import("../../common/Modal"));
+const SingleBadge = ({ name, description }) => {
+  const [toggleModal, setToggleModal] = useState("hidden");
+
   return (
-    <div className="border mx-5 mt-10">
-      <h1 className={`text-center my-5 text-2xl font-semibold ${textcolor500}`}>
-        Celebrate your achievements 👏
-      </h1>
-      <div class="grid grid-cols-2 sm:grid-cols-4">
-        <div class="col text-center my-2">
-          <div className="mx-5">
-            <SingleBadgeIcon />
-          </div>
-          <h1 className="text-lg font-medium">Over Acheiever</h1>
+    <>
+      <div className="col text-center my-2" onClick={() => setToggleModal("")}>
+        <div className="mx-5">
+          <SingleBadgeIcon />
         </div>
+        <h1 className="text-lg font-medium">{name}</h1>
       </div>
-    </div>
+
+      {toggleModal != "hidden" && (
+        <Suspense fallback={<Shimmer />}>
+          <Modal
+            toggleModal={toggleModal}
+            setToggleModal={setToggleModal}
+            heading={name}
+            footer={"Got it!"}
+          >
+            <h1 className="px-5 py-1">{description}</h1>
+            <h1 className="px-5 py-1">
+              Congratulations on earning this badge!
+            </h1>
+          </Modal>
+        </Suspense>
+      )}
+    </>
   );
 };
 

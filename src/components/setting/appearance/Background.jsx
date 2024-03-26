@@ -415,7 +415,7 @@ const Background = () => {
     <>
       <Toaster />
       <h1 className={`my-5 text-center text-2xl font-bold ${textcolor500}`}>
-        Let's design your background!
+        Let's design your background! 🖌️
       </h1>
       <div className="grid grid-rows-4 sm:grid-rows-2 sm:grid-cols-2 mb-24">
         {BGData.map((bg) => {

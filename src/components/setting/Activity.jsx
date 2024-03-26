@@ -39,10 +39,12 @@ const Activity = () => {
     }
   }, []);
   return (
-    <div className="mb-20">
+    <div className="mb-24">
       <div className="text-center mt-10 mb-5">
-        <h1 className={`text-4xl ${textcolor500}`}>Your Activity Feed</h1>
-        <p className={`${textcolor500} text-sm`}>Showing last 50 activities.</p>
+        <h1 className={`text-3xl ${textcolor500} font-bold`}>
+          Your Activity Feed ⏳
+        </h1>
+        <p className="text-sm">Showing last 50 activities.</p>
       </div>
 
       <div className="ml-5">

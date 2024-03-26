@@ -28,10 +28,12 @@ const EditHabitPage = () => {
       return;
     }
 
+    let oldLevel;
     let newHabits = [...state.habits];
 
     newHabits.map((habit) => {
       if (habit.id == id) {
+        oldLevel = habit.difficulty;
         habit.name = habitName;
         habit.difficulty = habitLevel;
       }
@@ -44,6 +46,11 @@ const EditHabitPage = () => {
       time: Date.now(),
     };
 
+    let updatedAnalytics = { ...state.user.analytics };
+    updatedAnalytics.habits[oldLevel][0] =
+      updatedAnalytics.habits[oldLevel][0] - 1;
+    updatedAnalytics.habits[habitLevel][0] =
+      updatedAnalytics.habits[habitLevel][0] + 1;
     if (localStorage.getItem("userSound") == "true") {
       const sound = new Audio(
         `../../../assets/sounds/${localStorage.getItem("userCurrentSound")}.mp3`
@@ -55,6 +62,10 @@ const EditHabitPage = () => {
     axios
       .put(API_URL, {
         ...state,
+        user: {
+          ...state.user,
+          analytics: updatedAnalytics,
+        },
         habits: newHabits,
         activity: [...state.activity, newActivity],
         lastEdited: Date.now(),
@@ -63,6 +74,7 @@ const EditHabitPage = () => {
         dispatch({
           type: "FETCH_DATA",
           payload: {
+            user: res?.data?.user,
             habits: res?.data?.habits,
             activity: res?.data?.activity,
             lastEdited: res?.data?.lastEdited,

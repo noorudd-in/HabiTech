@@ -191,7 +191,7 @@ const Theme = () => {
       <h1
         className={`mt-10 mb-3 text-center text-xl font-bold ${textcolor500}`}
       >
-        Select your favourite color to apply!
+        What's your favourite color? 🎨
       </h1>
       <div className="flex flex-wrap text-center justify-center">
         {colorThemes?.map((theme) => {

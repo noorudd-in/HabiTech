@@ -137,6 +137,11 @@ const SingleHabit = ({
         time: Date.now(),
       };
 
+      let updatedAnalytics = { ...state.user.analytics };
+      updatedAnalytics.habits[difficulty][1] =
+        updatedAnalytics.habits[difficulty][1] + 1;
+      updatedAnalytics.habits.total[1] = updatedAnalytics.habits.total[1] + 1;
+
       // Trigger axios update.
       axios
         .put(API_URL, {
