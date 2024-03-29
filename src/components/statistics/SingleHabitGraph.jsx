@@ -12,36 +12,46 @@ const SingleHabitGraph = () => {
 
   const changeHabit = (index) => {
     setCurrentHabit(index);
-    setChartData(state.habits[index].analytics);
+    setChartData(state?.habits[index]?.analytics);
   };
 
   useEffect(() => {
-    setChartData(state.habits[0].analytics);
+    if (state?.habits[0] == undefined) {
+      setChartData([]);
+    } else {
+      setChartData(state?.habits[0]?.analytics);
+    }
   }, []);
 
   if (chartData == null) return <Shimmer />;
 
   return (
     <div>
-      <div className="flex justify-center">
-        <h1 className="mr-3">Showing chart for</h1>
-        <select
-          name="goalsCategory"
-          id="goalsCategory"
-          value={currentHabit}
-          className={`text-black rounded-md px-1 ${bgcolor50} border border-neutral-500`}
-          onChange={(e) => changeHabit(e.target.value)}
-        >
-          {state.habits.map((habit, ind) => {
-            return (
-              <option key={habit.id} value={ind}>
-                {habit.name}
-              </option>
-            );
-          })}
-        </select>
-      </div>
-      <AreaGraph data={chartData} xkey={"count"} height={300} />
+      {chartData[0] == undefined ? (
+        <h1 className="text-center text-lg">No data to show</h1>
+      ) : (
+        <>
+          <div className="flex justify-center">
+            <h1 className="mr-3">Showing chart for</h1>
+            <select
+              name="goalsCategory"
+              id="goalsCategory"
+              value={currentHabit}
+              className={`text-black rounded-md px-1 ${bgcolor50} border border-neutral-500`}
+              onChange={(e) => changeHabit(e.target.value)}
+            >
+              {state.habits.map((habit, ind) => {
+                return (
+                  <option key={habit.id} value={ind}>
+                    {habit.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <AreaGraph data={chartData} xkey={"count"} height={300} />
+        </>
+      )}
     </div>
   );
 };

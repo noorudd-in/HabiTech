@@ -20,15 +20,17 @@ const Modal = ({ toggleModal, heading, setToggleModal, footer, children }) => {
           {children}
 
           {/* Footer */}
-          <div className="text-center p-4 md:p-5 border-t rounded-b border-gray-600">
-            <button
-              type="button"
-              className={`text-black focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center ${bgcolor500}`}
-              onClick={() => setToggleModal("hidden")}
-            >
-              {footer}
-            </button>
-          </div>
+          {footer && (
+            <div className="text-center p-4 md:p-5 border-t rounded-b border-gray-600">
+              <button
+                type="button"
+                className={`text-black focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center ${bgcolor500}`}
+                onClick={() => setToggleModal("hidden")}
+              >
+                {footer}
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

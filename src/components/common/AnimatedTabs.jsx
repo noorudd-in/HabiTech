@@ -1,16 +1,37 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useColorTheme } from "../../hooks/useColorTheme";
 
-let tabs = [
-  { id: "planner", label: "Planner" },
-  { id: "habits", label: "Habit" },
-  { id: "goals", label: "Goals" },
-];
-
 const AnimatedTabs = ({ setCurrentTab }) => {
-  let [activeTab, setActiveTab] = useState(tabs[0].id);
   const { bgcolor100, bgcolor400 } = useColorTheme();
+  const [tabs, setTabs] = useState([
+    { id: "planner", label: "Planner" },
+    { id: "habit", label: "Habit" },
+    { id: "goal", label: "Goal" },
+  ]);
+  let [activeTab, setActiveTab] = useState(tabs[0].id);
+
+  useEffect(() => {
+    let defaultTabs = JSON.parse(localStorage.getItem("defaultTabs"));
+    if (defaultTabs != null) {
+      setTabs([
+        {
+          id: defaultTabs[0],
+          label: defaultTabs[0][0].toUpperCase() + defaultTabs[0].slice(1),
+        },
+        {
+          id: defaultTabs[1],
+          label: defaultTabs[1][0].toUpperCase() + defaultTabs[1].slice(1),
+        },
+        {
+          id: defaultTabs[2],
+          label: defaultTabs[2][0].toUpperCase() + defaultTabs[2].slice(1),
+        },
+      ]);
+      setActiveTab(defaultTabs[0]);
+      setCurrentTab(defaultTabs[0]);
+    }
+  }, []);
 
   const setTab = (id) => {
     setActiveTab(id);

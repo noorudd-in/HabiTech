@@ -39,20 +39,26 @@ const SingleGoal = ({
   const { customcolor } = useColorTheme();
   const { state, dispatch } = useContext(HabitechContext);
 
-  const getDueDate = () => {
-    if (dayjs(new Date(duedate)).isToday()) {
-      return "Today";
-    }
-    if (dayjs(new Date(duedate)).isTomorrow()) {
-      return "Tomorrow";
-    }
-    if (dayjs(new Date(duedate)).isBefore(new Date(), "day")) {
-      return "Missed";
-    }
-    const date = dayjs(new Date(duedate)).format("DD MMM YYYY");
-    return date;
-  };
+  const showDueDate = localStorage.getItem("showDueDate");
+  const showPriority = localStorage.getItem("showPriority");
+  const showType = localStorage.getItem("showType");
 
+  const getDueDate = () => {
+    if (status == 0) {
+      if (dayjs(new Date(duedate)).isToday()) {
+        return "Today";
+      }
+      if (dayjs(new Date(duedate)).isTomorrow()) {
+        return "Tomorrow";
+      }
+      if (dayjs(new Date(duedate)).isBefore(new Date(), "day")) {
+        return "Missed";
+      }
+      return dayjs(new Date(duedate)).format("DD MMM YYYY");
+    } else {
+      return dayjs(new Date(duedate)).format("DD MMM YYYY");
+    }
+  };
   const getDate = getDueDate();
   const navigate = useNavigate();
 
@@ -240,11 +246,23 @@ const SingleGoal = ({
             {name}
           </div>
           <div className="flex text-sm">
-            <Badge deadline={getDate} />
-            <h1 className="mx-2">|</h1>
-            <Badge priority={priority} />
-            <h1 className="mx-2">|</h1>
-            <Badge type={type} />
+            {showDueDate != "false" && (
+              <>
+                <Badge deadline={getDate} />
+                <h1 className="mx-2"></h1>
+              </>
+            )}
+            {showPriority != "false" && (
+              <>
+                <Badge priority={priority} />
+                <h1 className="mx-2"></h1>
+              </>
+            )}
+            {showType != "false" && (
+              <>
+                <Badge type={type} />
+              </>
+            )}
           </div>
 
           {(showTask || toggleGoal) && (
@@ -263,6 +281,15 @@ const SingleGoal = ({
             <>
               <Suspense fallback={<Shimmer />}>
                 <p className="text-xs italic my-1">{description}</p>
+                <p className="text-xs italic my-1">
+                  Priority: {priority[0].toUpperCase() + priority.slice(1)}
+                </p>
+                <p className="text-xs italic my-1">
+                  Type: {type[0].toUpperCase() + type.slice(1)} Term
+                </p>
+                <p className="text-xs italic my-1">
+                  Due Date: {dayjs(new Date(duedate)).format("DD MMM YYYY")}
+                </p>
                 <AvailableTags tagData={tags} />
                 <p className="mt-2 text-xs text-center">
                   Created on{" "}

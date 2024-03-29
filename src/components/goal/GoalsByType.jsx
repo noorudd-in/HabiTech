@@ -57,7 +57,7 @@ const GoalsByType = ({ showTask, showActive }) => {
       const result = sortByType();
       setGoalsData(result);
     }
-  }, [toggleUpdate]);
+  }, [toggleUpdate, state]);
 
   if (appLoading) return <Shimmer />;
   return (
