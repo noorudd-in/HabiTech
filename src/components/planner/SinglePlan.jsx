@@ -24,6 +24,7 @@ const SinglePlan = ({
   const [toggleModal, setToggleModal] = useState("hidden");
   const navigate = useNavigate();
   const { bgcolor500 } = useColorTheme();
+  const showDuration = localStorage.getItem("showDuration");
 
   // Perform below action when habit is long pressed
   const attrs = useLongPress(
@@ -103,9 +104,14 @@ const SinglePlan = ({
 
           <div className="flex justify-between w-11/12 mx-auto">
             <div className="text-xs">{dayjs(start).format("hh:mm A")}</div>
-            <div className="text-xs">{`${hours !== 0 ? hours + "h" : ""} ${
-              minutes !== 0 ? minutes + "m" : ""
-            }`}</div>
+            {showDuration != "false" ? (
+              <div className="text-xs">{`${hours !== 0 ? hours + "h" : ""} ${
+                minutes !== 0 ? minutes + "m" : ""
+              }`}</div>
+            ) : (
+              <div></div>
+            )}
+
             <div className="text-xs">{dayjs(end).format("hh:mm A")}</div>
           </div>
           <div>

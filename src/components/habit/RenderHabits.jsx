@@ -1,6 +1,6 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
-import { useTimeDifference } from "../../hooks/useTimeDifference";
+import { useTimeDifference } from "../../hooks/useDifference";
 import { API_URL } from "../../constants";
 import SingleHabit from "./SingleHabit";
 import axios from "axios";
@@ -9,6 +9,12 @@ import Shimmer from "../../pages/Shimmer";
 const RenderHabits = () => {
   const { state, dispatch, appLoading } = useContext(HabitechContext);
   const lens = state.habits.length;
+  const [habitData, setHabitData] = useState(state.habits);
+  const [performUpdate, setPerformUpdate] = useState(true);
+  const resetDuration =
+    localStorage.getItem("resetHabit") == null
+      ? 720
+      : localStorage.getItem("resetHabit");
 
   // Update the status value of habit once the 12 hours have passed!
   const updateHabitCheck = () => {
@@ -18,7 +24,7 @@ const RenderHabits = () => {
       return null;
     }
     let updatedHabits = state.habits.map((habit) => {
-      const value = useTimeDifference(habit.lastUpdated);
+      const value = useTimeDifference(habit.lastUpdated, resetDuration);
       if (value == 0 && habit.status != 0) {
         flag = true;
         return { ...habit, status: 0 };
@@ -52,6 +58,25 @@ const RenderHabits = () => {
     }
   }, [lens]);
 
+  useEffect(() => {
+    if (localStorage.getItem("moveHabits") == "true") {
+      let completedHabits = [];
+      let incompleteHabits = [];
+      state.habits.map((habit) => {
+        if (habit.status == 1) {
+          completedHabits.push(habit);
+        } else {
+          incompleteHabits.push(habit);
+        }
+      });
+      let newHabits = incompleteHabits.concat(completedHabits);
+      console.log(newHabits);
+      setHabitData(newHabits);
+    } else {
+      setHabitData(state.habits);
+    }
+  }, [performUpdate]);
+
   if (appLoading) return <Shimmer />;
   return (
     <div className="mt-5">
@@ -60,7 +85,7 @@ const RenderHabits = () => {
           No habit found! Click on the plus button to add one!
         </h1>
       )}
-      {state.habits.map(
+      {habitData.map(
         ({
           id,
           name,
@@ -84,6 +109,8 @@ const RenderHabits = () => {
               posCount={posCount}
               negCount={negCount}
               analytics={analytics}
+              performUpdate={performUpdate}
+              setPerformUpdate={setPerformUpdate}
             />
           );
         }

@@ -13,6 +13,7 @@ import linkedInPNG from "../../assets/linkedin.png";
 import githubPNG from "../../assets/github.png";
 import TermsAndConditionIcon from "../components/icons/TermsAndConditionIcon";
 import PrivacyPolicy from "../components/icons/PrivacyPolicyIcon";
+import AdvancedSettingsIcon from "../components/icons/AdvancedSettingsIcon";
 
 const Settings = () => {
   const { state } = useContext(HabitechContext);
@@ -29,9 +30,6 @@ const Settings = () => {
         <Link to="/activity">
           <div className="flex px-1 text-lg my-2">
             <ActivityFeedIcon className="w-6 h-7" />
-            {/** 
-            <h1>⏳</h1>
-            */}
             <h1 className="ml-2">Activity Feed</h1>
           </div>
         </Link>
@@ -39,9 +37,6 @@ const Settings = () => {
         <Link to="/appearance">
           <div className="flex px-1 text-lg my-2">
             <ThemeIcon className="w-6 h-7" />
-            {/** 
-            <h1>🎨</h1>
-            */}
             <h1 className="ml-2">Appearance</h1>
           </div>
         </Link>
@@ -49,9 +44,6 @@ const Settings = () => {
         <Link to="/avatar">
           <div className="flex px-1 text-lg my-2">
             <AvatarIcon className="w-6 h-7" />
-            {/** 
-            <h1>🧍</h1>
-            */}
             <h1 className="ml-2">Avatar</h1>
           </div>
         </Link>
@@ -59,9 +51,6 @@ const Settings = () => {
         <Link to="/reward">
           <div className="flex px-1 text-lg my-2">
             <BadgeIcon className="w-6 h-7" />
-            {/** 
-            <h1>🏆</h1>
-            */}
             <h1 className="ml-2">Badge</h1>
           </div>
         </Link>
@@ -69,9 +58,6 @@ const Settings = () => {
         <Link to="/sound">
           <div className="flex px-1 text-lg my-2">
             <SoundAndVibrationIcon className="w-6 h-7" />
-            {/** 
-            <h1>🔈</h1>
-             * */}
             <h1 className="ml-2">Sound & Vibration</h1>
           </div>
         </Link>
@@ -79,10 +65,14 @@ const Settings = () => {
         <Link to="/applock">
           <div className="flex px-1 text-lg my-2">
             <LockIcon className="w-6 h-7" />
-            {/** 
-            <h1>🔒</h1>
-            */}
             <h1 className="ml-2">Lock</h1>
+          </div>
+        </Link>
+
+        <Link to="/advanced">
+          <div className="flex px-1 text-lg my-2">
+            <AdvancedSettingsIcon className="w-6 h-7" />
+            <h1 className="ml-2">Advanced Settings</h1>
           </div>
         </Link>
       </div>

@@ -30,6 +30,9 @@ const LockAndUnlockApp = lazy(() =>
 );
 const Avatar = lazy(() => import("../components/setting/appearance/Avatar"));
 const Badge = lazy(() => import("../components/setting/Badge"));
+const AdvancedSetting = lazy(() =>
+  import("../components/setting/AdvancedSetting")
+);
 
 const HABITECH_ROUTES = createBrowserRouter([
   {
@@ -271,6 +274,18 @@ const HABITECH_ROUTES = createBrowserRouter([
       <>
         <Suspense fallback={<Shimmer />}>
           <LockAndUnlockApp />
+          <GlobalFooter />
+        </Suspense>
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/advanced",
+    element: (
+      <>
+        <Suspense fallback={<Shimmer />}>
+          <AdvancedSetting />
           <GlobalFooter />
         </Suspense>
       </>

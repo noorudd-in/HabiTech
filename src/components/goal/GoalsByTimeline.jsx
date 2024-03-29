@@ -105,7 +105,7 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
       const result = sortByTimeline();
       setGoalsData(result);
     }
-  }, [toggleUpdate]);
+  }, [toggleUpdate, state]);
 
   if (appLoading) return <Shimmer />;
   return (

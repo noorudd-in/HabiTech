@@ -56,7 +56,7 @@ const GoalsByPriority = ({ showTask, showActive }) => {
       const result = sortByPriority();
       setGoalsData(result);
     }
-  }, [toggleUpdate]);
+  }, [toggleUpdate, state]);
 
   if (appLoading) return <Shimmer />;
   return (

@@ -1,6 +1,6 @@
 # HabiTech
 
-A goal and habit tracker with planner included. Unlock your productivity with the power of technology.
+A goal and habit tracker with planner included. Unlock your productivity with the power of technology!
 
 ## 🛠️ Technologies
 
@@ -49,32 +49,31 @@ Below are features that I am planning to add in the app.
 - [x] Show last activity.
 - [x] Sort goals based on duedate by default.
 - [x] Allow users to show/hide subtask.
-- [ ] Track and show all the activities performed by user (Activity Feed).
+- [x] Track and show all the activities performed by user (Activity Feed).
 - [x] Add Animations/Transisition/Smooth Scroll.
 - [x] Add progress bar when habit is updated.
 - [x] Show toast notification on changes.
 - [x] Implement single click to show modal.
 - [x] Implement double click to edit.
-- [ ] Add trend charts to each habit.
-- [ ] Record and show analytics for whole habits (last 7, 30, 90 days to one year).
-- [ ] Enable/Disable Haptic Feedback
-- [ ] Enable/Disable Sounds & Vibrations
-- [ ] Add store to purchase themes, health, avatars, badges, etc.
-- [ ] Implement lock and unlock app feature.
+- [x] Add trend charts to each habit.
+- [x] Record and show analytics for whole habits (last 7, 30, 90 days to one year).
+- [x] Enable/Disable Haptic Feedback
+- [x] Enable/Disable Sounds & Vibrations
+- [x] Add store to purchase themes, health, avatars, badges, etc.
+- [x] Implement lock and unlock app feature.
 - [ ] Implement Eisenhower Matrix.
 - [ ] Implement Pomodoro Timer.
-- [ ] Show/Hide duedate, priority, type by default on goals.
+- [x] Show/Hide duedate, priority, type by default on goals.
 - [ ] Implement smart suggestions whenever user creates a habit, goal, plan or tag.
 - [ ] Import goal or habit to plan.
 - [ ] Copy existing goal/habit/plan and create new one.
-- [ ] Automatically transfer goals from monthly to weekly, quarterly to monthly and so on based on duedate.
-- [ ] Allow users to select the by default view from settings (such as group by goals, show subtasks or not, show planner first or goals first and more!).
+- [x] Automatically transfer goals from monthly to weekly, quarterly to monthly and so on based on duedate.
+- [x] Allow users to select the by default view from settings (such as group by goals, show subtasks or not, show planner first or goals first and more!).
 - [x] Allow users to set different theme colors.
-- [ ] Allow users to set different background/fonts.
+- [x] Allow users to set different background/fonts.
 - [ ] Allow users to print/export/share the habits/goals/plans list.
+- [x] Allow users to reset app / delete data.
 - [ ] Page for `How to use app`
-- [ ] Provide users the badges/rewards if are eligible (e.g. completed 5 goals, achieved level 5, etc).
-- [ ] Allow users to pin goal or habit.
 
 ## 🐞 Issues
 
@@ -91,7 +90,6 @@ Issues/Bugs which I am not interested to fix due to lack of time or resources.
 
 ## ⚡️ Build In Public Progress
 
-- [HabiTech V1.0](https://www.linkedin.com/posts/nooruddin-shaikh_developer-habits-habitech-activity-7164270082024431616-L-IQ)
-- [HabiTech V2.0](https://www.linkedin.com/posts/nooruddin-shaikh_tailwindcss-react-api-activity-7166338128054534147-_NnH)
-- [HabiTech V3.0](https://www.linkedin.com/posts/nooruddin-shaikh_framermotion-priority-deadline-activity-7168499155403751424-k7FX)
-- [HabiTech V4.0](https://www.linkedin.com/posts/nooruddin-shaikh_framermotion-priority-deadline-activity-7172513445098078208-qIRy)
+- [HabiTech V1.0](https://www.linkedin.com/posts/nooruddin-shaikh_developer-habits-habitech-activity-7164270082024431616-L-IQ?utm_source=share&utm_medium=member_desktop)
+- [HabiTech V2.0](https://www.linkedin.com/posts/nooruddin-shaikh_tailwindcss-react-api-activity-7166338128054534147-_NnH?utm_source=share&utm_medium=member_desktop)
+- [HabiTech V3.0](https://www.linkedin.com/posts/nooruddin-shaikh_framermotion-priority-deadline-activity-7168499155403751424-k7FX?utm_source=share&utm_medium=member_desktop)

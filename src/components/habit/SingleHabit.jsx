@@ -1,7 +1,7 @@
 import { lazy, useContext, useState, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLongPress } from "@uidotdev/usehooks";
-import { useTimeDifference } from "../../hooks/useTimeDifference";
+import { useTimeDifference } from "../../hooks/useDifference";
 import { API_URL } from "../../constants";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import toast, { Toaster } from "react-hot-toast";
@@ -28,12 +28,20 @@ const SingleHabit = ({
   posCount,
   negCount,
   analytics,
+  performUpdate,
+  setPerformUpdate,
 }) => {
   const [toggleModal, setToggleModal] = useState("hidden");
   const { state, dispatch } = useContext(HabitechContext);
   const navigate = useNavigate();
-  const value = useTimeDifference(lastUpdated);
+  const resetDuration =
+    localStorage.getItem("resetHabit") == null
+      ? 720
+      : localStorage.getItem("resetHabit");
+  const value = useTimeDifference(lastUpdated, resetDuration);
   const { bgcolor400, border400, customcolor } = useColorTheme();
+
+  const showDifficulty = localStorage.getItem("showDifficulty");
 
   // Perform below action when habit is long pressed
   const attrs = useLongPress(
@@ -101,8 +109,6 @@ const SingleHabit = ({
         `Do you want to update your habit: ${name}? This cannot be undone.`
       )
     ) {
-      console.log("Clicked");
-
       const updatedHabits = findAndUpdateHabit(type);
 
       // Update Health based on action type
@@ -178,6 +184,7 @@ const SingleHabit = ({
           lastEdited: Date.now(),
         })
         .then((res) => {
+          setPerformUpdate(!performUpdate);
           dispatch({
             type: "FETCH_DATA",
             payload: {
@@ -253,7 +260,7 @@ const SingleHabit = ({
           >
             <div className="flex justify-between" onClick={handleClick}>
               <h1 className="text-xl">{name}</h1>
-              <Badge difficulty={difficulty} />
+              {showDifficulty != "false" && <Badge difficulty={difficulty} />}
             </div>
             <div>
               <div className="w-full h-2 bg-gray-700 mt-3 -mb-3 rounded-t">

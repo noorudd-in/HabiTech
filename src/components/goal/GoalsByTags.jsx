@@ -78,7 +78,7 @@ const GoalsByTags = ({ showTask, showActive }) => {
       const result = sortByTags();
       setGoalsData(result);
     }
-  }, [toggleUpdate]);
+  }, [toggleUpdate, state]);
 
   if (appLoading) return <Shimmer />;
   return (
