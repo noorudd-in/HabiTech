@@ -5,7 +5,7 @@ import { useColorTheme } from "../../../hooks/useColorTheme";
 import { toast, Toaster } from "react-hot-toast";
 import { toastError } from "../../common/Toast";
 import axios from "axios";
-import { API_URL } from "../../../constants";
+import { API_URL, CLOUD_AUDIO_PATH } from "../../../constants";
 import { HabitechContext } from "../../../contexts/HabitechContext";
 const SetupPassword = ({
   setPasswordCreated,
@@ -38,7 +38,7 @@ const SetupPassword = ({
 
     if (localStorage.getItem("userSound") == "true") {
       const sound = new Audio(
-        `../../../assets/sounds/${localStorage.getItem("userCurrentSound")}.mp3`
+        `${CLOUD_AUDIO_PATH + localStorage.getItem("userCurrentSound")}.mp3`
       );
       sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
       sound.play();

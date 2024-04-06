@@ -2,7 +2,7 @@ import { lazy, useContext, useState, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLongPress } from "@uidotdev/usehooks";
 import { useTimeDifference } from "../../hooks/useDifference";
-import { API_URL } from "../../constants";
+import { API_URL, CLOUD_AUDIO_PATH } from "../../constants";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import toast, { Toaster } from "react-hot-toast";
 import { toastSuccess, toastError, toastInfo } from "../common/Toast";
@@ -131,9 +131,7 @@ const SingleHabit = ({
 
       if (localStorage.getItem("userSound") == "true") {
         const sound = new Audio(
-          `../../../assets/sounds/${localStorage.getItem(
-            "userCurrentSound"
-          )}.mp3`
+          `${CLOUD_AUDIO_PATH + localStorage.getItem("userCurrentSound")}.mp3`
         );
         sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
         sound.play();
@@ -250,12 +248,14 @@ const SingleHabit = ({
           <div
             className={`flex flex-row items-center justify-center rounded-l-md ${bgcolor400}`}
             onClick={() => updateHabit(-1)}
+            id="tour-habit-minus"
           >
             <MinusIcon status={status} className="col-span-1" />
           </div>
 
           <div
             {...attrs}
+            id="tour-habit-content"
             className={`col-span-10 m-3 ${status != 0 ? "text-black" : ""}`}
           >
             <div className="flex justify-between" onClick={handleClick}>
@@ -270,6 +270,7 @@ const SingleHabit = ({
           </div>
 
           <div
+            id="tour-habit-plus"
             className={`flex flex-row items-center justify-center rounded-r-md ${bgcolor400}`}
             onClick={() => updateHabit(1)}
           >

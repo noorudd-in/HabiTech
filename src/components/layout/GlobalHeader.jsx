@@ -9,22 +9,26 @@ const GlobalHeader = () => {
   const { state } = useContext(HabitechContext);
   const { bgcolor400 } = useColorTheme();
   return (
-    <div className="flex m-2">
+    <div id="tour-header" className="flex m-2">
       <div className="w-[120px] lg:w-[180px]">
         <Avatar />
       </div>
       <div className="w-[65%] ml-2">
         <UserDetails />
-        <ProgressBar
-          objective="Health"
-          value={state.user.health}
-          color="bg-red-700"
-        />
-        <ProgressBar
-          objective="Experience"
-          value={state.user.exp % 100}
-          color={bgcolor400}
-        />
+        <div id="tour-health">
+          <ProgressBar
+            objective="Health"
+            value={state.user.health}
+            color="bg-red-700"
+          />
+        </div>
+        <div id="tour-exp">
+          <ProgressBar
+            objective="Experience"
+            value={state.user.exp % 100}
+            color={bgcolor400}
+          />
+        </div>
       </div>
     </div>
   );

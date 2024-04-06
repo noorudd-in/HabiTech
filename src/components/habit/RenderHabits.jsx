@@ -5,6 +5,7 @@ import { API_URL } from "../../constants";
 import SingleHabit from "./SingleHabit";
 import axios from "axios";
 import Shimmer from "../../pages/Shimmer";
+import { homepageObj } from "../onboarding/driver";
 
 const RenderHabits = () => {
   const { state, dispatch, appLoading } = useContext(HabitechContext);
@@ -74,6 +75,13 @@ const RenderHabits = () => {
       setHabitData(newHabits);
     } else {
       setHabitData(state.habits);
+    }
+
+    if (
+      localStorage.getItem("home-tour") != null &&
+      localStorage.getItem("habit-tour") == null
+    ) {
+      homepageObj.drive(13);
     }
   }, [performUpdate]);
 

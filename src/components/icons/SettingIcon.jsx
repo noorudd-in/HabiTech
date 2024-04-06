@@ -1,6 +1,6 @@
 import { useColorTheme } from "../../hooks/useColorTheme";
 
-const SettingIcon = ({ currentURL, navigate }) => {
+const SettingIcon = ({ currentURL, navigate, id }) => {
   const { textcolor500, darktextcolor100 } = useColorTheme();
   return (
     <button
@@ -11,6 +11,7 @@ const SettingIcon = ({ currentURL, navigate }) => {
       onClick={() => navigate("/setting")}
     >
       <svg
+        id={id}
         className={`w-8 h-7 mb-1 ${
           currentURL == "/setting"
             ? textcolor500

@@ -4,6 +4,8 @@ import { useHabitechData } from "../hooks/useHabitechData";
 import { useSearchParams } from "react-router-dom";
 import { toastSuccess, toastError } from "../components/common/Toast";
 import { useColorTheme } from "../hooks/useColorTheme";
+import { homepageObj } from "../components/onboarding/driver";
+import { CLOUD_AUDIO_PATH } from "../constants";
 import Shimmer from "./Shimmer";
 import GlobalHeader from "../components/layout/GlobalHeader";
 import HorizontalLine from "../components/common/HorizontalLine";
@@ -38,6 +40,10 @@ const HomePage = () => {
         },
       });
 
+      if (localStorage.getItem("home-tour") == null) {
+        homepageObj.drive();
+      }
+
       // Run if app redirects to home page from other route.
       let type = searchParams.get("toastType");
       let message = searchParams.get("toastMessage");
@@ -52,10 +58,10 @@ const HomePage = () => {
         if (userSound == "purchase" || userSound == "current") {
           if (localStorage.getItem("userSound") == "true") {
             const sound = new Audio(
-              `../../../assets/sounds/${
+              `${
                 userSound == "purchase"
-                  ? "purchase"
-                  : localStorage.getItem("userCurrentSound")
+                  ? `${CLOUD_AUDIO_PATH + "purchase_rtnov1"}`
+                  : CLOUD_AUDIO_PATH + localStorage.getItem("userCurrentSound")
               }.mp3`
             );
             sound.volume = parseFloat(

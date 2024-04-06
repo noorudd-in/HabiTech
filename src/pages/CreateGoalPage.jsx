@@ -2,7 +2,7 @@ import { useContext, useState, useEffect, lazy, Suspense } from "react";
 import { HabitechContext } from "../contexts/HabitechContext";
 import toast, { Toaster } from "react-hot-toast";
 import { toastError } from "../components/common/Toast";
-import { API_URL } from "../constants/index";
+import { API_URL, CLOUD_AUDIO_PATH } from "../constants/index";
 import { useNavigate } from "react-router-dom";
 import { useColorTheme } from "../hooks/useColorTheme";
 import axios from "axios";
@@ -95,7 +95,7 @@ const CreateGoalPage = () => {
 
     if (localStorage.getItem("userSound") == "true") {
       const sound = new Audio(
-        `../../../assets/sounds/${localStorage.getItem("userCurrentSound")}.mp3`
+        `${CLOUD_AUDIO_PATH + localStorage.getItem("userCurrentSound")}.mp3`
       );
       sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
       sound.play();

@@ -1,6 +1,6 @@
 import { useColorTheme } from "../../hooks/useColorTheme";
 
-const CreateIcon = ({ navigate, currentURL }) => {
+const CreateIcon = ({ navigate, currentURL, id }) => {
   const { customcolor } = useColorTheme();
   return (
     <>
@@ -12,6 +12,7 @@ const CreateIcon = ({ navigate, currentURL }) => {
         onClick={() => navigate("/create")}
       >
         <svg
+          id={id}
           className="w-10 h-10 mb-1"
           viewBox="0 0 32 32"
           xmlns="http://www.w3.org/2000/svg"
