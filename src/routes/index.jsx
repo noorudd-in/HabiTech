@@ -47,7 +47,7 @@ const HABITECH_ROUTES = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/calender",
+    path: "/statistics",
     element: (
       <Suspense fallback={<Shimmer />}>
         <AnimatePage>

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import HomeIcon from "../icons/HomeIcon";
-import CalenderIcon from "../icons/CalenderIcon";
+import ChartIcon from "../icons/ChartIcon";
 import TimerIcon from "../icons/TimerIcon";
 import SettingIcon from "../icons/SettingIcon";
 import CreateIcon from "../icons/CreateIcon";
@@ -21,13 +21,35 @@ const GlobalFooter = () => {
         className="grid h-full max-w-lg grid-cols-5 mx-auto"
         onClick={setVibrate}
       >
-        <HomeIcon currentURL={currentURL} navigate={navigate} />
-        <CalenderIcon currentURL={currentURL} navigate={navigate} />
+        <HomeIcon
+          currentURL={currentURL}
+          navigate={navigate}
+          id={"tour-home"}
+        />
 
-        <CreateIcon navigate={navigate} currentURL={currentURL} />
+        <ChartIcon
+          currentURL={currentURL}
+          navigate={navigate}
+          id={"tour-statistics"}
+        />
 
-        <TimerIcon currentURL={currentURL} navigate={navigate} />
-        <SettingIcon currentURL={currentURL} navigate={navigate} />
+        <CreateIcon
+          navigate={navigate}
+          currentURL={currentURL}
+          id={"tour-create"}
+        />
+
+        <TimerIcon
+          currentURL={currentURL}
+          navigate={navigate}
+          id={"tour-timer"}
+        />
+
+        <SettingIcon
+          currentURL={currentURL}
+          navigate={navigate}
+          id={"tour-setting"}
+        />
       </div>
     </div>
   );

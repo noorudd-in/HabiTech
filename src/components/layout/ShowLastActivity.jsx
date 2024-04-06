@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 const Activity = () => {
   const { state } = useContext(HabitechContext);
   return (
-    <h1 className="text-center italic">
+    <h1 className="text-center italic" id="tour-last-activity">
       Last Activity: {dayjs(state.lastEdited).format("DD MMM YYYY, hh:mm:ss A")}
     </h1>
   );

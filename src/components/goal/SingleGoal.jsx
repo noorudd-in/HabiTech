@@ -1,7 +1,7 @@
 import { Suspense, lazy, useContext, useState } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import { useLongPress } from "@uidotdev/usehooks";
-import { API_URL } from "../../constants";
+import { API_URL, CLOUD_AUDIO_PATH } from "../../constants";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
@@ -154,9 +154,7 @@ const SingleGoal = ({
 
         if (localStorage.getItem("userSound") == "true") {
           const sound = new Audio(
-            `../../../assets/sounds/${localStorage.getItem(
-              "userCurrentSound"
-            )}.mp3`
+            `${CLOUD_AUDIO_PATH + localStorage.getItem("userCurrentSound")}.mp3`
           );
           sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
           sound.play();

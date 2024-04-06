@@ -3,7 +3,7 @@ import { HabitechContext } from "../contexts/HabitechContext";
 import { useColorTheme } from "../hooks/useColorTheme";
 import { useNavigate, useParams } from "react-router-dom";
 import { toastError } from "../components/common/Toast";
-import { API_URL } from "../constants";
+import { API_URL, CLOUD_AUDIO_PATH } from "../constants";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
@@ -53,7 +53,7 @@ const EditHabitPage = () => {
       updatedAnalytics.habits[habitLevel][0] + 1;
     if (localStorage.getItem("userSound") == "true") {
       const sound = new Audio(
-        `../../../assets/sounds/${localStorage.getItem("userCurrentSound")}.mp3`
+        `${CLOUD_AUDIO_PATH + localStorage.getItem("userCurrentSound")}.mp3`
       );
       sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
       sound.play();
@@ -104,9 +104,7 @@ const EditHabitPage = () => {
 
       if (localStorage.getItem("userSound") == "true") {
         const sound = new Audio(
-          `../../../assets/sounds/${localStorage.getItem(
-            "userCurrentSound"
-          )}.mp3`
+          `${CLOUD_AUDIO_PATH + localStorage.getItem("userCurrentSound")}.mp3`
         );
         sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
         sound.play();

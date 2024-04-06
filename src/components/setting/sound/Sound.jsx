@@ -4,27 +4,28 @@ import { useColorTheme } from "../../../hooks/useColorTheme";
 import ToggleButton from "../../common/ToggleButton";
 import CircleIcon from "../../icons/CircleIcon";
 import CircleTickedIcon from "../../icons/CircleTickedIcon";
-
+import { CLOUD_AUDIO_PATH } from "../../../constants";
+//purchase_rtnov1
 const soundData = [
-  "twinkle",
-  "retro",
-  "archive",
-  "excite",
-  "shallow",
-  "ping",
-  "pop",
-  "progress",
-  "tap",
-  "success",
-  "tuck",
-  "answer",
-  "notify",
-  "click",
+  "twinkle_qcm4wr",
+  "retro_sh5xox",
+  "archive_lvbkz7",
+  "excite_oqn27r",
+  "shallow_kamgsy",
+  "ping_mk1xnt",
+  "pop_ox79jn",
+  "progress_gowxzp",
+  "tap_hvj326",
+  "success_koztas",
+  "tuck_rhsaet",
+  "answer_fsvrij",
+  "notify_hm57yq",
+  "click_fxgbeg",
 ];
 
 const Sound = () => {
   const [enableSound, setEnableSound] = useState(false);
-  const [currentSound, setCurrentSound] = useState("archive");
+  const [currentSound, setCurrentSound] = useState("archive_lvbkz7");
   const [volume, setVolume] = useState(0.5);
   const { state } = useContext(HabitechContext);
   const { checkboxcolor } = useColorTheme();
@@ -33,7 +34,7 @@ const Sound = () => {
     setEnableSound(value);
     if (value) {
       localStorage.setItem("userSound", value);
-      localStorage.setItem("userCurrentSound", "archive");
+      localStorage.setItem("userCurrentSound", "archive_lvbkz7");
       localStorage.setItem("userCurrentVolume", 0.5);
     } else {
       localStorage.removeItem("userSound");
@@ -47,7 +48,7 @@ const Sound = () => {
       return;
     }
     setCurrentSound(value);
-    const sound = new Audio(`../../../assets/sounds/${value}.mp3`);
+    const sound = new Audio(`${CLOUD_AUDIO_PATH + value}.mp3`);
     sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
     sound.play();
     localStorage.setItem("userCurrentSound", value);
@@ -63,7 +64,7 @@ const Sound = () => {
       setVolume(e.target.value);
       timer = setTimeout(() => {
         localStorage.setItem("userCurrentVolume", e.target.value);
-        const sound = new Audio(`../../../assets/sounds/${currentSound}.mp3`);
+        const sound = new Audio(`${CLOUD_AUDIO_PATH + currentSound}.mp3`);
         sound.volume = e.target.value;
         sound.play();
       }, 700);

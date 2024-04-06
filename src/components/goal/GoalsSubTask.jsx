@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { useColorTheme } from "../../hooks/useColorTheme";
 import { HabitechContext } from "../../contexts/HabitechContext";
-import { API_URL } from "../../constants/index";
+import { API_URL, CLOUD_AUDIO_PATH } from "../../constants/index";
 import { toast } from "react-hot-toast";
 import { toastSuccess } from "../common/Toast";
 import axios from "axios";
@@ -28,7 +28,7 @@ const GoalsSubTask = ({ task, goalId, status }) => {
 
     if (localStorage.getItem("userSound") == "true") {
       const sound = new Audio(
-        `../../../assets/sounds/${localStorage.getItem("userCurrentSound")}.mp3`
+        `${CLOUD_AUDIO_PATH + localStorage.getItem("userCurrentSound")}.mp3`
       );
       sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
       sound.play();

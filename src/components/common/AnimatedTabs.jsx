@@ -49,6 +49,7 @@ const AnimatedTabs = ({ setCurrentTab }) => {
     <div
       className={`w-3/4 mt-3 grid grid-flow-col text-center ${bgcolor100} rounded-full p-1`}
       onClick={setVibrate}
+      id="tour-animated-tabs"
     >
       {tabs.map((tab) => (
         <button

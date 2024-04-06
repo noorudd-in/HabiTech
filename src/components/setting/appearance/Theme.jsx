@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import { HabitechContext } from "../../../contexts/HabitechContext";
 import { toast, Toaster } from "react-hot-toast";
 import { toastError } from "../../common/Toast";
-import { API_URL } from "../../../constants";
+import { API_URL, CLOUD_AUDIO_PATH } from "../../../constants";
 import SingleTheme from "../../layout/SingleTheme";
 import axios from "axios";
 
@@ -107,9 +107,7 @@ const Theme = () => {
     if (isPurchased && atob(currentTheme) != name) {
       if (localStorage.getItem("userSound") == "true") {
         const sound = new Audio(
-          `../../../assets/sounds/${localStorage.getItem(
-            "userCurrentSound"
-          )}.mp3`
+          `${CLOUD_AUDIO_PATH + localStorage.getItem("userCurrentSound")}.mp3`
         );
         sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
         sound.play();
@@ -145,7 +143,7 @@ const Theme = () => {
       };
 
       if (localStorage.getItem("userSound") == "true") {
-        const sound = new Audio(`../../../assets/sounds/purchase.mp3`);
+        const sound = new Audio(`${CLOUD_AUDIO_PATH + "purchase_rtnov1"}.mp3`);
         sound.volume = parseFloat(localStorage.getItem("userCurrentVolume"));
         sound.play();
       }
