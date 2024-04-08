@@ -40,10 +40,6 @@ const HomePage = () => {
         },
       });
 
-      if (localStorage.getItem("home-tour") == null) {
-        homepageObj.drive();
-      }
-
       // Run if app redirects to home page from other route.
       let type = searchParams.get("toastType");
       let message = searchParams.get("toastMessage");
@@ -73,7 +69,7 @@ const HomePage = () => {
         setSearchParams({ toastType: "", toastMessage: "", sound: "" });
       }
 
-      // Lock app if onlock time is expired or
+      // Lock app if unlock time is expired or
       // userLock is true but new device detected.
       if (data.user.userLock) {
         let lastUnlock = localStorage.getItem("lastUnlock");
@@ -91,6 +87,10 @@ const HomePage = () => {
             setLockApp(true);
           }
         }
+      }
+
+      if (localStorage.getItem("home-tour") == null && !data.user.userLock) {
+        homepageObj.drive();
       }
     }
   }, [data]);

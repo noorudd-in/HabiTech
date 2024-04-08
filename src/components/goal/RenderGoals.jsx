@@ -6,6 +6,7 @@ const GoalsByTags = lazy(() => import("./GoalsByTags"));
 const GoalsByPriority = lazy(() => import("./GoalsByPriority"));
 const GoalsByTimeline = lazy(() => import("./GoalsByTimeline"));
 const GoalsByType = lazy(() => import("./GoalsByType"));
+const GoalsByEisenhower = lazy(() => import("./GoalsByEisenhower"));
 import TabSwitchForGoals from "../layout/TabSwitchForGoals";
 import axios from "axios";
 import { API_URL } from "../../constants";
@@ -88,6 +89,11 @@ const RenderGoals = ({ showTask, groupBy }) => {
         {groupBy == "tags" && (
           <Suspense fallback={<Shimmer />}>
             <GoalsByTags {...{ showTask, showActive }} />{" "}
+          </Suspense>
+        )}
+        {groupBy == "eisenhower" && (
+          <Suspense fallback={<Shimmer />}>
+            <GoalsByEisenhower {...{ showTask, showActive }} />
           </Suspense>
         )}
       </div>
