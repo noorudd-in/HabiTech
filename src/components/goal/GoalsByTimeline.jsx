@@ -130,7 +130,7 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
               <p className="text-xs mb-5 mt-1 italic text-gray-300 text-center">
                 Goals with a deadline less than a week!
               </p>
-              {goalsData?.[index]?.weekly == undefined && (
+              {goalsData?.[index]?.weekly[0] == undefined && (
                 <h1 className="text-center">No Goals Found</h1>
               )}
 
@@ -192,7 +192,7 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
               <p className="text-xs mb-5 mt-1 italic text-gray-300 text-center">
                 Goals with a deadline less than a month!
               </p>
-              {goalsData?.[index]?.monthly == undefined && (
+              {goalsData?.[index]?.monthly[0] == undefined && (
                 <h1 className="text-center">No Goals Found</h1>
               )}
 
@@ -253,7 +253,7 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
               <p className="text-xs mb-5 mt-1 italic text-gray-300 text-center">
                 Goals with a deadline less than a qaurter!
               </p>
-              {goalsData?.[index]?.quarterly == undefined && (
+              {goalsData?.[index]?.quarterly[0] == undefined && (
                 <h1 className="text-center">No Goals Found</h1>
               )}
 
@@ -314,7 +314,7 @@ const GoalsByTimeline = ({ showTask, showActive }) => {
               <p className="text-xs mb-5 mt-1 italic text-gray-300 text-center">
                 Long-term goals with annual period.
               </p>
-              {goalsData?.[index]?.yearly == undefined && (
+              {goalsData?.[index]?.yearly[0] == undefined && (
                 <h1 className="text-center">No Goals Found</h1>
               )}
 

@@ -5,10 +5,11 @@ import { toastError } from "../../common/Toast";
 import { useHabitechData } from "../../../hooks/useHabitechData";
 import Shimmer from "../../../pages/Shimmer";
 import { HabitechContext } from "../../../contexts/HabitechContext";
+import { homepageObj } from "../../onboarding/driver";
 
 const VerifyPassword = ({ setLockApp }) => {
-  const { state, appLoading } = useContext(HabitechContext);
-  const { data, loading } = useHabitechData();
+  const { state } = useContext(HabitechContext);
+  const { loading } = useHabitechData();
   const { textcolor500, bgcolor500 } = useColorTheme();
   const [verifyPassword, setVerifyPassword] = useState("");
 
@@ -24,6 +25,9 @@ const VerifyPassword = ({ setLockApp }) => {
       if (encryptedHash == state.user.userHash) {
         setLockApp(false);
         localStorage.setItem("lastUnlock", Date.now());
+        if (localStorage.getItem("home-tour") == null) {
+          homepageObj.drive();
+        }
       } else {
         toast("Incorrect password", toastError());
       }
