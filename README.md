@@ -61,7 +61,7 @@ Below are features that I am planning to add in the app.
 - [x] Enable/Disable Sounds & Vibrations
 - [x] Add store to purchase themes, health, avatars, badges, etc.
 - [x] Implement lock and unlock app feature.
-- [ ] Implement Eisenhower Matrix.
+- [x] Implement Eisenhower Matrix.
 - [ ] Implement Pomodoro Timer.
 - [x] Show/Hide duedate, priority, type by default on goals.
 - [ ] Implement smart suggestions whenever user creates a habit, goal, plan or tag.

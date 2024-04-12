@@ -157,7 +157,7 @@ export const useColorTheme = () => {
       colors.lighttext = "text-black";
       colors.darktext = "dark:text-white";
       colors.darktextcolor100 = "dark:text-amber-100";
-      colors.textcolor500 = "text-amber-500";
+      colors.textcolor500 = "text-amber-400";
       colors.bgcolor50 = "bg-amber-50";
       colors.bgcolor100 = "bg-amber-100";
       colors.bgcolor400 = "bg-amber-400";

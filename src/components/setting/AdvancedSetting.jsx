@@ -21,7 +21,7 @@ const AdvancedSetting = () => {
   const [showLastActivity, setShowLastActivity] = useState(true);
   const [toggleModal, setToggleModal] = useState("hidden");
   const [resetText, setResetText] = useState("");
-
+  const [smartSuggestions, setSmartSuggestions] = useState(true);
   const { bgcolor50, textcolor500, bgcolor500 } = useColorTheme();
 
   const handleDueDate = (value) => {
@@ -101,7 +101,6 @@ const AdvancedSetting = () => {
     setShowLastActivity(value);
     localStorage.setItem("showLastActivity", value);
   };
-
   const handleReset = (type) => {
     if (type == "setting") {
       if (localStorage.getItem("userVibrate") == "true") {
@@ -137,7 +136,6 @@ const AdvancedSetting = () => {
       }
     }
   };
-
   const handleResetApp = () => {
     if (resetText != "RESET") {
       toast("Enter correct text", toastError());
@@ -146,6 +144,13 @@ const AdvancedSetting = () => {
     localStorage.clear();
     axios.put(API_URL, INITIAL_DATA);
     window.location.replace("/");
+  };
+  const handleSmartSuggestions = (value) => {
+    if (localStorage.getItem("userVibrate") == "true") {
+      window.navigator.vibrate(5);
+    }
+    setSmartSuggestions(value);
+    localStorage.setItem("smartSuggestions", value);
   };
 
   useEffect(() => {
@@ -161,6 +166,7 @@ const AdvancedSetting = () => {
       showDurationOnPlans: "showDuration",
       resetHabitDuration: "resetHabit",
       showLastActivity: "showLastActivity",
+      smartSuggestions: "smartSuggestions",
     };
 
     const preferences = {};
@@ -183,6 +189,7 @@ const AdvancedSetting = () => {
     }
     if (preferences.showDurationOnPlans == "false") setShowDuration(false);
     if (preferences.showLastActivity == "false") setShowLastActivity(false);
+    if (preferences.smartSuggestions == "false") setSmartSuggestions(false);
     if (preferences.resetHabitDuration != null)
       setResetHabit(preferences.resetHabitDuration);
   }, []);
@@ -205,6 +212,14 @@ const AdvancedSetting = () => {
             <ToggleButton
               toggle={showLastActivity}
               setToggle={handleLastActivity}
+              name=""
+            />
+          </div>
+          <div className="flex justify-between mb-2">
+            <h1>Smart Suggestions</h1>
+            <ToggleButton
+              toggle={smartSuggestions}
+              setToggle={handleSmartSuggestions}
               name=""
             />
           </div>

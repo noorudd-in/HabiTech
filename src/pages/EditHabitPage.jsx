@@ -7,9 +7,33 @@ import { API_URL, CLOUD_AUDIO_PATH } from "../constants";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
+const smartHabits = [
+  "Drank 8 galsses of water",
+  "Read 20 pages of a book",
+  "Did exercise for 30 minutes",
+  "Meditated for 10 minutes",
+  "Woke up at 6 AM",
+  "Ate a healthy breakfast",
+  "Avoided sugary snacks and desserts",
+  "Gone for a 20-minute walk after dinner",
+  "Written gratitude journaling",
+  "Limited screen time to 1 hour",
+  "Didn't smoked cigarettes",
+  "Din't drank alcohol today",
+  "Avoid eating fast food",
+  "Avoided biting nails",
+  "Reduced caffeine intake today",
+  "Limited social media usage to 30 minutes",
+  "Avoid procrastination?",
+  "Slept 7-8 hours",
+  "Stoped consuming sugary drinks today",
+  "Practiced deep breathing exercises",
+];
+
 const EditHabitPage = () => {
   const [habitName, setHabitName] = useState("");
   const [habitLevel, setHabitLevel] = useState("");
+  const [randomIndex, setRandomIndex] = useState(0);
   const { state, dispatch } = useContext(HabitechContext);
   const { bgcolor500, textcolor500 } = useColorTheme();
   const navigate = useNavigate();
@@ -144,6 +168,7 @@ const EditHabitPage = () => {
         }
       }
     }
+    setRandomIndex(Math.floor(Math.random() * 19));
   }, []);
   return (
     <>
@@ -163,7 +188,11 @@ const EditHabitPage = () => {
           type="text"
           value={habitName}
           className="my-1 p-1 border w-3/4 text-md rounded-md bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
-          placeholder="Read 10 pages daily"
+          placeholder={
+            localStorage.getItem("smartSuggestions") == "false"
+              ? ""
+              : smartHabits[randomIndex]
+          }
           onChange={(e) => setHabitName(e.target.value)}
           required
         />
