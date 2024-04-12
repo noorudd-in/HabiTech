@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HabitechContext } from "../../contexts/HabitechContext";
 import { toast, Toaster } from "react-hot-toast";
 import { toastError, toastSuccess } from "../common/Toast";
@@ -6,9 +6,33 @@ import { API_URL } from "../../constants";
 import { useColorTheme } from "../../hooks/useColorTheme";
 import axios from "axios";
 
+const smartTags = [
+  "Fitness",
+  "Coding",
+  "Travel",
+  "Reading",
+  "Cooking",
+  "Photography",
+  "Learning",
+  "Yoga",
+  "Meditation",
+  "Art",
+  "Dancing",
+  "Writing",
+  "Gaming",
+  "Music",
+  "Gardening",
+  "Programming",
+  "Design",
+  "Cycling",
+  "Swimming",
+  "Hiking",
+];
+
 const CreateTagForm = () => {
   const { state, dispatch } = useContext(HabitechContext);
   const [newTag, setNewTag] = useState("");
+  const [randomIndex, setRandomIndex] = useState(0);
   const { bgcolor500, customcolor, textcolor500 } = useColorTheme();
 
   const creatTag = () => {
@@ -48,6 +72,13 @@ const CreateTagForm = () => {
         setNewTag("");
       });
   };
+
+  useEffect(() => {
+    if (state.user.name == undefined) {
+      window.location.replace("/");
+    }
+    setRandomIndex(Math.floor(Math.random() * 19));
+  }, []);
   return (
     <>
       <Toaster />
@@ -64,7 +95,11 @@ const CreateTagForm = () => {
           type="text"
           value={newTag}
           className="my-1 p-1 border text-md rounded-md bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
-          placeholder="Example: Work"
+          placeholder={
+            localStorage.getItem("smartSuggestions") == "false"
+              ? ""
+              : smartTags[randomIndex]
+          }
           onChange={(e) => setNewTag(e.target.value)}
           required
         />

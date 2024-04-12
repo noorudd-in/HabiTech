@@ -23,6 +23,52 @@ const AvailableSubtask = lazy(() =>
 const Modal = lazy(() => import("../components/common/Modal"));
 import Shimmer from "./Shimmer";
 
+const smartLabels = [
+  "Learn a new language",
+  "Run a half-marathon",
+  "Read 24 books in a year",
+  "Save 1 Lakhs rupees",
+  "Lose 10 pounds",
+  "Travel to 5 new countries",
+  "Complete a coding bootcamp",
+  "Meditate daily",
+  "Learn to play the guitar",
+  "Start a side hustle",
+  "Complete a 30-day fitness challenge",
+  "Volunteer for a cause",
+  "Learn to cook 10 new recipes",
+  "Complete a digital detox",
+  "Earn a professional certification",
+  "Improve time management skills",
+  "Start a daily journal",
+  "Attend a personal development seminar",
+  "Achieve a promotion at work",
+  "Improve flexibility",
+];
+
+const smartSuggestions = [
+  "Achieve conversational fluency in Spanish within 6 months.",
+  "Complete a half-marathon in under 2 hours by the end of the year.",
+  "Read 2 books per month for personal development and leisure.",
+  "Save 1 lakh rupees for emergency funds and future investments.",
+  "Achieve a weight loss of 10 pounds in 3 months through regular exercise and a balanced diet.",
+  "Explore and visit 5 new countries for cultural experiences.",
+  "Finish an online coding bootcamp and master a new programming language.",
+  "Practice meditation for at least 10 minutes daily for mental well-being.",
+  "Master basic guitar chords and play 5 songs within 6 months.",
+  "Launch a part-time business or freelancing gig to generate additional income.",
+  "Participate in a 30-day fitness challenge to improve overall health and fitness levels.",
+  "Dedicate 50 hours to volunteering for a charitable cause or organization.",
+  "Experiment and master 10 new recipes to diversify cooking skills.",
+  "Take a 7-day break from social media and digital devices for mental clarity.",
+  "Obtain a professional certification in a relevant field to enhance career prospects.",
+  "Implement effective time management strategies to increase productivity.",
+  "Maintain a daily journal to reflect on personal growth and experiences.",
+  "Participate in a personal development seminar or workshop to gain new insights.",
+  "Demonstrate outstanding performance and skills to secure a promotion within the next year.",
+  "Engage in regular stretching and flexibility exercises to improve overall flexibility.",
+];
+
 const CreateGoalPage = () => {
   const { bgcolor500, textcolor500 } = useColorTheme();
   const [name, setName] = useState("");
@@ -34,6 +80,7 @@ const CreateGoalPage = () => {
   const [task, setTask] = useState([]);
   const [dropdown, setDropdown] = useState(false);
   const [toggleModal, setToggleModal] = useState("hidden");
+  const [randomIndex, setRandomIndex] = useState(0);
 
   const { state, dispatch } = useContext(HabitechContext);
   const navigate = useNavigate();
@@ -132,7 +179,8 @@ const CreateGoalPage = () => {
     if (state.user.name == undefined) {
       window.location.replace("/");
     }
-  });
+    setRandomIndex(Math.floor(Math.random() * 19));
+  }, []);
 
   return (
     <>
@@ -153,7 +201,11 @@ const CreateGoalPage = () => {
           type="text"
           value={name}
           className="my-1 p-1 border w-3/4 text-md rounded-md bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
-          placeholder="Email all students"
+          placeholder={
+            localStorage.getItem("smartSuggestions") == "false"
+              ? ""
+              : smartLabels[randomIndex]
+          }
           onChange={(e) => setName(e.target.value)}
           required
         />
@@ -166,7 +218,11 @@ const CreateGoalPage = () => {
           type="text"
           value={description}
           className="my-1 p-1 border w-3/4  text-md rounded-md bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
-          placeholder="Make an excel sheet with name and roll number of all students"
+          placeholder={
+            localStorage.getItem("smartSuggestions") == "false"
+              ? ""
+              : smartSuggestions[randomIndex]
+          }
           onChange={(e) => setDescription(e.target.value)}
           required
         ></textarea>
@@ -179,7 +235,7 @@ const CreateGoalPage = () => {
             </label>
             <select
               id="type"
-              className=" my-1 p-1 w-3/4 border text-md rounded-md block bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
+              className=" my-1 p-1 w-3/4 border text-md rounded-md block bg-gray-700 border-gray-600 text-white"
               onChange={(e) => setType(e.target.value)}
             >
               <option value="select">Select</option>
@@ -196,7 +252,7 @@ const CreateGoalPage = () => {
             </label>
             <select
               id="priority"
-              className=" my-1 p-1 w-3/4 border text-md rounded-md block bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
+              className=" my-1 p-1 w-3/4 border text-md rounded-md block bg-gray-700 border-gray-600 text-white"
               onChange={(e) => setPriority(e.target.value)}
             >
               <option value="select">Select</option>

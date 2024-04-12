@@ -8,6 +8,51 @@ import { API_URL, CLOUD_AUDIO_PATH } from "../constants";
 import dayjs from "dayjs";
 import axios from "axios";
 
+const smartLabels = [
+  "Morning Exercise",
+  "Breakfast",
+  "Work Meeting",
+  "Lunch",
+  "Afternoon Task",
+  "Evening Walk",
+  "Dinner",
+  "Reading Time",
+  "Bedtime",
+  "Morning Meditation",
+  "Coffee Break",
+  "Afternoon Meeting",
+  "Snack Time",
+  "Yoga Session",
+  "Evening Relaxation",
+  "Meal Prep",
+  "Evening Skincare",
+  "Learning Time",
+  "Family Time",
+  "Night Routine",
+];
+const smartDescriptions = [
+  "30 minutes of jogging in the park",
+  "Healthy smoothie and oatmeal",
+  "Discuss project updates with the team",
+  "Grilled chicken salad",
+  "Complete presentation slides",
+  "20 minutes walk around the neighborhood",
+  "Salmon with roasted vegetables",
+  "Read a chapter of a book",
+  "Meditation and sleep by 10:30 PM",
+  "10 minutes of mindfulness meditation",
+  "Enjoy a cup of coffee or tea",
+  "Review quarterly goals",
+  "Fruit and nuts",
+  "45 minutes of yoga practice",
+  "Listen to calming music",
+  "Prepare meals for the next day",
+  "Cleanse, tone, and moisturize",
+  "Online course or tutorial",
+  "Spend time with family or friends",
+  "Brush teeth and prepare for bed",
+];
+
 const EditPlanPage = () => {
   const [name, setName] = useState("");
   const [start, setStart] = useState("");
@@ -21,11 +66,11 @@ const EditPlanPage = () => {
   const [durationValue, setDurationValue] = useState("select");
   const { state, dispatch } = useContext(HabitechContext);
   const { bgcolor500, border400, textcolor500 } = useColorTheme();
+  const [randomIndex, setRandomIndex] = useState(0);
   const navigate = useNavigate();
   let { id } = useParams();
 
   let today = dayjs();
-  let yesterday = today.subtract(1, "day");
   let tomorrow = today.add(1, "day");
 
   const setNow = () => {
@@ -246,6 +291,8 @@ const EditPlanPage = () => {
             }
           }
 
+          setRandomIndex(Math.floor(Math.random() * 19));
+
           // Set dropdown value after calculating duration from start to end time.
           const startTime = plan.start.split(":");
           const endTime = plan.end.split(":");
@@ -290,7 +337,11 @@ const EditPlanPage = () => {
             type="text"
             value={name}
             className="my-1 p-1 border w-3/4  text-md rounded-md bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
-            placeholder="Repair Fan"
+            placeholder={
+              localStorage.getItem("smartSuggestions") == "false"
+                ? ""
+                : smartLabels[randomIndex]
+            }
             onChange={(e) => setName(e.target.value)}
             required
           />
@@ -341,7 +392,7 @@ const EditPlanPage = () => {
                   <select
                     value={durationValue}
                     id="type"
-                    className=" my-1 p-1 border text-md rounded-md block bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
+                    className=" my-1 p-1 border text-md rounded-md block bg-gray-700 border-gray-600 text-white"
                     onChange={(e) => setDuration(e.target.value)}
                   >
                     <option value="select">Select</option>
@@ -441,7 +492,11 @@ const EditPlanPage = () => {
             type="text"
             value={description}
             className="my-1 p-1 border w-3/4 text-md rounded-md bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
-            placeholder="Call electrician and repair the fan."
+            placeholder={
+              localStorage.getItem("smartSuggestions") == "false"
+                ? ""
+                : smartDescriptions[randomIndex]
+            }
             onChange={(e) => setDescription(e.target.value)}
             required
           ></textarea>

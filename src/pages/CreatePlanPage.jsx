@@ -8,6 +8,51 @@ import { API_URL, CLOUD_AUDIO_PATH } from "../constants";
 import dayjs from "dayjs";
 import axios from "axios";
 
+const smartLabels = [
+  "Morning Exercise",
+  "Breakfast",
+  "Work Meeting",
+  "Lunch",
+  "Afternoon Task",
+  "Evening Walk",
+  "Dinner",
+  "Reading Time",
+  "Bedtime",
+  "Morning Meditation",
+  "Coffee Break",
+  "Afternoon Meeting",
+  "Snack Time",
+  "Yoga Session",
+  "Evening Relaxation",
+  "Meal Prep",
+  "Evening Skincare",
+  "Learning Time",
+  "Family Time",
+  "Night Routine",
+];
+const smartDescriptions = [
+  "30 minutes of jogging in the park",
+  "Healthy smoothie and oatmeal",
+  "Discuss project updates with the team",
+  "Grilled chicken salad",
+  "Complete presentation slides",
+  "20 minutes walk around the neighborhood",
+  "Salmon with roasted vegetables",
+  "Read a chapter of a book",
+  "Meditation and sleep by 10:30 PM",
+  "10 minutes of mindfulness meditation",
+  "Enjoy a cup of coffee or tea",
+  "Review quarterly goals",
+  "Fruit and nuts",
+  "45 minutes of yoga practice",
+  "Listen to calming music",
+  "Prepare meals for the next day",
+  "Cleanse, tone, and moisturize",
+  "Online course or tutorial",
+  "Spend time with family or friends",
+  "Brush teeth and prepare for bed",
+];
+
 const CreatePlanPage = () => {
   const { state, dispatch } = useContext(HabitechContext);
   const [name, setName] = useState("");
@@ -20,6 +65,7 @@ const CreatePlanPage = () => {
   const [toggleRepeat, setToggleRepeat] = useState("once");
   const [toggleDate, setToggleDate] = useState("today");
   const [durationValue, setDurationValue] = useState("select");
+  const [randomIndex, setRandomIndex] = useState(0);
   const { bgcolor500, border400, textcolor500 } = useColorTheme();
   const navigate = useNavigate();
 
@@ -177,7 +223,8 @@ const CreatePlanPage = () => {
     if (state.user.name == undefined) {
       window.location.replace("/");
     }
-  });
+    setRandomIndex(Math.floor(Math.random() * 19));
+  }, []);
 
   return (
     <>
@@ -199,7 +246,11 @@ const CreatePlanPage = () => {
             type="text"
             value={name}
             className="my-1 p-1 border w-3/4 text-md rounded-md bg-gray-700 border-gray-600 placeholder-gray-400 text-white"
-            placeholder="Repair Fan"
+            placeholder={
+              localStorage.getItem("smartSuggestions") == "false"
+                ? ""
+                : smartLabels[randomIndex]
+            }
             onChange={(e) => setName(e.target.value)}
             required
           />
@@ -350,7 +401,11 @@ const CreatePlanPage = () => {
             type="text"
             value={description}
             className="my-1 p-1 border w-3/4 text-md rounded-md text-white bg-gray-700 border-gray-600 placeholder-gray-400 "
-            placeholder="Call electrician and repair the fan."
+            placeholder={
+              localStorage.getItem("smartSuggestions") == "false"
+                ? ""
+                : smartDescriptions[randomIndex]
+            }
             onChange={(e) => setDescription(e.target.value)}
             required
           ></textarea>
