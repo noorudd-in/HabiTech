@@ -5,7 +5,7 @@ export const toastSuccess = (customcolor) => {
     style: {
       borderRadius: "20px",
       background: "#343a40",
-      color: customcolor,
+      color: customcolor == undefined ? "#ffffff" : customcolor,
     },
   };
 };

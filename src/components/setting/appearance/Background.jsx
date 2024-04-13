@@ -335,6 +335,7 @@ const Background = () => {
   const { bgcolor400, border400, textcolor500 } = useColorTheme();
   const [currentBG, setCurrentBG] = useState("Texture");
   const { state, dispatch } = useContext(HabitechContext);
+
   const applyBackground = (bgName, bgPrice) => {
     if (localStorage.getItem("userCurrentBackground") == bgName) {
       return;

@@ -64,7 +64,7 @@ Below are features that I am planning to add in the app.
 - [x] Implement Eisenhower Matrix.
 - [ ] Implement Pomodoro Timer.
 - [x] Show/Hide duedate, priority, type by default on goals.
-- [ ] Implement smart suggestions whenever user creates a habit, goal, plan or tag.
+- [x] Implement smart suggestions whenever user creates a habit, goal, plan or tag.
 - [ ] Import goal or habit to plan.
 - [ ] Copy existing goal/habit/plan and create new one.
 - [x] Automatically transfer goals from monthly to weekly, quarterly to monthly and so on based on duedate.
