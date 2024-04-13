@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import GlobalHeader from "../components/layout/GlobalHeader";
 import ActivityFeedIcon from "../components/icons/ActivityFeedIcon";
 import ThemeIcon from "../components/icons/ThemeIcon";
-import AvatarIcon from "../components/icons/AvatarIcon";
 import BadgeIcon from "../components/icons/BadgeIcon";
 import SoundAndVibrationIcon from "../components/icons/SoundAndVibrationIcon";
 import LockIcon from "../components/icons/LockIcon";
@@ -38,13 +37,6 @@ const Settings = () => {
           <div className="flex px-1 text-lg my-2">
             <ThemeIcon className="w-6 h-7" />
             <h1 className="ml-2">Appearance</h1>
-          </div>
-        </Link>
-
-        <Link to="/avatar">
-          <div className="flex px-1 text-lg my-2">
-            <AvatarIcon className="w-6 h-7" />
-            <h1 className="ml-2">Avatar</h1>
           </div>
         </Link>
 

@@ -1,11 +1,12 @@
 import dayjs from "dayjs";
 
 const PlanModalContent = ({ data }) => {
+  console.log(data.start);
   return (
     <div>
       <div className="p-5 md:p-q space-y-1">
         <div>
-          Time: {data.start.format("h:MM A")} to {data.end.format("h:MM A")}
+          Time: {data.start.format("h:mm A")} to {data.end.format("h:mm A")}
         </div>
         <div>
           {data.description != "" ? (
