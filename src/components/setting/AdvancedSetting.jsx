@@ -102,6 +102,10 @@ const AdvancedSetting = () => {
     localStorage.setItem("showLastActivity", value);
   };
   const handleReset = (type) => {
+    if (window.location.host == "habitech.noorudd.in") {
+      toast("Feature Disabled");
+      return;
+    }
     if (type == "setting") {
       if (localStorage.getItem("userVibrate") == "true") {
         window.navigator.vibrate(5);
@@ -206,7 +210,7 @@ const AdvancedSetting = () => {
           will be applied if you change the device or clear the site data.
         </p>
         <div className="m-2 mt p-2 bg-gray-700 rounded">
-          <h1 className="mb-5">GENERAL</h1>
+          <h1 className="mb-5 font-bold">GENERAL</h1>
           <div className="flex justify-between mb-2">
             <h1>Show last activity</h1>
             <ToggleButton
@@ -229,7 +233,7 @@ const AdvancedSetting = () => {
           </div>
         </div>
         <div className="m-2 mt p-2 bg-gray-700 rounded">
-          <h1 className="mb-5">GOALS</h1>
+          <h1 className="mb-5 font-bold">GOALS</h1>
           <div className="flex justify-between mb-2">
             <h1>Show due date by default</h1>
             <ToggleButton
@@ -292,7 +296,7 @@ const AdvancedSetting = () => {
         </div>
 
         <div className="m-2 mt p-2 bg-gray-700 rounded">
-          <h1 className="mb-5">HABITS</h1>
+          <h1 className="mb-5 font-bold">HABITS</h1>
 
           <div className="flex justify-between mb-2">
             <h1>Show difficulty</h1>
@@ -328,7 +332,7 @@ const AdvancedSetting = () => {
         </div>
 
         <div className="m-2 mt p-2 bg-gray-700 rounded">
-          <h1 className="mb-5">PLANS</h1>
+          <h1 className="mb-5 font-bold">PLANS</h1>
 
           <div className="flex justify-between mb-2">
             <h1>Show duration</h1>
@@ -341,7 +345,7 @@ const AdvancedSetting = () => {
         </div>
 
         <div className="m-2 mt p-2 bg-gray-700 rounded">
-          <h1 className="mb-5">RESET</h1>
+          <h1 className="mb-5 font-bold">RESET</h1>
 
           <h1
             className="mb-2 text-red-500"

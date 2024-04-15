@@ -13,6 +13,7 @@ import githubPNG from "../../assets/github.png";
 import TermsAndConditionIcon from "../components/icons/TermsAndConditionIcon";
 import PrivacyPolicy from "../components/icons/PrivacyPolicyIcon";
 import AdvancedSettingsIcon from "../components/icons/AdvancedSettingsIcon";
+import ImportExportIcon from "../components/icons/ImportExportIcon";
 
 const Settings = () => {
   const { state } = useContext(HabitechContext);
@@ -67,6 +68,12 @@ const Settings = () => {
             <h1 className="ml-2">Advanced Settings</h1>
           </div>
         </Link>
+        <Link to="/manage-data">
+          <div className="flex px-1 text-lg my-2">
+            <ImportExportIcon className="w-6 h-7" />
+            <h1 className="ml-2">Import & Export</h1>
+          </div>
+        </Link>
       </div>
 
       <div className="m-2 mt p-2  bg-gray-700 rounded">
@@ -115,7 +122,7 @@ const Settings = () => {
       </div>
 
       <div>
-        <h1 className="mt-1 mb-5 text-center italic">Version: 9.12</h1>
+        <h1 className="mt-1 mb-5 text-center italic">Version: 10.2.6</h1>
       </div>
     </div>
   );

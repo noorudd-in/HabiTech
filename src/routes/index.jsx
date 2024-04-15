@@ -33,6 +33,7 @@ const Badge = lazy(() => import("../components/setting/Badge"));
 const AdvancedSetting = lazy(() =>
   import("../components/setting/AdvancedSetting")
 );
+const ImportExport = lazy(() => import("../components/setting/ImportExport"));
 
 const HABITECH_ROUTES = createBrowserRouter([
   {
@@ -286,6 +287,18 @@ const HABITECH_ROUTES = createBrowserRouter([
       <>
         <Suspense fallback={<Shimmer />}>
           <AdvancedSetting />
+          <GlobalFooter />
+        </Suspense>
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/manage-data",
+    element: (
+      <>
+        <Suspense fallback={<Shimmer />}>
+          <ImportExport />
           <GlobalFooter />
         </Suspense>
       </>

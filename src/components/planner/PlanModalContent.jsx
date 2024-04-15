@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 
 const PlanModalContent = ({ data }) => {
-  console.log(data.start);
   return (
     <div>
       <div className="p-5 md:p-q space-y-1">
