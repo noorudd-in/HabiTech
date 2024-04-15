@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { HabitechContext } from "../contexts/HabitechContext";
 import toast, { Toaster } from "react-hot-toast";
 import { toastError } from "../components/common/Toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { API_URL, CLOUD_AUDIO_PATH } from "../constants";
 import { useColorTheme } from "../hooks/useColorTheme";
 import axios from "axios";
@@ -35,6 +35,7 @@ const CreateHabitPage = () => {
   const [habitLevel, setHabitLevel] = useState("");
   const [randomIndex, setRandomIndex] = useState(0);
   const { state, dispatch } = useContext(HabitechContext);
+  const [urlParams] = useSearchParams();
   const { bgcolor500, textcolor500 } = useColorTheme();
   const navigate = useNavigate();
 
@@ -122,6 +123,12 @@ const CreateHabitPage = () => {
     if (state.user.name == undefined) {
       window.location.replace("/");
     }
+    if (urlParams.get("name") != null) {
+      setHabitName(urlParams.get("name"));
+    }
+    if (urlParams.get("difficulty") != null) {
+      setHabitLevel(urlParams.get("difficulty"));
+    }
     setRandomIndex(Math.floor(Math.random() * 19));
   }, []);
   return (
@@ -154,6 +161,7 @@ const CreateHabitPage = () => {
         </label>
         <select
           id="habit-level"
+          value={habitLevel}
           className=" my-1 p-1 w-3/4 border text-md rounded-md block bg-gray-700 border-gray-600 text-white"
           onChange={(e) => setHabitLevel(e.target.value)}
         >

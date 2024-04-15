@@ -1,4 +1,4 @@
-export const toastSuccess = (customcolor) => {
+export const toastSuccess = (customcolor, icon) => {
   return {
     duration: 4000,
     icon: "👏",

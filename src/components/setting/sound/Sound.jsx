@@ -110,6 +110,9 @@ const Sound = () => {
 
           <div className="mt-3 p-2">
             {soundData.map((sound) => {
+              let soundName = sound.split("_");
+              soundName = soundName[0];
+              soundName = soundName[0].toUpperCase() + soundName.slice(1);
               return (
                 <div className="flex mt-1" key={sound}>
                   {sound == currentSound ? (
@@ -121,7 +124,7 @@ const Sound = () => {
                     />
                   )}
                   <h1 className="ml-2" onClick={() => changeSound(sound)}>
-                    {sound[0].toUpperCase() + sound.slice(1)}
+                    {soundName}
                   </h1>
                 </div>
               );

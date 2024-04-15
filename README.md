@@ -74,19 +74,20 @@ Below are features that I am planning to add in the app.
 - [ ] Allow users to print/export/share the habits/goals/plans list.
 - [x] Allow users to reset app / delete data.
 - [ ] Page for `How to use app`
+- [x] Allow users to import and export data.
 
 ## 🐞 Issues
 
 Issues/Bugs which I am not interested to fix due to lack of time or resources.
 
-- It works pretty well on mobile screens but not a great experience in desktop view.
+- It works pretty well on mobile screens but experience in desktop view can be improved.
 - Theme (Light/Dark) is taken from system's preferences. I am not able to provide user to switch themes as the app's code has grown too big.
 
 ## 💡 Improvements
 
 - **Calender View**: Display goals, task from the calender point of view.
-- **Import**: Allow users to import plans, goals, habits from JSON or Excel Sheet.
-- **Export**: Allow users to export plans, habit and goals data.
+- **Import**: Allow users to import plans, goals, habits from JSON or Excel Sheet. (Feature Implemented)
+- **Export**: Allow users to export plans, habit and goals data. (Feature Implemented)
 
 ## ⚡️ Build In Public Progress
 

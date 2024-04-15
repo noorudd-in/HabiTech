@@ -279,15 +279,6 @@ const SingleGoal = ({
             <>
               <Suspense fallback={<Shimmer />}>
                 <p className="text-xs italic my-1">{description}</p>
-                <p className="text-xs italic my-1">
-                  Priority: {priority[0].toUpperCase() + priority.slice(1)}
-                </p>
-                <p className="text-xs italic my-1">
-                  Type: {type[0].toUpperCase() + type.slice(1)} Term
-                </p>
-                <p className="text-xs italic my-1">
-                  Due Date: {dayjs(new Date(duedate)).format("DD MMM YYYY")}
-                </p>
                 <AvailableTags tagData={tags} />
                 <p className="mt-2 text-xs text-center">
                   Created on{" "}
