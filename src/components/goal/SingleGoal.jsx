@@ -13,10 +13,10 @@ import dayjs from "dayjs";
 import isToday from "dayjs/plugin/isToday";
 import isTomorrow from "dayjs/plugin/isTomorrow";
 import Badge from "../common/Badge";
-const AvailableTags = lazy(() => import("../common/AvailableTags"));
-const GoalsSubTask = lazy(() => import("./GoalsSubTask"));
 import axios from "axios";
 import Shimmer from "../../pages/Shimmer";
+const AvailableTags = lazy(() => import("../common/AvailableTags"));
+const GoalsSubTask = lazy(() => import("./GoalsSubTask"));
 dayjs.extend(isToday);
 dayjs.extend(isTomorrow);
 
@@ -36,7 +36,7 @@ const SingleGoal = ({
   setToggleUpdate,
 }) => {
   const [toggleGoal, setToggleGoal] = useState(false);
-  const { customcolor } = useColorTheme();
+  const { customcolor, textcolor500 } = useColorTheme();
   const { state, dispatch } = useContext(HabitechContext);
 
   const showDueDate = localStorage.getItem("showDueDate");
@@ -228,6 +228,14 @@ const SingleGoal = ({
     }
   };
 
+  const duplicateNavigation = () => {
+    navigate(
+      `/create/goal?name=Copy of ${name}&type=${type}&priority=${priority}&duedate=${duedate}&tags=${JSON.stringify(
+        tags
+      )}&subtasks=${JSON.stringify(subtasks)}&description=${description}`
+    );
+  };
+
   return (
     <>
       <motion.div {...attrs} className="flex" whileTap={{ scale: 0.98 }}>
@@ -280,6 +288,12 @@ const SingleGoal = ({
               <Suspense fallback={<Shimmer />}>
                 <p className="text-xs italic my-1">{description}</p>
                 <AvailableTags tagData={tags} />
+                <p
+                  className={`${textcolor500} my-3 underline underline-offset-4 text-sm`}
+                  onClick={duplicateNavigation}
+                >
+                  Copy this goal
+                </p>
                 <p className="mt-2 text-xs text-center">
                   Created on{" "}
                   {dayjs(new Date(id)).format("DD MMM YYYY, hh:mm:ss A")}

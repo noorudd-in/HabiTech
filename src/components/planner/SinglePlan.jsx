@@ -18,6 +18,8 @@ const SinglePlan = ({
   start,
   end,
   status,
+  repeat,
+  date,
   lastUpdated,
   description,
 }) => {
@@ -66,11 +68,14 @@ const SinglePlan = ({
           >
             <PlanModalContent
               data={{
-                id: id,
-                start: start,
-                end: end,
-                description: description,
-                lastUpdated: lastUpdated,
+                id,
+                name,
+                start,
+                end,
+                repeat,
+                date,
+                description,
+                lastUpdated,
               }}
             />
           </Modal>

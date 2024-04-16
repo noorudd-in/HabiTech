@@ -66,12 +66,15 @@ Below are features that I am planning to add in the app.
 - [x] Show/Hide duedate, priority, type by default on goals.
 - [x] Implement smart suggestions whenever user creates a habit, goal, plan or tag.
 - [ ] Import goal or habit to plan.
-- [ ] Copy existing goal/habit/plan and create new one.
+- [x] Copy existing goal/habit/plan and create new one.
 - [x] Automatically transfer goals from monthly to weekly, quarterly to monthly and so on based on duedate.
 - [x] Allow users to select the by default view from settings (such as group by goals, show subtasks or not, show planner first or goals first and more!).
 - [x] Allow users to set different theme colors.
 - [x] Allow users to set different background/fonts.
-- [ ] Allow users to print/export/share the habits/goals/plans list.
+- [x] Allow users to reset app / delete data.
+- [x] Allow users to export all plans, habits, goals data to local.
+- [x] Allow users to import all plans, habits, goals data from remote file.
+- [x] Allow users to export and import settings of an app OR Enable transfer of settings.
 - [x] Allow users to reset app / delete data.
 - [ ] Page for `How to use app`
 - [x] Allow users to import and export data.
@@ -86,8 +89,8 @@ Issues/Bugs which I am not interested to fix due to lack of time or resources.
 ## 💡 Improvements
 
 - **Calender View**: Display goals, task from the calender point of view.
-- **Import**: Allow users to import plans, goals, habits from JSON or Excel Sheet. (Feature Implemented)
-- **Export**: Allow users to export plans, habit and goals data. (Feature Implemented)
+- **Import**: Allow users to import plans, goals, habits from JSON, Excel Sheet and more other formats.
+- **Export**: Allow users to export plans, habit and goals data to CSV, JSON, Excel, and more other formats.
 
 ## ⚡️ Build In Public Progress
 

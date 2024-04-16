@@ -3,7 +3,7 @@ import { useColorTheme } from "../hooks/useColorTheme";
 import toast, { Toaster } from "react-hot-toast";
 import { toastError } from "../components/common/Toast";
 import { HabitechContext } from "../contexts/HabitechContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { API_URL, CLOUD_AUDIO_PATH } from "../constants";
 import dayjs from "dayjs";
 import axios from "axios";
@@ -61,11 +61,12 @@ const CreatePlanPage = () => {
   const [repeat, setRepeat] = useState("once");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState(Date.now());
-  const [toggleDuration, setToggleDuration] = useState("duration");
+  const [toggleDuration, setToggleDuration] = useState("time");
   const [toggleRepeat, setToggleRepeat] = useState("once");
   const [toggleDate, setToggleDate] = useState("today");
   const [durationValue, setDurationValue] = useState("select");
   const [randomIndex, setRandomIndex] = useState(0);
+  const [urlParams] = useSearchParams();
   const { bgcolor500, border400, textcolor500 } = useColorTheme();
   const navigate = useNavigate();
 
@@ -222,6 +223,22 @@ const CreatePlanPage = () => {
   useEffect(() => {
     if (state.user.name == undefined) {
       window.location.replace("/");
+    }
+    if (urlParams.get("name") != null) {
+      setName(urlParams.get("name"));
+    }
+    if (urlParams.get("start") != null) {
+      setStart(urlParams.get("start"));
+    }
+    if (urlParams.get("end") != null) {
+      setEnd(urlParams.get("end"));
+    }
+    if (urlParams.get("repeat") != null) {
+      setToggleRepeat(urlParams.get("repeat"));
+      setRepeat(urlParams.get("repeat"));
+    }
+    if (urlParams.get("description") != null) {
+      setDescription(urlParams.get("description"));
     }
     setRandomIndex(Math.floor(Math.random() * 19));
   }, []);

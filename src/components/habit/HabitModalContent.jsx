@@ -14,7 +14,9 @@ const HabitModalContent = ({ data }) => {
   if (data.difficulty == "hard") newCoins = 1.5;
 
   const duplicateNavigation = () => {
-    navigate(`/create/habit?name=${data.name}&difficulty=${data.difficulty}`);
+    navigate(
+      `/create/habit?name=Copy of ${data.name}&difficulty=${data.difficulty}`
+    );
   };
   return (
     <div className="p-5 md:p-q space-y-1">
