@@ -3,7 +3,7 @@ import { HabitechContext } from "../contexts/HabitechContext";
 import toast, { Toaster } from "react-hot-toast";
 import { toastError } from "../components/common/Toast";
 import { API_URL, CLOUD_AUDIO_PATH } from "../constants/index";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useColorTheme } from "../hooks/useColorTheme";
 import axios from "axios";
 import DatePicker from "react-datepicker";
@@ -81,6 +81,7 @@ const CreateGoalPage = () => {
   const [dropdown, setDropdown] = useState(false);
   const [toggleModal, setToggleModal] = useState("hidden");
   const [randomIndex, setRandomIndex] = useState(0);
+  const [urlParams] = useSearchParams();
 
   const { state, dispatch } = useContext(HabitechContext);
   const navigate = useNavigate();
@@ -179,6 +180,27 @@ const CreateGoalPage = () => {
     if (state.user.name == undefined) {
       window.location.replace("/");
     }
+    if (urlParams.get("name") != null) {
+      setName(urlParams.get("name"));
+    }
+    if (urlParams.get("type") != null) {
+      setType(urlParams.get("type"));
+    }
+    if (urlParams.get("priority") != null) {
+      setPriority(urlParams.get("priority"));
+    }
+    if (urlParams.get("duedate") != null) {
+      setDuedate(new Date(Number(urlParams.get("duedate"))));
+    }
+    if (urlParams.get("tags") != null) {
+      setTags(JSON.parse(urlParams.get("tags")));
+    }
+    if (urlParams.get("subtasks") != null) {
+      setTask(JSON.parse(urlParams.get("subtasks")));
+    }
+    if (urlParams.get("description") != null) {
+      setDescription(urlParams.get("description"));
+    }
     setRandomIndex(Math.floor(Math.random() * 19));
   }, []);
 
@@ -235,6 +257,7 @@ const CreateGoalPage = () => {
             </label>
             <select
               id="type"
+              value={type}
               className=" my-1 p-1 w-3/4 border text-md rounded-md block bg-gray-700 border-gray-600 text-white"
               onChange={(e) => setType(e.target.value)}
             >
@@ -252,6 +275,7 @@ const CreateGoalPage = () => {
             </label>
             <select
               id="priority"
+              value={priority}
               className=" my-1 p-1 w-3/4 border text-md rounded-md block bg-gray-700 border-gray-600 text-white"
               onChange={(e) => setPriority(e.target.value)}
             >

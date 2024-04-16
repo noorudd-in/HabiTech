@@ -136,7 +136,6 @@ const RenderPlanner = () => {
               let endTime = dayjs()
                 .hour(plan.end?.slice(0, 2))
                 .minute(plan.end?.slice(3, 5));
-
               return (
                 <div key={plan.id}>
                   <PlanWrapper status={-1}>
@@ -145,6 +144,8 @@ const RenderPlanner = () => {
                       start={startTime}
                       end={endTime}
                       name={plan.name}
+                      repeat={plan.repeat}
+                      date={plan.date}
                       status={-1}
                       lastUpdated={plan.lastUpdated}
                       description={plan.description}
@@ -179,6 +180,8 @@ const RenderPlanner = () => {
                       end={endTime}
                       name={plan.name}
                       status={status}
+                      repeat={plan.repeat}
+                      date={plan.date}
                       lastUpdated={plan.lastUpdated}
                       description={plan.description}
                     />
@@ -211,6 +214,8 @@ const RenderPlanner = () => {
                       start={startTime}
                       end={endTime}
                       name={plan.name}
+                      repeat={plan.repeat}
+                      date={plan.date}
                       status={1}
                       lastUpdated={plan.lastUpdated}
                       description={plan.description}

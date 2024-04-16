@@ -223,15 +223,15 @@ const SingleHabit = ({
           >
             <HabitModalContent
               data={{
-                id: id,
-                name: name,
-                status: status,
-                difficulty: difficulty,
-                lastUpdated: lastUpdated,
-                expValue: expValue,
-                posCount: posCount,
-                negCount: negCount,
-                analytics: analytics,
+                id,
+                name,
+                status,
+                difficulty,
+                lastUpdated,
+                expValue,
+                posCount,
+                negCount,
+                analytics,
               }}
             />
           </Modal>
