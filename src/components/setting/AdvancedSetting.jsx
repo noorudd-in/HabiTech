@@ -291,6 +291,7 @@ const AdvancedSetting = () => {
               <option value="type">Type</option>
               <option value="priority">Priority</option>
               <option value="tags">Tags</option>
+              <option value="eisenhower">Eisenhower</option>
             </select>
           </div>
         </div>

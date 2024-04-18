@@ -34,6 +34,7 @@ const AdvancedSetting = lazy(() =>
   import("../components/setting/AdvancedSetting")
 );
 const ImportExport = lazy(() => import("../components/setting/ImportExport"));
+const Countdown = lazy(() => import("../components/countdown/Countdown"));
 
 const HABITECH_ROUTES = createBrowserRouter([
   {
@@ -64,7 +65,7 @@ const HABITECH_ROUTES = createBrowserRouter([
     element: (
       <Suspense fallback={<Shimmer />}>
         <AnimatePage>
-          <CommingSoon />
+          <Countdown />
           <GlobalFooter />
         </AnimatePage>
       </Suspense>
