@@ -71,7 +71,6 @@ const RenderHabits = () => {
         }
       });
       let newHabits = incompleteHabits.concat(completedHabits);
-      console.log(newHabits);
       setHabitData(newHabits);
     } else {
       setHabitData(state.habits);

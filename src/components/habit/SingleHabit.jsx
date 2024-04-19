@@ -144,18 +144,16 @@ const SingleHabit = ({
         time: Date.now(),
       };
 
-      let updatedAnalytics = { ...state.user.analytics };
-      updatedAnalytics.habits[difficulty][1] =
-        updatedAnalytics.habits[difficulty][1] + 1;
-      updatedAnalytics.habits.total[1] = updatedAnalytics.habits.total[1] + 1;
+      let updatedAnalytics = { ...state.user.analytics.habits };
+      updatedAnalytics[difficulty][1] += 1;
+      updatedAnalytics.total[1] += 1;
 
       // Add record to user analytics;
-      let newRecords = { ...state.user.analytics.habits.records };
       let todaysDate = dayjs().format("DD MMM");
-      if (newRecords[todaysDate]) {
-        newRecords[todaysDate] += 1;
+      if (updatedAnalytics.records[todaysDate]) {
+        updatedAnalytics.records[todaysDate] += 1;
       } else {
-        newRecords[todaysDate] = 1;
+        updatedAnalytics.records[todaysDate] = 1;
       }
 
       // Trigger axios update.
@@ -169,10 +167,7 @@ const SingleHabit = ({
             coins: state.user.coins + newCoins,
             analytics: {
               ...state.user.analytics,
-              habits: {
-                ...state.user.analytics.habits,
-                records: newRecords,
-              },
+              habits: updatedAnalytics,
               totalMoneyEarned:
                 state.user.analytics.totalMoneyEarned + newCoins,
             },

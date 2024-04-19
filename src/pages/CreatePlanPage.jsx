@@ -76,6 +76,9 @@ const CreatePlanPage = () => {
     if (String(hh).length == 1) {
       hh = "0" + parseInt(hh);
     }
+    if (String(mm).length == 1) {
+      mm = "0" + parseInt(mm);
+    }
     setStart(hh + ":" + mm);
   };
 
@@ -89,7 +92,15 @@ const CreatePlanPage = () => {
     const type = value.slice(2, 3) == "M" ? "minute" : "hour";
     const startTime = dayjs().hour(start.slice(0, 2)).minute(start.slice(3, 5));
     const endTime = startTime.add(parseInt(num), type);
-    setEnd(endTime.toDate().toLocaleTimeString().slice(0, 5));
+    let endTimeHour = endTime.toDate().getHours();
+    let endTimeMinute = endTime.toDate().getMinutes();
+    if (String(endTimeHour).length == 1) {
+      endTimeHour = "0" + parseInt(endTimeHour);
+    }
+    if (String(endTimeMinute).length == 1) {
+      endTimeMinute = "0" + parseInt(endTimeMinute);
+    }
+    setEnd(endTimeHour + ":" + endTimeMinute);
     setDurationValue(value);
   };
 
@@ -133,21 +144,6 @@ const CreatePlanPage = () => {
     }
   };
 
-  // Ensure if end time is after the start time.
-  const validateTime = () => {
-    const startTime = start.split(":");
-    const endTime = end.split(":");
-    if (endTime[0] < startTime[0]) {
-      return false;
-    }
-    if (startTime[0] == endTime[0]) {
-      if (endTime[1] < startTime[1]) {
-        return false;
-      }
-    }
-    return true;
-  };
-
   const createPlan = () => {
     if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate(5);
@@ -167,10 +163,6 @@ const CreatePlanPage = () => {
     }
     if (end == "") {
       toast("You forget to enter the end date!", toastError());
-      return;
-    }
-    if (!validateTime()) {
-      toast("It seems end time is before the start time!", toastError());
       return;
     }
     // Create Plan object and perform API Call.

@@ -77,7 +77,7 @@ const Settings = () => {
       </div>
 
       <div className="m-2 mt p-2  bg-gray-700 rounded">
-        <Link to="/about">
+        <Link to="/info">
           <div className="flex px-1 text-lg my-2">
             <div className="w-6 h-6">
               <img src={aboutPNG} alt="About HabiTech" />
@@ -122,7 +122,7 @@ const Settings = () => {
       </div>
 
       <div>
-        <h1 className="mt-1 mb-5 text-center italic">Version: 10.2.6</h1>
+        <h1 className="mt-1 mb-5 text-center italic">Version: 12.1.4</h1>
       </div>
     </div>
   );
