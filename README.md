@@ -1,6 +1,6 @@
 # HabiTech
 
-A goal and habit tracker with planner included. Unlock your productivity with the power of technology!
+A goal and habit tracker with an integrated planner. Unlock your productivity with the power of technology!
 
 ## 🛠️ Technologies
 
@@ -8,32 +8,41 @@ A goal and habit tracker with planner included. Unlock your productivity with th
 - `Tailwind CSS`
 - `Vite`
 
-## 📦 Libraries
+## 📦 Libraries & Why I am using it?
 
-- `Framer Motion`
-- `Axios`
-- `DayJS`
-- `Recharts`
-- `React Hot Toast`
+- `Framer Motion: For seamless animations`
+- `Axios: To handle API calls`
+- `DayJS: For Date & Time manipulation`
+- `Recharts: For plotting graphs and charts`
+- `React Hot Toast: To provide awesome UI notifications (like alerts)`
+- `Driver.js: For onboarding user experience`
+- `Papaparse: To parse CSV files and convert them to strings, arrays, objects, etc`
+- `React-CSV: To generate errorless CSV file from strings and JSON`
+- `React-Datepicker: Just like datepicker but with addional functionality`
+- `React Router DOM: For page routing`
+- `Circular Progressbar: For displaying progressbar as a timer`
 
 ## 🚦 Running the project
 
-To run the project in your local environment, you need to follow the below steps:
+To run the project in your local environment, follow the below steps:
 
 1. Clone the repository to your local machine.
-2. Replace **API_URL** inside `src > constants > index.js` with your API URL. You can also create a dummy JSON file and watch it in a local host and enter that localhost URL here.
+2. Replace **API_URL** inside `src > constants > index.js` with your API URL. Alternatively, create a dummy JSON file and watch it in a local host and enter that localhost URL here.
 3. Run `npm install` or `yarn` in the project directory to install the required dependencies.
-4. Run `npm run install` or `yarn start` to get the project started.
+4. Run `npm run dev` or `yarn start` to get the project started.
 5. Open http://localhost:5173 (or the address shown in your console) in your web browser to view the app.
-6. Enable responsive view and view it in a mobile screen to get better UI experience.
+6. Enable responsive view and check it in a mobile screen to get better UI experience.
 
 ## 🧠 What New I Learnt?
 
+- Spending a good amount of time on designing the app before writing a code is must.
+- How to reduce a good amount of API calls and increase performance.
 - Learnt about dayjs library and how can we add, subtract, format, manipulate dates and how to show humanised format of dates and time.
 - Learnt how we cannot use `bg-${status ? "green" : "red"}-500` in tailwind css since tailwind cannot parse broken css classes. Instead we need to do like `${status ? "bg-green-500" : "bg-red-500"}`
-- How to use onTap, Scale, AnimatePresence, motion from Framer Motion.
-- How to manage global store with Context API using useReducer (An alternative experience of Redux).
-- How to implement debounce in ReactJS (I though it's same implementation as in JS but no!) to handle multiple requests in a short time.
+- Learnt animation techniques like onTap, Scale, AnimatePresence, motion, onDrag from Framer Motion.
+- How to manage global store with Context API using useReducer (An alternative solution of Redux).
+- Why and how to use debounce/throttling.
+- How to work with CVS files, Blob datas, and audio files.
 
 ## 🚀 Planned Features
 
@@ -62,10 +71,9 @@ Below are features that I am planning to add in the app.
 - [x] Add store to purchase themes, health, avatars, badges, etc.
 - [x] Implement lock and unlock app feature.
 - [x] Implement Eisenhower Matrix.
-- [ ] Implement Pomodoro Timer.
+- [x] Implement Pomodoro Timer.
 - [x] Show/Hide duedate, priority, type by default on goals.
 - [x] Implement smart suggestions whenever user creates a habit, goal, plan or tag.
-- [ ] Import goal or habit to plan.
 - [x] Copy existing goal/habit/plan and create new one.
 - [x] Automatically transfer goals from monthly to weekly, quarterly to monthly and so on based on duedate.
 - [x] Allow users to select the by default view from settings (such as group by goals, show subtasks or not, show planner first or goals first and more!).
@@ -76,8 +84,8 @@ Below are features that I am planning to add in the app.
 - [x] Allow users to import all plans, habits, goals data from remote file.
 - [x] Allow users to export and import settings of an app OR Enable transfer of settings.
 - [x] Allow users to reset app / delete data.
-- [ ] Page for `How to use app`
 - [x] Allow users to import and export data.
+- [ ] Page for `How to use app`
 
 ## 🐞 Issues
 
@@ -89,8 +97,8 @@ Issues/Bugs which I am not interested to fix due to lack of time or resources.
 ## 💡 Improvements
 
 - **Calender View**: Display goals, task from the calender point of view.
-- **Import**: Allow users to import plans, goals, habits from JSON, Excel Sheet and more other formats.
-- **Export**: Allow users to export plans, habit and goals data to CSV, JSON, Excel, and more other formats.
+- **Detailed Analysis**: Provide detailed analysis with more number of charts and graph options.
+- **Format Conversion**: Allow users to convert their habit into goal, goal into habit, habit into plan and more.
 
 ## ⚡️ Build In Public Progress
 

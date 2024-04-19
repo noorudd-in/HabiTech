@@ -4,6 +4,7 @@ import { HabitechContext } from "../../contexts/HabitechContext";
 import Shimmer from "../../pages/Shimmer";
 import CoinIcon from "../icons/CoinIcon";
 import LevelIcon from "../icons/LevelIcon";
+import InfoIcon from "../icons/InfoIcon";
 
 const UserDetails = () => {
   const { state, appLoading } = useContext(HabitechContext);
@@ -15,7 +16,7 @@ const UserDetails = () => {
         <h2 className="text-3xl">{state.user.name}</h2>
         <div id="tour-info">
           <Link to="/info">
-            <h1>Hello</h1>
+            <InfoIcon className="w-8 h-8" />
           </Link>
         </div>
       </div>

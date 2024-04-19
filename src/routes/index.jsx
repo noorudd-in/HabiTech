@@ -35,6 +35,7 @@ const AdvancedSetting = lazy(() =>
 );
 const ImportExport = lazy(() => import("../components/setting/ImportExport"));
 const Countdown = lazy(() => import("../components/countdown/Countdown"));
+const InfoPage = lazy(() => import("../pages/InfoPage"));
 
 const HABITECH_ROUTES = createBrowserRouter([
   {
@@ -307,11 +308,11 @@ const HABITECH_ROUTES = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/about",
+    path: "/info",
     element: (
       <>
         <Suspense fallback={<Shimmer />}>
-          <CommingSoon />
+          <InfoPage />
           <GlobalFooter />
         </Suspense>
       </>
@@ -336,6 +337,18 @@ const HABITECH_ROUTES = createBrowserRouter([
       <>
         <Suspense fallback={<Shimmer />}>
           <CommingSoon />
+          <GlobalFooter />
+        </Suspense>
+      </>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/shimmer",
+    element: (
+      <>
+        <Suspense fallback={<Shimmer />}>
+          <Shimmer />
           <GlobalFooter />
         </Suspense>
       </>

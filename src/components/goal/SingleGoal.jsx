@@ -167,13 +167,17 @@ const SingleGoal = ({
           time: Date.now(),
         };
 
+        let updatedAnalytics = { ...state.user.analytics.goals };
+        updatedAnalytics[priority][1] += 1;
+        updatedAnalytics[type][1] += 1;
+        updatedAnalytics.total[1] += 1;
+
         // Add record to user analytics;
-        let newRecords = { ...state.user.analytics.goals.records };
         let todaysDate = dayjs().format("DD MMM");
-        if (newRecords[todaysDate]) {
-          newRecords[todaysDate] += 1;
+        if (updatedAnalytics.records[todaysDate]) {
+          updatedAnalytics.records[todaysDate] += 1;
         } else {
-          newRecords[todaysDate] = 1;
+          updatedAnalytics.records[todaysDate] = 1;
         }
 
         axios
@@ -187,10 +191,7 @@ const SingleGoal = ({
               health: newHealth,
               analytics: {
                 ...state.user.analytics,
-                goals: {
-                  ...state.user.analytics.goals,
-                  records: newRecords,
-                },
+                goals: updatedAnalytics,
                 totalMoneyEarned:
                   state.user.analytics.totalMoneyEarned + newCoins,
               },

@@ -69,7 +69,6 @@ const SetupPassword = ({
       });
     setPasswordCreated(true);
     setShowPasswordField(false);
-    console.log(setLockDuration);
     if (setLockDuration) {
       setLockDuration(10);
     }
