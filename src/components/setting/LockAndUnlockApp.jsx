@@ -23,6 +23,10 @@ const LockAndUnlockApp = () => {
     if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate([5, 200, 20]);
     }
+    if (window.location.host == "habitech.noorudd.in") {
+      toast("Feature Disabled");
+      return;
+    }
     setEnableLock(value);
     if (value) {
       setShowPasswordField("new");
