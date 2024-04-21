@@ -85,11 +85,11 @@ Below are features that I am planning to add in the app.
 - [x] Allow users to export and import settings of an app OR Enable transfer of settings.
 - [x] Allow users to reset app / delete data.
 - [x] Allow users to import and export data.
-- [ ] Page for `How to use app`
+- [x] Page for `How to use app`
 
 ## 🐞 Issues
 
-Issues/Bugs which I am not interested to fix due to lack of time or resources.
+Issues/Bugs which I are known and I am not interested to fix due to lack of time or resources.
 
 - It works pretty well on mobile screens but experience in desktop view can be improved.
 - Theme (Light/Dark) is taken from system's preferences. I am not able to provide user to switch themes as the app's code has grown too big.
@@ -99,6 +99,7 @@ Issues/Bugs which I am not interested to fix due to lack of time or resources.
 - **Calender View**: Display goals, task from the calender point of view.
 - **Detailed Analysis**: Provide detailed analysis with more number of charts and graph options.
 - **Format Conversion**: Allow users to convert their habit into goal, goal into habit, habit into plan and more.
+- **Pin**: Allow users to pin top three habits or goals or plan if there are too many.
 
 ## ⚡️ Build In Public Progress
 
