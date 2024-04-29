@@ -7,6 +7,7 @@ import { useColorTheme } from "../../hooks/useColorTheme";
 import RightIcon from "../icons/RightIcon";
 import DownIcon from "../icons/DownIcon";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 import { API_URL } from "../../constants";
 
 const LockAndUnlockApp = () => {
@@ -23,7 +24,7 @@ const LockAndUnlockApp = () => {
     if (localStorage.getItem("userVibrate") == "true") {
       window.navigator.vibrate([5, 200, 20]);
     }
-    if (window.location.host == "habitech.noorudd.in") {
+    if (window.location.host != "habitech.noorudd.in") {
       toast("Feature Disabled");
       return;
     }
@@ -84,6 +85,7 @@ const LockAndUnlockApp = () => {
 
   return (
     <>
+      <Toaster />
       {lockApp ? (
         <VerifyPassword setLockApp={setLockApp} />
       ) : (
