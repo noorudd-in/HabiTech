@@ -2,6 +2,10 @@
 
 A goal and habit tracker with an integrated planner. Unlock your productivity with the power of technology!
 
+# Demo
+
+The demo of this app is live and is hosted on [habitech.noorudd.in](https://habitech.noorudd.in).
+
 ## 🛠️ Technologies
 
 - `ReactJS`
